@@ -1,0 +1,13 @@
+{
+  "dataset_version": "v0.1.0",
+  "created_at": "2026-10-04",
+  "shap_series": "hmi.sharp_cea_720s",
+  "native_cadence_minutes": 12,
+  "sampling_stride": null,
+  "cycle24_start": "2010-05-01",
+  "cycle24_end": "2019-12-31",
+  "cycle25_start": "2020-01-01",
+  "label_threshold": "M1.0+",
+  "forecast_horizon_hours": 24,
+  "label_source": null
+}

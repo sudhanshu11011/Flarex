@@ -1,0 +1,25 @@
+shap:
+  product_type: definitive
+  series: hmi.sharp_cea_720s
+  native_cadence_minutes: 12
+
+sampling:
+  primary_stride_minutes: null
+
+cycle24:
+  start: "2010-05-01"
+  end: "2019-12-31"
+
+cycle25:
+  start: "2020-01-01"
+  end: null
+
+forecast:
+  minimum_flare_class: "M1.0"
+  horizon_hours: 24
+
+labels:
+  primary_catalog: null
+
+quality:
+  limb_cut_degrees: null

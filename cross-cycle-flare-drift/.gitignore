@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Raw/large data
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+
+# Preserve folders
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Generated model artifacts
+artifacts/models/*
+artifacts/preprocessors/*
+
+# Temporary logs
+*.log
+
+# Cache
+.pytest_cache/
+.ruff_cache/
