@@ -1,0 +1,2 @@
+ENTITY_GROUP_ID,cycle24_rows,cycle25_rows,cycle24_positive,cycle25_positive,cycle24_harps,cycle25_harps,canonical_harps,canonical_noaa_ars,cycle24_first_utc,cycle24_last_utc,cycle25_first_utc,cycle25_last_utc
+ENTITY_00049,22,88,0,35,219,13354,"219,13354","11114,14113,14114,14115",2010-10-14 05:59:26+00:00,2010-10-15 23:59:26+00:00,2025-06-12 23:59:23+00:00,2025-06-22 07:59:23+00:00
