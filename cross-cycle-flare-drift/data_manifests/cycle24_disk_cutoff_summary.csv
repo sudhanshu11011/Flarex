@@ -1,0 +1,6 @@
+cutoff_deg,rows_inside,retention_vs_quality0_pct,cmask_zero_inside,all25_finite_inside,final_pass_candidate,final_pass_vs_quality0_pct,final_pass_vs_inside_pct
+60,195,73.03,0,191,191,71.54,97.95
+65,199,74.53,0,194,194,72.66,97.49
+68,203,76.03,0,197,197,73.78,97.04
+70,204,76.4,0,198,198,74.16,97.06
+75,206,77.15,0,200,200,74.91,97.09

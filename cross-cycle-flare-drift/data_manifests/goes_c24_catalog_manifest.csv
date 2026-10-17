@@ -1,0 +1,11 @@
+year,source_filename,local_file,download_ok,file_size_bytes,sha256,rows
+2010,sci_xrsf-l2-flrpt_geo_y2010_v1-0-1.csv,data\raw\goes\goes_flare_2010.csv,True,313115,b460bacc09159fe5945b86843dcd223fdfe6eabc97153871d8948fcd889ce1cf,2208
+2011,sci_xrsf-l2-flrpt_geo_y2011_v1-0-1.csv,data\raw\goes\goes_flare_2011.csv,True,488029,e094cf9f5325fcf4474c330219bb2d01490ca8586ec94c0e60644d3ed58bd519,3382
+2012,sci_xrsf-l2-flrpt_geo_y2012_v1-0-1.csv,data\raw\goes\goes_flare_2012.csv,True,477182,4469dc5b9c588cd93d3c0bf369303e88c16ce397e02bc4ea8550936d21b72fa0,3300
+2013,sci_xrsf-l2-flrpt_geo_y2013_v1-0-1.csv,data\raw\goes\goes_flare_2013.csv,True,465944,113008d522abee1439ec61ba14caa3acaa3c1a91c86284331f2ff83f1bea5b6a,3217
+2014,sci_xrsf-l2-flrpt_geo_y2014_v1-0-1.csv,data\raw\goes\goes_flare_2014.csv,True,521773,bf0827d87ced965ebb4834927bcc5165bb995640d4dc4a9385917552c789c057,3599
+2015,sci_xrsf-l2-flrpt_geo_y2015_v1-0-1.csv,data\raw\goes\goes_flare_2015.csv,True,484646,ebf46bdbefc60b4a9637289c9b7bd39714f98546ffd5ca3685de6434e2c34040,3352
+2016,sci_xrsf-l2-flrpt_geo_y2016_v1-0-1.csv,data\raw\goes\goes_flare_2016.csv,True,400660,72034c0e8115aeaf1a484479abf96834f2a82991138c88e693b87aa1ba6e8a9b,2836
+2017,sci_xrsf-l2-flrpt_geo_y2017_v1-0-1.csv,data\raw\goes\goes_flare_2017.csv,True,329879,c710e5da5990b38f8ec1c9d2e860141f36cc4591e9dcd0722ae1af027b8dc9c7,2246
+2018,sci_xrsf-l2-flrpt_geo_y2018_v1-0-1.csv,data\raw\goes\goes_flare_2018.csv,True,82441,37b1f52afdbe3e5955976b91078933a61c120d2d953743eb54fafeaa6a924a55,588
+2019,sci_xrsf-l2-flrpt_geo_y2019_v1-0-1.csv,data\raw\goes\goes_flare_2019.csv,True,65345,1b5ca02a379c064cd3078eb8ae7c8bf83f730737d6c5f0e81f99236678aeea26,455
