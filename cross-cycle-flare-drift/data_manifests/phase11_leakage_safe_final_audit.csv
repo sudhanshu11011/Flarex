@@ -1,0 +1,3 @@
+cycle,rows,positive,negative,positive_rate_pct,unique_entity_groups,feature_count,duplicate_keys,nonfinite_feature_rows,invalid_targets,invalid_label_status,missing_entity_groups,blank_entity_groups,invalid_trec,off_120min_grid_rows,before_tai_start,after_tai_end,invalid_observation_utc,before_utc_start,after_utc_end,invalid_24h_horizon,wrong_cycle_tag,expected_rows,expected_positive,expected_negative,rows_match_expected,positives_match_expected,negatives_match_expected,cycle_audit_pass
+cycle24,88557,3620,84937,4.08776268392109,1174,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,88557,3620,84937,True,True,True,True
+cycle25,79682,5216,74466,6.546020431214076,1011,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,79682,5216,74466,True,True,True,True

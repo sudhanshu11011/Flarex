@@ -1,0 +1,3 @@
+cycle,sharp_rows,lorentz_rows,outer_merged_rows,exact_matches,sharp_only,lorentz_only,merge_rate_from_sharp_pct,qc1_valid_key,qc2_exact_merge,qc3_quality0,qc4_cmask_positive,qc5_disk_position,qc6_all25_finite,qc_pass_1_6,qc_retention_pct,sharp_duplicate_keys,lorentz_duplicate_keys,output_file
+cycle24,321702,311702,321702,311702,10000,0,96.8915331580158,321702,311702,247376,264992,242109,243866,179565,55.81718484808923,0,0,data\interim\cycle24_merged_qc.parquet
+cycle25,288403,275186,288403,275186,13217,0,95.41717665905,288403,275186,236018,232752,212148,209046,166614,57.771243711057096,0,0,data\interim\cycle25_merged_qc.parquet

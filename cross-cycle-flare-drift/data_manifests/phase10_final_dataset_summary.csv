@@ -1,0 +1,3 @@
+cycle,usable_labels_before_group,mapped_by_harp_initially,mapped_by_noaa_fallback,ambiguous_group_fallback,unresolved_group,harp_noaa_group_conflicts,excluded_for_missing_group,final_model_rows,positive,negative,positive_rate_pct,unique_entity_groups,duplicate_keys,nonfinite_feature_rows,invalid_target_rows,missing_entity_group_rows,output_file
+cycle24,88579,88579,0,0,0,0,0,88579,3620,84959,4.086747423204145,1175,0,0,0,0,data\processed\cycle24_model_ready.parquet
+cycle25,79770,79770,0,0,0,0,0,79770,5251,74519,6.582675191174626,1012,0,0,0,0,data\processed\cycle25_model_ready.parquet
