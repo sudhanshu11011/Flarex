@@ -1,0 +1,121 @@
+{
+  "dataset_name": "Cross-Cycle Solar Flare Dataset",
+  "dataset_version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-17T21:10:40.235439+00:00",
+  "research_role": {
+    "cycle24": "Development domain. Future train/validation/independent-holdout splits must respect ENTITY_GROUP_ID.",
+    "cycle25": "Frozen temporal transfer/test domain. Must not be used for model fitting, preprocessing fitting, feature selection, hyperparameter tuning, or threshold tuning."
+  },
+  "feature_contract": {
+    "total_model_features": 25,
+    "sharp_feature_count": 18,
+    "lorentz_feature_count": 7,
+    "sharp_features": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP"
+    ],
+    "lorentz_features": [
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ]
+  },
+  "sampling_contract": {
+    "native_cadence_minutes": 12,
+    "primary_stride_minutes": 120,
+    "sampling_anchor": "00:00 TAI",
+    "sampling_method": "Fixed absolute 2-hour TAI timestamp grid; never every-Nth-available-row sampling."
+  },
+  "label_contract": {
+    "target": "At least one GOES M1.0+ flare associated with the SHARP row NOAA metadata within the next 24 hours.",
+    "event_timestamp": "GOES flare start_time",
+    "forecast_window": "(t, t+24h]",
+    "positive": "At least one matching region-assigned M1.0+ event in the forecast window.",
+    "negative": "No matching assigned M1.0+ event and no region-unassigned M1.0+ event in the forecast window.",
+    "unassigned_m1_policy": "CENSOR",
+    "no_noaa_association_policy": "EXCLUDE",
+    "boundary_policy": "Require complete 24-hour outcome horizon inside the frozen cycle domain.",
+    "goes_region_normalization": "For audited GOES catalogs: active_region < 10000 -> +10000; already-full NOAA values retained. No generic modulo normalization."
+  },
+  "qc_contract": {
+    "QC1": "Valid HARPNUM and T_REC; unique key.",
+    "QC2": "Exact one-to-one SHARP/Lorentz merge on HARPNUM + T_REC.",
+    "QC3": "QUALITY == 0",
+    "QC4": "CMASK > 0",
+    "QC5": "Position available and |LON_FWT| <= 68 degrees.",
+    "QC6": "All 25 model features finite; no blind imputation."
+  },
+  "leakage_contract": {
+    "primary_leakage_unit": "connected HARP-NOAA ENTITY_GROUP_ID",
+    "cross_cycle_entity_overlap_allowed": false,
+    "cross_cycle_harp_overlap_allowed": false,
+    "quarantined_entity_groups": [
+      "ENTITY_00049"
+    ],
+    "cycle24_rows_quarantined": 22,
+    "cycle25_rows_quarantined": 88,
+    "quarantine_rule": "Any ENTITY_GROUP_ID occurring in both Cycle24 and Cycle25 primary datasets is removed from both domains. Rule is label-blind."
+  },
+  "cycle24": {
+    "file": "data\\final\\dataset_v1\\cycle24_dataset_v1.parquet",
+    "rows": 88557,
+    "positive": 3620,
+    "negative": 84937,
+    "unique_entity_groups": 1174,
+    "sha256": "a6a27fd74547a8cac07e40acd5b2f7581474529bd2f0b00f14d92d9407c661b2"
+  },
+  "cycle25": {
+    "file": "data\\final\\dataset_v1\\cycle25_dataset_v1.parquet",
+    "rows": 79682,
+    "positive": 5216,
+    "negative": 74466,
+    "unique_entity_groups": 1011,
+    "sha256": "4f7aae11959b4b16d0c7708cd209dcf9cde2b9a48cdcdbc4829030ab506c6661"
+  },
+  "schema_sha256": "fc9f3816539c3d3142ebf82e6949ea40a3ae2a4f550a5eefda78b7782ff8b44f",
+  "provenance": {
+    "phase11_final_audit": {
+      "file": "data_manifests\\phase11_leakage_safe_final_audit.csv",
+      "sha256": "8f5711375e5d44c2fbc229a95f70a47d985e010f2a288e410cdd51a0752859d1"
+    },
+    "cross_cycle_quarantine": {
+      "file": "data_manifests\\phase11_cross_cycle_quarantine_summary.csv",
+      "sha256": "acdd2a0d00bb9671b2a33ff0556d6dbb6e26bb4b6bdc100bff4de0c7eaea591b"
+    },
+    "temporal_contract": {
+      "file": "data_manifests\\temporal_data_contract.json",
+      "sha256": "694ebb3e4b583a9934df5cf21214802a8f3796ea661d44900f8fa4676cc2bccb"
+    },
+    "sampling_contract": {
+      "file": "data_manifests\\sampling_stride_contract.json",
+      "sha256": "6add770595c2313fd135d629d86addac698b9c1e752dee882f56450684c59184"
+    }
+  },
+  "immutability_rule": "Dataset v1 files must not be modified in place. Any methodological or data change requires a new dataset version.",
+  "modeling_gate": {
+    "dataset_frozen": true,
+    "cycle25_tuning_allowed": false,
+    "modeling_may_begin": true
+  }
+}
