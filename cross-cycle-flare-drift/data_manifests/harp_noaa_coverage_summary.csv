@@ -1,0 +1,3 @@
+cycle,total_rows,noaa_linked_rows,mapped_rows,missing_mapping,relation_conflicts,mapping_coverage_pct
+Cycle24,292,133,133,0,0,100.0
+Cycle25,281,132,132,0,0,100.0

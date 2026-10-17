@@ -1,0 +1,2 @@
+total_qc_valid_candidates,recorded_rows,positive,negative,censored_unassigned,excluded_noaa,time_conversion_errors,usable_labels,positive_rate_pct
+197,197,4,82,5,106,0,86,4.651162790697675

@@ -1,0 +1,2 @@
+cycle,forecast_horizon_hours,cycle_end_exclusive_utc,total_audit_rows,conversion_errors,inside_cycle_horizon,cross_boundary_rows,qc8c_usable_labels,usable_removed_by_boundary,qc8d_usable_labels,boundary_policy_tests_pass
+Cycle24,24,2020-01-01 00:00:00+00:00,197,0,197,0,86,0,86,True

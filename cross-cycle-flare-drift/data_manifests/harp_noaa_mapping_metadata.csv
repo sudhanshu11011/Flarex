@@ -1,0 +1,2 @@
+downloaded_at_utc,source,raw_file,file_size_bytes,sha256,harps,unique_edges,unique_noaa_ars,zero_noaa_harps,single_noaa_harps,multi_noaa_harps,noaa_connected_to_multiple_harps,duplicate_edges
+2026-10-15T09:19:12.838565+00:00,http://jsoc.stanford.edu/doc/data/hmi/harpnum_to_noaa/all_harps_with_noaa_ars.txt,data\raw\mappings\all_harps_with_noaa_ars.txt,35164,eef5697391c7ff57ab767bfccb986b9b8a0cc1fff05a812be08b8265f9b30330,2625,3589,3374,0,2069,556,207,0

@@ -1,0 +1,4 @@
+QUALITY,quality_hex,rows,sharp_missing_rows,cmask_zero_rows,position_missing_rows,outside_68_rows,percent
+0,0x0,267,52,51,52,12,91.43835616438356
+128,0x80,15,0,0,0,3,5.136986301369863
+67584,0x10800,10,0,0,0,2,3.4246575342465753
