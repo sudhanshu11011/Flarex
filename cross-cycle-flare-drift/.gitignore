@@ -40,3 +40,15 @@ artifacts/preprocessors/*
 # Cache
 .pytest_cache/
 .ruff_cache/
+
+
+.venv/
+__pycache__/
+.env
+API keys
+data/raw/ large datasets
+
+data/raw/goes/
+.venv/
+__pycache__/
+.env
