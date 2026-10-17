@@ -1,0 +1,80 @@
+{
+  "contract_version": "1.0",
+  "status": "FROZEN",
+  "phase": "Phase 8 - Temporal and Data Contract Freeze",
+  "created_at_utc": "2026-10-17T18:47:04.810799+00:00",
+  "data_sources": {
+    "sharp_series": "hmi.sharp_cea_720s",
+    "lorentz_series": "cgem.lorentz",
+    "goes_product": "GOES XRS L2 science flare report",
+    "goes_product_version": "v1-0-1",
+    "goes_years": [
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ]
+  },
+  "sampling": {
+    "native_cadence_minutes": 12,
+    "primary_stride_minutes": 120,
+    "grid_anchor": "00:00 TAI",
+    "grid_rule": "fixed absolute 2-hour TAI grid",
+    "sample_by_available_row_index": false
+  },
+  "forecast_target": {
+    "flare_threshold": "M1.0+",
+    "forecast_horizon_hours": 24,
+    "future_interval": "(t, t+24h]",
+    "event_time_field": "GOES start_time"
+  },
+  "cycle24": {
+    "domain_start_utc": "2010-05-01T00:00:00+00:00",
+    "domain_end_exclusive_utc": "2020-01-01T00:00:00+00:00",
+    "first_valid_sample_tai": "2010.05.01_02:00:00_TAI",
+    "first_valid_sample_utc": "2010-05-01T01:59:26+00:00",
+    "last_valid_sample_tai": "2019.12.31_00:00:00_TAI",
+    "last_valid_sample_utc": "2019-12-30T23:59:23+00:00",
+    "role": "model development, validation and independent holdout"
+  },
+  "cycle25": {
+    "domain_start_utc": "2020-01-01T00:00:00+00:00",
+    "domain_end_exclusive_utc": "2026-01-01T00:00:00+00:00",
+    "calendar_years": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "first_valid_sample_tai": "2020.01.01_02:00:00_TAI",
+    "first_valid_sample_utc": "2020-01-01T01:59:23+00:00",
+    "last_valid_sample_tai": "2025.12.31_00:00:00_TAI",
+    "last_valid_sample_utc": "2025-12-30T23:59:23+00:00",
+    "role": "frozen-model transfer evaluation only"
+  },
+  "leakage_rules": {
+    "cycle25_model_tuning": false,
+    "cycle25_preprocessing_fit": false,
+    "cycle25_threshold_selection": false,
+    "entity_group_split_required": true,
+    "label_horizon_must_remain_inside_cycle_domain": true
+  },
+  "manifest_files": {
+    "sampling_stride_contract": "data_manifests\\sampling_stride_contract.json",
+    "goes_catalog_manifest": "data_manifests\\goes_catalog_manifest_2010_2025.csv"
+  }
+}
