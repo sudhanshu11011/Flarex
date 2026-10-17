@@ -1,0 +1,3 @@
+cycle,total_rows,qc_pass_1_6,positive,negative,usable_labels,positive_rate_pct,censored_unassigned_flare,excluded_noaa,excluded_boundary,excluded_invalid_time,excluded_qc,qc_rows_with_multiple_noaa,qc_rows_with_noaa_under_10000,output_file
+cycle24,321702,179565,3620,84959,88579,4.086747423204145,4579,86407,0,0,142137,20196,0,data\interim\cycle24_qc_labeled.parquet
+cycle25,288403,166614,5251,74519,79770,6.582675191174626,5905,80939,0,0,121789,23426,0,data\interim\cycle25_qc_labeled.parquet
