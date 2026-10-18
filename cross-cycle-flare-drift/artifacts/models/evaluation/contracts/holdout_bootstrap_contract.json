@@ -1,0 +1,94 @@
+{
+  "contract_name": "Cycle24 Holdout ENTITY_GROUP Bootstrap Confidence Intervals",
+  "version": "1.0",
+  "status": "FROZEN_HOLDOUT_BOOTSTRAP_CI",
+  "created_at_utc": "2026-10-18T13:49:59.585553+00:00",
+  "bootstrap_design": {
+    "unit": "ENTITY_GROUP",
+    "group_count": 176,
+    "groups_drawn_per_replicate": 176,
+    "sampling": "with_replacement",
+    "cluster_rows_preserved": true,
+    "paired_draws_across_models": true,
+    "seed": 24025,
+    "valid_replicates": 2000,
+    "invalid_replicates_redrawn": 0,
+    "total_sampling_attempts": 2000
+  },
+  "confidence_interval": {
+    "method": "percentile",
+    "confidence_level": 0.95,
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "numpy_quantile_method": "linear"
+  },
+  "metrics": [
+    "tss",
+    "hss",
+    "f1",
+    "sensitivity",
+    "specificity",
+    "precision",
+    "pr_auc",
+    "roc_auc",
+    "brier_score"
+  ],
+  "threshold_policy": {
+    "source": "CYCLE24_VALIDATION",
+    "frozen_unchanged": true,
+    "reoptimized_during_bootstrap": false
+  },
+  "model_policy": {
+    "models_frozen": true,
+    "retraining": false,
+    "candidate_changes": false
+  },
+  "artifacts": {
+    "bootstrap_replicates": {
+      "file": "artifacts\\models\\evaluation\\bootstrap\\holdout_group_bootstrap_replicates.parquet",
+      "sha256": "00e91e02d7d23acd7d4029cad5863ccf4a2e2fb50655637ed2ac8af0671d69f2",
+      "rows": 6000
+    },
+    "bootstrap_ci_summary": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_bootstrap_ci.csv",
+      "sha256": "dc1f06a635ce4dc9883e033d68a4778ec666099d74e244a0a67288e3cb684a99",
+      "rows": 27
+    }
+  },
+  "data_isolation": {
+    "frozen_holdout_predictions_read": true,
+    "raw_holdout_dataset_reread": false,
+    "train_read": false,
+    "validation_read": false,
+    "cycle25_read": false,
+    "new_model_fitting": false,
+    "threshold_tuning": false
+  },
+  "provenance": {
+    "holdout_prediction_artifact": {
+      "file": "artifacts\\models\\evaluation\\predictions\\cycle24_holdout_predictions.parquet",
+      "sha256": "dbb864949293b92a8b450d5683e143f18841d5d4837f035298efc114791fd149"
+    },
+    "holdout_prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_prediction_contract.json",
+      "sha256": "e15e6c863689ef93abf0931c385a45faa0dd8067f7a23c061b4cb1d594d3eecc"
+    },
+    "holdout_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_protocol.json",
+      "sha256": "5331ba6793b8710cbe9f048c7fdb9f5a5c5dd30771659fd85941754cabfbb4de"
+    },
+    "holdout_point_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_metrics.csv",
+      "sha256": "63076cf6b2d2a43e801da473469b5b683081353d387679649dba17e5014ade5b"
+    },
+    "holdout_point_metrics_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_metrics_contract.json",
+      "sha256": "e6ef9cd4509e278b305699c3cccea3b7a3a54e9eece150682a396ffe46a414cc"
+    },
+    "frozen_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\holdout_frozen_model_registry.csv",
+      "sha256": "56d685ebd9c3283dd5971d1edb97137ea46132f4ad16acaf2864d27263f283fc"
+    }
+  },
+  "interpretation_rule": "Confidence intervals quantify uncertainty under connected ENTITY_GROUP resampling. They must not be used to retroactively change the frozen models, thresholds, features, preprocessing, or model-family selection."
+}

@@ -1,0 +1,195 @@
+{
+  "contract_name": "Independent Cycle24 Holdout Evaluation Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_HOLDOUT_EVALUATION",
+  "created_at_utc": "2026-10-18T13:41:18.342883+00:00",
+  "scientific_role": "Independent within-Cycle24 test set used after model-family selection and threshold selection have been fully frozen.",
+  "holdout_dataset": {
+    "file": "artifacts/splitting/data/cycle24_holdout.parquet",
+    "expected_sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc",
+    "expected_rows": 13072,
+    "expected_positive": 527,
+    "expected_negative": 12545,
+    "expected_entity_groups": 176,
+    "evaluation_only": true
+  },
+  "model_count": 3,
+  "models": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_file": "artifacts\\models\\logistic\\models\\LR_02_C0p01_BALANCED.joblib",
+      "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+      "frozen_threshold": 0.4548081408379442,
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "threshold_source": "CYCLE24_VALIDATION"
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_file": "artifacts\\models\\random_forest\\models\\RF_04_D12_L5_BALSUB.joblib",
+      "model_sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31",
+      "frozen_threshold": 0.1196946372748545,
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "threshold_source": "CYCLE24_VALIDATION"
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_file": "artifacts\\models\\xgboost\\models\\XGB_02_LR0p03_D3_BAL.joblib",
+      "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+      "frozen_threshold": 0.2638225555419922,
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "threshold_source": "CYCLE24_VALIDATION"
+    }
+  ],
+  "prediction_rule": "Classify positive when predicted probability is greater than or equal to the frozen family-specific threshold.",
+  "metric_definitions": {
+    "TSS": "TPR - FPR",
+    "HSS": "2*(TP*TN - FN*FP) / ((TP+FN)*(FN+TN) + (TP+FP)*(FP+TN))",
+    "F1": "2*TP / (2*TP + FP + FN)",
+    "sensitivity": "TP / (TP + FN)",
+    "specificity": "TN / (TN + FP)",
+    "precision": "TP / (TP + FP)",
+    "PR_AUC": "sklearn.metrics.average_precision_score",
+    "PR_AUC_operational_name": "Average Precision used consistently as the frozen PR-AUC implementation from Chapter 6.",
+    "ROC_AUC": "sklearn.metrics.roc_auc_score",
+    "Brier_score": "sklearn.metrics.brier_score_loss"
+  },
+  "threshold_dependent_metrics": [
+    "TSS",
+    "HSS",
+    "F1",
+    "sensitivity",
+    "specificity",
+    "precision",
+    "TP",
+    "FP",
+    "TN",
+    "FN"
+  ],
+  "threshold_independent_metrics": [
+    "PR_AUC",
+    "ROC_AUC",
+    "Brier_score"
+  ],
+  "bootstrap": {
+    "enabled": true,
+    "unit": "ENTITY_GROUP",
+    "method": "Connected-entity-group cluster bootstrap. Sample exactly G holdout ENTITY_GROUPs with replacement, where G is the number of unique holdout groups. Every row belonging to each sampled group is included once per draw of that group.",
+    "group_count_expected": 176,
+    "random_seed": 24025,
+    "valid_replicates": 2000,
+    "confidence_level": 0.95,
+    "ci_method": "percentile",
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "invalid_replicate_rule": "A bootstrap replicate lacking either positive or negative target examples is invalid for the common metric set and must be redrawn. Continue until exactly 2000 valid replicates exist.",
+    "bootstrap_metrics": [
+      "TSS",
+      "HSS",
+      "F1",
+      "sensitivity",
+      "specificity",
+      "precision",
+      "PR_AUC",
+      "ROC_AUC",
+      "Brier_score"
+    ],
+    "thresholds_during_bootstrap": "FROZEN_UNCHANGED",
+    "models_during_bootstrap": "FROZEN_UNCHANGED"
+  },
+  "calibration": {
+    "brier_score": true,
+    "reliability_table": true,
+    "binning": "fixed_probability_width",
+    "bin_edges": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "per_bin_outputs": [
+      "row_count",
+      "positive_count",
+      "mean_predicted_probability",
+      "observed_event_rate"
+    ],
+    "recalibration_allowed": false,
+    "calibration_outputs_are_diagnostic": true
+  },
+  "prediction_artifact_requirements": {
+    "preserve_target": true,
+    "preserve_ENTITY_GROUP": true,
+    "preserve_HARPNUM": true,
+    "preserve_row_identity": true,
+    "probability_columns": 3,
+    "thresholded_prediction_columns": 3,
+    "reason": "Connected ENTITY_GROUP identifiers must remain available for group-bootstrap confidence intervals and leakage-aware evaluation."
+  },
+  "prohibited_actions": [
+    "retrain_selected_models",
+    "refit_logistic_scaler",
+    "change_features",
+    "change_preprocessing",
+    "change_hyperparameters",
+    "replace_selected_candidate",
+    "reoptimize_threshold_on_holdout",
+    "select_model_using_holdout",
+    "calibrate_probabilities_using_holdout_for_future_tuning",
+    "use_cycle25_to_modify_holdout_analysis"
+  ],
+  "post_holdout_policy": {
+    "poor_holdout_performance": "Report as observed. Do not repair or retune the frozen development pipeline.",
+    "strong_holdout_performance": "Report as observed. Do not alter the pipeline before Cycle25 evaluation.",
+    "cycle25_next_stage": "Use the same frozen models, features, preprocessing, and thresholds unchanged."
+  },
+  "data_isolation_at_protocol_freeze": {
+    "holdout_data_read": false,
+    "holdout_predictions_generated": false,
+    "holdout_metrics_seen": false,
+    "cycle25_read": false,
+    "model_retraining": false,
+    "threshold_reoptimization": false
+  },
+  "artifacts": {
+    "frozen_holdout_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\holdout_frozen_model_registry.csv",
+      "sha256": "56d685ebd9c3283dd5971d1edb97137ea46132f4ad16acaf2864d27263f283fc"
+    }
+  },
+  "provenance": {
+    "selected_models_contract": {
+      "file": "artifacts\\models\\selection\\contracts\\selected_models_contract.json",
+      "sha256": "2eea4b1f8f35d3a4a83dfecd5e74dea95aa3cdc6b79d700682f8446a6a8b6f30"
+    },
+    "selected_models_manifest": {
+      "file": "artifacts\\models\\selection\\manifests\\frozen_selected_models.csv",
+      "sha256": "a7799201cc8ad7c582b3f1378a7036b740c29cff5e4d7a11e49e7bcea8ef7936"
+    },
+    "selection_audit": {
+      "file": "artifacts\\models\\selection\\contracts\\family_selection_audit.json",
+      "sha256": "9cffef1af30a36f80fd334c5c00768f9aa51d2428f041ead104cff505f032201"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "cycle24_split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    }
+  },
+  "immutability_rule": "After this protocol is created, the Cycle24 holdout may be opened only for evaluation. The three frozen TRAIN-only models, their preprocessing, feature order, and validation-derived thresholds must remain unchanged. Holdout outcomes must not trigger model, threshold, feature, preprocessing, or candidate changes."
+}

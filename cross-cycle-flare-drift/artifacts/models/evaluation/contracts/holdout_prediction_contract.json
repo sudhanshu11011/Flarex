@@ -1,0 +1,140 @@
+{
+  "contract_name": "Cycle24 Holdout Frozen-Model Predictions",
+  "version": "1.0",
+  "status": "FROZEN_HOLDOUT_PREDICTIONS",
+  "created_at_utc": "2026-10-18T13:45:36.573463+00:00",
+  "source_dataset": {
+    "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+    "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc",
+    "rows": 13072,
+    "positive": 527,
+    "negative": 12545,
+    "entity_groups": 176,
+    "entity_group_source_column": "ENTITY_GROUP_ID"
+  },
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "model_count": 3,
+  "models": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+      "frozen_threshold": 0.4548081408379442,
+      "probability_column": "LR_02_C0p01_BALANCED__probability",
+      "prediction_column": "LR_02_C0p01_BALANCED__prediction"
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31",
+      "frozen_threshold": 0.1196946372748545,
+      "probability_column": "RF_04_D12_L5_BALSUB__probability",
+      "prediction_column": "RF_04_D12_L5_BALSUB__prediction"
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+      "frozen_threshold": 0.2638225555419922,
+      "probability_column": "XGB_02_LR0p03_D3_BAL__probability",
+      "prediction_column": "XGB_02_LR0p03_D3_BAL__prediction"
+    }
+  ],
+  "prediction_rule": "probability >= frozen_threshold",
+  "prediction_artifact": {
+    "file": "artifacts\\models\\evaluation\\predictions\\cycle24_holdout_predictions.parquet",
+    "sha256": "dbb864949293b92a8b450d5683e143f18841d5d4837f035298efc114791fd149",
+    "rows": 13072,
+    "columns": 18
+  },
+  "prediction_manifest": {
+    "file": "artifacts\\models\\evaluation\\manifests\\holdout_prediction_manifest.csv",
+    "sha256": "0b0ec8d37f0e4fa60d608b9ad3f9759571f7b150139bddc621357aca5dac2a07"
+  },
+  "preserved_metadata": {
+    "holdout_row_id": true,
+    "ENTITY_GROUP": true,
+    "ENTITY_GROUP_ID": true,
+    "HARPNUM": true,
+    "target": true,
+    "T_REC": true,
+    "observation_time_utc": true,
+    "NOAA_AR": true,
+    "NOAA_ARS": true,
+    "associated_noaa_list": true,
+    "associated_noaa_count": true,
+    "entity_group_source": true
+  },
+  "evaluation_state": {
+    "holdout_opened": true,
+    "probabilities_generated": true,
+    "frozen_thresholds_applied": true,
+    "holdout_metrics_computed": false,
+    "calibration_metrics_computed": false,
+    "bootstrap_confidence_intervals_computed": false,
+    "models_retrained": false,
+    "logistic_scaler_refit": false,
+    "thresholds_reoptimized": false,
+    "family_selection_changed": false
+  },
+  "data_isolation": {
+    "cycle24_holdout_read": true,
+    "cycle25_read": false,
+    "train_used_for_new_fitting": false,
+    "validation_used_for_new_tuning": false
+  },
+  "provenance": {
+    "holdout_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_protocol.json",
+      "sha256": "5331ba6793b8710cbe9f048c7fdb9f5a5c5dd30771659fd85941754cabfbb4de"
+    },
+    "holdout_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\holdout_frozen_model_registry.csv",
+      "sha256": "56d685ebd9c3283dd5971d1edb97137ea46132f4ad16acaf2864d27263f283fc"
+    },
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "logistic_scaler": {
+      "file": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+      "sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5"
+    }
+  },
+  "immutability_rule": "These Cycle24 holdout probability predictions were generated using the already-frozen TRAIN-only models, preprocessing, and validation-derived thresholds. Holdout outcomes must not be used to retrain models, refit preprocessing, alter features, change candidates, or reoptimize thresholds."
+}
