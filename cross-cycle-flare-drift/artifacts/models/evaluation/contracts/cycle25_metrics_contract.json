@@ -1,0 +1,136 @@
+{
+  "contract_name": "Frozen Solar Cycle 25 Point Metrics and Calibration",
+  "version": "1.0",
+  "status": "FROZEN_CYCLE25_POINT_METRICS",
+  "created_at_utc": "2026-10-18T14:10:29.376847+00:00",
+  "chapter": "MODEL_CHAPTER_8_3",
+  "evaluation_scopes": [
+    {
+      "scope_id": "C25_B1_2020_2021",
+      "scope_type": "PRIMARY_TEMPORAL_BLOCK",
+      "rows": 10411,
+      "positive": 133,
+      "negative": 10278,
+      "positive_prevalence": 0.012774949572567477,
+      "entity_groups": 146
+    },
+    {
+      "scope_id": "C25_B2_2022_2023",
+      "scope_type": "PRIMARY_TEMPORAL_BLOCK",
+      "rows": 33132,
+      "positive": 1801,
+      "negative": 31331,
+      "positive_prevalence": 0.054358324278643004,
+      "entity_groups": 414
+    },
+    {
+      "scope_id": "C25_B3_2024_2025",
+      "scope_type": "PRIMARY_TEMPORAL_BLOCK",
+      "rows": 35818,
+      "positive": 2902,
+      "negative": 32916,
+      "positive_prevalence": 0.08102071584119716,
+      "entity_groups": 458
+    },
+    {
+      "scope_id": "C25_ALL_2020_2025",
+      "scope_type": "SECONDARY_POOLED",
+      "rows": 79361,
+      "positive": 4836,
+      "negative": 74525,
+      "positive_prevalence": 0.060936732148032406,
+      "entity_groups": 1011
+    }
+  ],
+  "primary_temporal_blocks": [
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025"
+  ],
+  "secondary_pooled_scope": "C25_ALL_2020_2025",
+  "model_count": 3,
+  "metric_rows": 12,
+  "metric_implementations": {
+    "TSS": "TPR - FPR",
+    "HSS": "2*(TP*TN - FN*FP) / ((TP+FN)*(FN+TN) + (TP+FP)*(FP+TN))",
+    "F1": "2*TP / (2*TP + FP + FN)",
+    "PR_AUC": "sklearn.metrics.average_precision_score",
+    "PR_AUC_note": "Operationally Average Precision; name retained for compatibility with frozen Cycle24 contracts.",
+    "ROC_AUC": "sklearn.metrics.roc_auc_score",
+    "Brier_score": "sklearn.metrics.brier_score_loss"
+  },
+  "threshold_policy": {
+    "source": "CYCLE24_VALIDATION",
+    "prediction_rule": "probability >= frozen_threshold",
+    "reoptimized_on_cycle25": false
+  },
+  "calibration": {
+    "method": "fixed_probability_width",
+    "bin_count": 10,
+    "bin_edges": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "recalibration_performed": false,
+    "diagnostic_only": true
+  },
+  "artifacts": {
+    "cycle25_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cycle25_metrics.csv",
+      "sha256": "097ed307200b299f98c329d9e08083caea1bcfdd28904b989ef4ba61f73638c6",
+      "rows": 12
+    },
+    "cycle25_calibration": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cycle25_calibration.csv",
+      "sha256": "a4ce4994881b6b4c000940bb030edf12a63275d79958803394cb2d68231abd38",
+      "rows": 120
+    }
+  },
+  "evaluation_state": {
+    "point_metrics_computed": true,
+    "calibration_computed": true,
+    "bootstrap_confidence_intervals_computed": false,
+    "cross_cycle_metric_deltas_computed": false,
+    "predictive_drift_classification_computed": false,
+    "models_retrained": false,
+    "preprocessing_refit": false,
+    "thresholds_reoptimized": false,
+    "candidate_replacement": false
+  },
+  "data_access": {
+    "frozen_cycle25_prediction_artifact_read": true,
+    "raw_cycle25_dataset_reread": false,
+    "cycle24_train_read": false,
+    "cycle24_validation_read": false,
+    "cycle24_holdout_raw_read": false
+  },
+  "provenance": {
+    "cycle25_prediction_artifact": {
+      "file": "artifacts\\models\\evaluation\\predictions\\cycle25_predictions.parquet",
+      "sha256": "f597db0fa056b10c0998d1ba0e53a6c602b8aeb59e2b13e7a3fdda5ba4692e10"
+    },
+    "cycle25_prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_prediction_contract.json",
+      "sha256": "96224f45350828c24c3008e8621a6299fd438ba1bd1e047e01e4d631830f9b77"
+    },
+    "cycle25_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_evaluation_protocol.json",
+      "sha256": "11924e30c24b0ed592625c994b2764d900a8bf778d100f2dd8173fb737e6dae7"
+    },
+    "cycle25_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_frozen_model_registry.csv",
+      "sha256": "8e075be703da18a78760c5fe12e5946936e4d8bc7675002bdd727e3319d504ed"
+    }
+  },
+  "interpretation_rule": "These are fixed-pipeline Cycle25 point estimates and calibration diagnostics. Do not infer statistically measurable cross-cycle change from point estimates alone. ENTITY_GROUP bootstrap uncertainty and the predeclared Cycle24-vs-Cycle25 difference analysis must be completed before predictive-drift conclusions.",
+  "immutability_rule": "Cycle25 point results must not trigger model retraining, candidate replacement, feature changes, preprocessing refitting, threshold optimization, temporal-block changes, or probability recalibration."
+}

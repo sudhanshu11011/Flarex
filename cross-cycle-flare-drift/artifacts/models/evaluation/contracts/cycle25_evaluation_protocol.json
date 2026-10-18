@@ -1,0 +1,345 @@
+{
+  "contract_name": "Frozen Solar Cycle 25 Predictive Evaluation Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_CYCLE25_EVALUATION",
+  "created_at_utc": "2026-10-18T14:03:45.122432+00:00",
+  "chapter": "MODEL_CHAPTER_8",
+  "scientific_role": "Temporal/domain-transfer evaluation of the exact models frozen after Cycle24 development. Cycle25 is evaluation-only and is not used for adaptation.",
+  "cycle25_dataset": {
+    "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+    "expected_sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d",
+    "expected_rows": 79361,
+    "expected_positive": 4836,
+    "expected_negative": 74525,
+    "start_utc": "2020-01-01T00:00:00+00:00",
+    "end_exclusive_utc": "2026-01-01T00:00:00+00:00",
+    "time_assignment_column": "observation_time_utc",
+    "entity_group_source_column": "ENTITY_GROUP_ID",
+    "evaluation_only": true,
+    "domain_language": "Cycle25 is treated as a temporal/domain shift evaluation regime. It is not automatically labelled out-of-distribution."
+  },
+  "feature_contract": {
+    "feature_count": 25,
+    "feature_order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "changes_allowed": false
+  },
+  "model_count": 3,
+  "cross_family_winner_declared": false,
+  "models": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_file": "artifacts\\models\\logistic\\models\\LR_02_C0p01_BALANCED.joblib",
+      "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+      "frozen_threshold": 0.4548081408379442,
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "threshold_source": "CYCLE24_VALIDATION"
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_file": "artifacts\\models\\random_forest\\models\\RF_04_D12_L5_BALSUB.joblib",
+      "model_sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31",
+      "frozen_threshold": 0.1196946372748545,
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "threshold_source": "CYCLE24_VALIDATION"
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_file": "artifacts\\models\\xgboost\\models\\XGB_02_LR0p03_D3_BAL.joblib",
+      "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+      "frozen_threshold": 0.2638225555419922,
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "threshold_source": "CYCLE24_VALIDATION"
+    }
+  ],
+  "temporal_evaluation": {
+    "assignment_rule": "Assign rows using observation_time_utc with start-inclusive and end-exclusive intervals.",
+    "primary_block_count": 3,
+    "primary_blocks": [
+      {
+        "block_id": "C25_B1_2020_2021",
+        "start_utc": "2020-01-01T00:00:00+00:00",
+        "end_exclusive_utc": "2022-01-01T00:00:00+00:00",
+        "primary_block": true,
+        "pooled_summary": false,
+        "bootstrap_seed": 25025
+      },
+      {
+        "block_id": "C25_B2_2022_2023",
+        "start_utc": "2022-01-01T00:00:00+00:00",
+        "end_exclusive_utc": "2024-01-01T00:00:00+00:00",
+        "primary_block": true,
+        "pooled_summary": false,
+        "bootstrap_seed": 25026
+      },
+      {
+        "block_id": "C25_B3_2024_2025",
+        "start_utc": "2024-01-01T00:00:00+00:00",
+        "end_exclusive_utc": "2026-01-01T00:00:00+00:00",
+        "primary_block": true,
+        "pooled_summary": false,
+        "bootstrap_seed": 25027
+      }
+    ],
+    "pooled_secondary_summary": {
+      "block_id": "C25_ALL_2020_2025",
+      "start_utc": "2020-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-01-01T00:00:00+00:00",
+      "primary_block": false,
+      "pooled_summary": true,
+      "bootstrap_seed": 25028
+    },
+    "primary_inference": "Temporal-block results are the primary representation of Cycle25 transfer behavior.",
+    "pooled_role": "The complete 2020-2025 pool is a secondary overall-transfer summary and must not replace temporal-block reporting.",
+    "block_boundaries_selected_before_outcomes": true,
+    "block_design_basis": "Three equal-duration two-year calendar windows spanning the frozen 2020-2025 Cycle25 analysis window. Boundaries are fixed before Cycle25 predictions or metrics are examined."
+  },
+  "prediction_rule": "For each model, classify positive when predicted probability is greater than or equal to that model's frozen Cycle24-validation-derived threshold.",
+  "metric_definitions": {
+    "TSS": "TPR - FPR",
+    "HSS": "2*(TP*TN - FN*FP) / ((TP+FN)*(FN+TN) + (TP+FP)*(FP+TN))",
+    "F1": "2*TP / (2*TP + FP + FN)",
+    "sensitivity": "TP / (TP + FN)",
+    "specificity": "TN / (TN + FP)",
+    "precision": "TP / (TP + FP)",
+    "PR_AUC": "sklearn.metrics.average_precision_score",
+    "PR_AUC_operational_name": "Average Precision; preserved for consistency with frozen Cycle24 evaluation.",
+    "ROC_AUC": "sklearn.metrics.roc_auc_score",
+    "Brier_score": "sklearn.metrics.brier_score_loss"
+  },
+  "primary_predictive_metric": "TSS",
+  "complementary_metrics": [
+    "HSS",
+    "F1",
+    "sensitivity",
+    "specificity",
+    "precision",
+    "PR_AUC",
+    "ROC_AUC",
+    "Brier_score"
+  ],
+  "calibration": {
+    "brier_score": true,
+    "reliability_table": true,
+    "binning": "fixed_probability_width",
+    "bin_edges": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "same_as_cycle24": true,
+    "recalibration_allowed": false,
+    "diagnostic_only": true
+  },
+  "bootstrap": {
+    "enabled": true,
+    "unit": "ENTITY_GROUP",
+    "source_column": "ENTITY_GROUP_ID",
+    "method": "Within each temporal block and within the pooled Cycle25 summary, sample all available ENTITY_GROUP clusters with replacement. Every row belonging to a sampled group is included once per draw of that group.",
+    "valid_replicates_per_evaluation": 2000,
+    "confidence_level": 0.95,
+    "ci_method": "percentile",
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "invalid_replicate_rule": "A replicate lacking either target class is invalid and must be redrawn until exactly 2000 valid replicates are obtained.",
+    "block_specific_seeds": {
+      "C25_B1_2020_2021": 25025,
+      "C25_B2_2022_2023": 25026,
+      "C25_B3_2024_2025": 25027,
+      "C25_ALL_2020_2025": 25028
+    },
+    "metrics": [
+      "TSS",
+      "HSS",
+      "F1",
+      "sensitivity",
+      "specificity",
+      "precision",
+      "PR_AUC",
+      "ROC_AUC",
+      "Brier_score"
+    ],
+    "models_frozen": true,
+    "thresholds_frozen": true
+  },
+  "cross_cycle_comparison": {
+    "reference": "CYCLE24_HOLDOUT",
+    "comparison_direction": "delta = Cycle25 metric - Cycle24 holdout metric",
+    "primary_delta_metric": "TSS",
+    "cycle24_baseline_source": "artifacts\\models\\evaluation\\manifests\\frozen_holdout_results.csv",
+    "difference_uncertainty": {
+      "method": "Combine independently generated Cycle24 and Cycle25 ENTITY_GROUP bootstrap replicates by matching replicate_id. Cycle24 uses its already-frozen bootstrap; Cycle25 uses distinct predeclared seeds.",
+      "replicates": 2000,
+      "ci_method": "percentile",
+      "confidence_level": 0.95
+    },
+    "descriptive_tss_change_labels": {
+      "measurable_decrease": "95% bootstrap delta-TSS CI lies entirely below zero.",
+      "measurable_increase": "95% bootstrap delta-TSS CI lies entirely above zero.",
+      "no_measurable_change_at_95ci": "95% bootstrap delta-TSS CI contains zero."
+    },
+    "important_interpretation_rule": "A delta CI containing zero is not proof of equivalence or stability. Report it only as no measurable difference at the stated uncertainty level unless a separate equivalence criterion is predeclared.",
+    "marginal_ci_overlap_not_used_as_difference_test": true,
+    "cross_family_superiority_test": false
+  },
+  "cycle24_baseline": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "threshold": 0.4548081408379442,
+      "TSS": 0.719027440493162,
+      "TSS_CI95": [
+        0.5773922909084052,
+        0.8221484574101067
+      ],
+      "PR_AUC": 0.5219494404032338,
+      "ROC_AUC": 0.9343790816060288,
+      "Brier_score": 0.075016912215921
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "threshold": 0.1196946372748545,
+      "TSS": 0.7095955887079757,
+      "TSS_CI95": [
+        0.5863198574468085,
+        0.7935052092852312
+      ],
+      "PR_AUC": 0.3562469161446527,
+      "ROC_AUC": 0.9275071223670688,
+      "Brier_score": 0.0368150441882017
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "threshold": 0.2638225555419922,
+      "TSS": 0.7009902113302926,
+      "TSS_CI95": [
+        0.5776361643800711,
+        0.7841073309536799
+      ],
+      "PR_AUC": 0.517488792235293,
+      "ROC_AUC": 0.9345271633126436,
+      "Brier_score": 0.0655653717399754
+    }
+  ],
+  "strict_prohibitions": [
+    "retrain_model_on_cycle25",
+    "fine_tune_model_on_cycle25",
+    "replace_selected_candidate",
+    "modify_hyperparameters",
+    "change_feature_set",
+    "change_feature_order",
+    "fit_preprocessing_on_cycle25",
+    "refit_logistic_scaler_on_cycle25",
+    "reoptimize_threshold_on_cycle25",
+    "calibrate_probabilities_using_cycle25",
+    "change_temporal_blocks_after_viewing_results",
+    "drop_difficult_cycle25_blocks_based_on_performance",
+    "select_overall_model_using_cycle25"
+  ],
+  "later_analysis_boundary": {
+    "distribution_shift_audit": "LATER_CHAPTER",
+    "shap_null_baseline": "LATER_CHAPTER",
+    "cross_cycle_shap_drift": "LATER_CHAPTER",
+    "cycle25_predictive_results_do_not_define_shap_outcome": true
+  },
+  "data_isolation_at_protocol_freeze": {
+    "cycle25_dataset_file_existence_checked": true,
+    "cycle25_dataset_content_read": false,
+    "cycle25_hash_recomputed": false,
+    "cycle25_rows_inspected": false,
+    "cycle25_labels_inspected": false,
+    "cycle25_temporal_block_counts_seen": false,
+    "cycle25_predictions_generated": false,
+    "cycle25_metrics_computed": false,
+    "model_retraining": false,
+    "preprocessing_refit": false,
+    "threshold_reoptimization": false
+  },
+  "artifacts": {
+    "cycle25_frozen_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_frozen_model_registry.csv",
+      "sha256": "8e075be703da18a78760c5fe12e5946936e4d8bc7675002bdd727e3319d504ed"
+    },
+    "cycle25_temporal_blocks": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_temporal_blocks.csv",
+      "sha256": "7e3b06470c96a02a44abac3117e46a1e6b4f3d57e18e5716733de2db7b205bbf"
+    }
+  },
+  "provenance": {
+    "cycle24_holdout_results_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_results_contract.json",
+      "sha256": "1622a51eab230d06376b6a1d18863bb7e23372d073866c13fc9a22609b614add"
+    },
+    "cycle24_holdout_results_manifest": {
+      "file": "artifacts\\models\\evaluation\\manifests\\frozen_holdout_results.csv",
+      "sha256": "4d4d7d1ab938c1d7f83d9c7ba8ec77a780013626817a4546064cdcf7766dfd95"
+    },
+    "cycle24_holdout_audit_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_audit.json",
+      "sha256": "b951ed9ab608e4e36794dd6a0ee4de93ee7055a2e2e5bc3d70bf2115621b87cb"
+    },
+    "cycle24_bootstrap_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_bootstrap_contract.json",
+      "sha256": "cb5c47ec8cfdbc914db12333ebefbbc238abb1f7ce2fda2d5c917c00a8c6e21f"
+    },
+    "selected_models_contract": {
+      "file": "artifacts\\models\\selection\\contracts\\selected_models_contract.json",
+      "sha256": "2eea4b1f8f35d3a4a83dfecd5e74dea95aa3cdc6b79d700682f8446a6a8b6f30"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "temporal_data_contract": {
+      "file": "data_manifests\\temporal_data_contract.json",
+      "sha256": "694ebb3e4b583a9934df5cf21214802a8f3796ea661d44900f8fa4676cc2bccb"
+    },
+    "logistic_scaler": {
+      "file": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+      "sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5"
+    }
+  },
+  "immutability_rule": "After this Cycle25 evaluation protocol is created, the Cycle25 dataset may be opened only for frozen-pipeline evaluation. The three Cycle24 TRAIN-only models, 25-feature contract, preprocessing, validation-derived thresholds, temporal-block boundaries, metric definitions, calibration design, bootstrap design, and cross-cycle comparison rules must remain unchanged regardless of Cycle25 outcomes."
+}

@@ -1,0 +1,144 @@
+{
+  "contract_name": "Frozen Cycle25 ENTITY_GROUP Bootstrap Confidence Intervals",
+  "version": "1.0",
+  "status": "FROZEN_CYCLE25_BOOTSTRAP_CI",
+  "created_at_utc": "2026-10-18T14:23:32.987564+00:00",
+  "chapter": "MODEL_CHAPTER_8_4",
+  "scopes": [
+    {
+      "scope_id": "C25_B1_2020_2021",
+      "rows": 10411,
+      "entity_groups": 146,
+      "seed": 25025,
+      "valid_replicates": 2000,
+      "invalid_replicates_redrawn": 0,
+      "total_attempts": 2000
+    },
+    {
+      "scope_id": "C25_B2_2022_2023",
+      "rows": 33132,
+      "entity_groups": 414,
+      "seed": 25026,
+      "valid_replicates": 2000,
+      "invalid_replicates_redrawn": 0,
+      "total_attempts": 2000
+    },
+    {
+      "scope_id": "C25_B3_2024_2025",
+      "rows": 35818,
+      "entity_groups": 458,
+      "seed": 25027,
+      "valid_replicates": 2000,
+      "invalid_replicates_redrawn": 0,
+      "total_attempts": 2000
+    },
+    {
+      "scope_id": "C25_ALL_2020_2025",
+      "rows": 79361,
+      "entity_groups": 1011,
+      "seed": 25028,
+      "valid_replicates": 2000,
+      "invalid_replicates_redrawn": 0,
+      "total_attempts": 2000
+    }
+  ],
+  "bootstrap_design": {
+    "unit": "ENTITY_GROUP",
+    "sampling": "with_replacement",
+    "group_draw_rule": "Within each evaluation scope, draw exactly G ENTITY_GROUP clusters with replacement, where G is the number of distinct groups present in that scope.",
+    "row_replication_implementation": "Integer sample weights equal to ENTITY_GROUP draw multiplicities; mathematically equivalent to duplicating every row of each sampled group once per draw.",
+    "paired_draws_across_models": true,
+    "valid_replicates_per_scope": 2000,
+    "invalid_replicates": "Redrawn when either target class has zero bootstrap weight.",
+    "scope_specific_seeds": {
+      "C25_B1_2020_2021": 25025,
+      "C25_B2_2022_2023": 25026,
+      "C25_B3_2024_2025": 25027,
+      "C25_ALL_2020_2025": 25028
+    }
+  },
+  "confidence_interval": {
+    "method": "percentile",
+    "confidence_level": 0.95,
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "numpy_quantile_method": "linear"
+  },
+  "metrics": [
+    "tss",
+    "hss",
+    "f1",
+    "sensitivity",
+    "specificity",
+    "precision",
+    "pr_auc",
+    "roc_auc",
+    "brier_score"
+  ],
+  "threshold_policy": {
+    "source": "CYCLE24_VALIDATION",
+    "unchanged": true,
+    "reoptimized_during_bootstrap": false
+  },
+  "model_policy": {
+    "frozen_models": true,
+    "retraining": false,
+    "candidate_replacement": false,
+    "preprocessing_refit": false
+  },
+  "artifacts": {
+    "bootstrap_replicates": {
+      "file": "artifacts\\models\\evaluation\\bootstrap\\cycle25_group_bootstrap_replicates.parquet",
+      "sha256": "75c485f8d238befb6f1188b2f0444b1938f0815539ce0ef7a6d704faef78fb1b",
+      "rows": 24000
+    },
+    "bootstrap_ci_summary": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cycle25_bootstrap_ci.csv",
+      "sha256": "6965c5a843892e8794ecb5f2664487979a6097665bfc58a2125be8c694a8aa9e",
+      "rows": 108
+    }
+  },
+  "evaluation_state": {
+    "cycle25_point_metrics_frozen": true,
+    "cycle25_bootstrap_ci_computed": true,
+    "cross_cycle_delta_computed": false,
+    "predictive_drift_classification_computed": false,
+    "new_model_fitting": false,
+    "threshold_tuning": false,
+    "preprocessing_refit": false
+  },
+  "data_access": {
+    "frozen_cycle25_predictions_read": true,
+    "raw_cycle25_dataset_reread": false,
+    "cycle24_train_read": false,
+    "cycle24_validation_read": false,
+    "cycle24_holdout_raw_read": false
+  },
+  "provenance": {
+    "cycle25_prediction_artifact": {
+      "file": "artifacts\\models\\evaluation\\predictions\\cycle25_predictions.parquet",
+      "sha256": "f597db0fa056b10c0998d1ba0e53a6c602b8aeb59e2b13e7a3fdda5ba4692e10"
+    },
+    "cycle25_prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_prediction_contract.json",
+      "sha256": "96224f45350828c24c3008e8621a6299fd438ba1bd1e047e01e4d631830f9b77"
+    },
+    "cycle25_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_evaluation_protocol.json",
+      "sha256": "11924e30c24b0ed592625c994b2764d900a8bf778d100f2dd8173fb737e6dae7"
+    },
+    "cycle25_point_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cycle25_metrics.csv",
+      "sha256": "097ed307200b299f98c329d9e08083caea1bcfdd28904b989ef4ba61f73638c6"
+    },
+    "cycle25_point_metrics_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_metrics_contract.json",
+      "sha256": "65172884b2ef58cc7238ea3fb389c8402ef47da4c31e44530d6ae8bed7176934"
+    },
+    "cycle25_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_frozen_model_registry.csv",
+      "sha256": "8e075be703da18a78760c5fe12e5946936e4d8bc7675002bdd727e3319d504ed"
+    }
+  },
+  "interpretation_rule": "Cycle25 confidence intervals quantify sampling uncertainty under connected ENTITY_GROUP resampling. Cross-cycle predictive drift must not be classified from marginal Cycle24 and Cycle25 CIs alone; the frozen difference-bootstrap analysis is performed in Chapter 8.5."
+}
