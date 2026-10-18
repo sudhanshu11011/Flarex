@@ -1,0 +1,124 @@
+{
+  "contract_name": "Frozen Model Preprocessing Contract",
+  "version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T10:20:45.643402+00:00",
+  "source_split_version": "1.0",
+  "feature_contract_version": "1.0",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "logistic_regression": {
+    "preprocessor": "StandardScaler",
+    "artifact": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+    "artifact_sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5",
+    "fit_scope": "CYCLE24_TRAIN_ONLY",
+    "fit_rows": 62064,
+    "with_mean": true,
+    "with_std": true,
+    "validation_operation": "TRANSFORM_ONLY",
+    "holdout_operation": "TRANSFORM_ONLY_AFTER_MODEL_DEVELOPMENT_FREEZE",
+    "cycle25_operation": "TRANSFORM_ONLY_AFTER_FULL_CYCLE24_PIPELINE_FREEZE",
+    "refit_allowed": false,
+    "feature_order_locked": true
+  },
+  "random_forest": {
+    "preprocessor": "IDENTITY",
+    "scaling": false,
+    "feature_order_locked": true
+  },
+  "xgboost": {
+    "preprocessor": "IDENTITY",
+    "scaling": false,
+    "feature_order_locked": true
+  },
+  "global_rules": {
+    "imputation": false,
+    "pca": false,
+    "feature_selection": false,
+    "outlier_clipping": false,
+    "winsorization": false,
+    "log_transform": false,
+    "polynomial_features": false,
+    "interaction_feature_engineering": false,
+    "preserve_original_feature_identity": true
+  },
+  "data_isolation": {
+    "train_used_for_fit": true,
+    "validation_used_for_fit": false,
+    "validation_transform_verified": true,
+    "holdout_used": false,
+    "cycle25_used": false
+  },
+  "immutability_rule": "The preprocessing design, feature order, and Logistic Regression StandardScaler parameters are frozen. They must not be changed or refitted in response to validation, holdout, or Cycle25 model performance. Any scientifically necessary change requires a new preprocessing contract version and explicit justification.",
+  "software": {
+    "scikit_learn_version": "1.9.1"
+  },
+  "provenance": {
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_design": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_design.json",
+      "sha256": "3afa1acf0d5b5a69f2ca2776a9e6e3d11cbfd09a9bd31ba445fafa0285d47ebe"
+    },
+    "cycle24_split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "logistic_standard_scaler": {
+      "file": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+      "sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5"
+    },
+    "train_feature_distribution": {
+      "file": "artifacts\\preprocessing\\manifests\\model_ch2_train_feature_distribution.csv",
+      "sha256": "5dfb595aa5df66482a06938e370b0c5e38b83bd9342a0d642531c05fa0438c29"
+    },
+    "train_distribution_summary": {
+      "file": "artifacts\\preprocessing\\manifests\\model_ch2_train_distribution_summary.csv",
+      "sha256": "6e64caae4c158bb7113c3504ddeed6aae0ce700f39e43f06ad7d0c9a04674328"
+    },
+    "logistic_scaler_parameters": {
+      "file": "artifacts\\preprocessing\\manifests\\model_ch2_logistic_scaler_parameters.csv",
+      "sha256": "c937053ccc4cf4c12aaa0aac702ca29204e532b80da44073552b7c0d7d7a16c8"
+    },
+    "logistic_scaler_fit_summary": {
+      "file": "artifacts\\preprocessing\\manifests\\model_ch2_logistic_scaler_fit_summary.csv",
+      "sha256": "55aa0671b61cfc28b108cf37766ba037f2bf157357f9aa1ce8e3c20a81a1c67d"
+    },
+    "validation_feature_stats": {
+      "file": "artifacts\\preprocessing\\manifests\\model_ch2_validation_feature_stats.csv",
+      "sha256": "4b0773374fd607f9614ca2ef1890f1bf40d232b19fd99e2cd08ae05b645a850e"
+    },
+    "validation_transform_audit": {
+      "file": "artifacts\\preprocessing\\manifests\\model_ch2_validation_transform_audit.csv",
+      "sha256": "30b53a4acfe24f568cd2d3e3076fccf7a3f63d39bdf678c4fab75c2f0e5dfd8f"
+    }
+  }
+}

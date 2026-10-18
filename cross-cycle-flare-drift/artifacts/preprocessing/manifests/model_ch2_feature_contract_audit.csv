@@ -1,0 +1,4 @@
+split,rows,feature_count,missing_features,missing_values,nonfinite_values,nonfinite_rows,constant_features,target_present,target_in_feature_list,feature_contract_pass
+TRAIN,62064,25,0,0,0,0,0,True,False,True
+VALIDATION,13299,25,0,0,0,0,0,True,False,True
+HOLDOUT,13072,25,0,0,0,0,0,True,False,True

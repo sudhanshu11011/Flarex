@@ -1,0 +1,2 @@
+train_rows,feature_count,near_constant_features,high_skew_features_abs_ge_2,features_with_iqr_outlier_pct_ge_10,smallest_feature_std,largest_feature_std,std_scale_ratio,smallest_nonzero_max_abs,largest_max_abs,magnitude_scale_ratio,numerical_integrity_pass,standard_scaler_supported_for_lr,imputation_required,clipping_applied,log_transform_applied,validation_used,holdout_used,cycle25_used
+62064,25,0,10,4,0.007390498760839247,2.8147676376974412e+23,3.8086301463337273e+25,0.17685866,3.33489e+24,1.885624373723062e+25,True,True,False,False,False,False,False,False
