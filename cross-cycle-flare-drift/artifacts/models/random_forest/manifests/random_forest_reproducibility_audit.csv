@@ -1,0 +1,13 @@
+candidate_id,saved_tree_count,fresh_tree_count,tree_count_match,classes_match,feature_importance_max_abs_diff,feature_importance_match,node_count_match,child_structure_match,split_feature_match,threshold_max_abs_diff,threshold_match,tree_structure_match,depth_vector_match,leaf_vector_match,probability_max_abs_diff,probability_match,fresh_warning_count,reproducibility_pass
+RF_01_D12_L1_NONE,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,2.220446049250313e-16,True,0,True
+RF_02_D12_L1_BALSUB,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,3.3306690738754696e-16,True,0,True
+RF_03_D12_L5_NONE,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,2.220446049250313e-16,True,0,True
+RF_04_D12_L5_BALSUB,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,3.3306690738754696e-16,True,0,True
+RF_05_D24_L1_NONE,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,1.1102230246251565e-16,True,0,True
+RF_06_D24_L1_BALSUB,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,3.3306690738754696e-16,True,0,True
+RF_07_D24_L5_NONE,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,2.220446049250313e-16,True,0,True
+RF_08_D24_L5_BALSUB,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,3.3306690738754696e-16,True,0,True
+RF_09_DNONE_L1_NONE,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,0.0,True,0,True
+RF_10_DNONE_L1_BALSUB,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,0.0,True,0,True
+RF_11_DNONE_L5_NONE,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,3.3306690738754696e-16,True,0,True
+RF_12_DNONE_L5_BALSUB,500,500,True,True,0.0,True,True,True,True,0.0,True,True,True,True,3.3306690738754696e-16,True,0,True

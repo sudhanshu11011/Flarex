@@ -1,0 +1,81 @@
+{
+  "contract_name": "Independent Cycle24 Holdout Evaluation Audit",
+  "version": "1.0",
+  "status": "PASS",
+  "created_at_utc": "2026-10-18T13:52:48.538508+00:00",
+  "scope": {
+    "point_metric_recomputation": true,
+    "threshold_application_verification": true,
+    "confusion_matrix_verification": true,
+    "bootstrap_structure_verification": true,
+    "bootstrap_ci_recomputation": true,
+    "new_bootstrap_sampling": false,
+    "raw_holdout_dataset_read": false,
+    "model_files_loaded": false,
+    "model_retraining": false,
+    "threshold_reoptimization": false,
+    "cycle25_read": false
+  },
+  "population_verified": {
+    "rows": 13072,
+    "positive": 527,
+    "negative": 12545,
+    "entity_groups": 176
+  },
+  "models_audited": 3,
+  "models_passing": 3,
+  "bootstrap_verified": {
+    "unit": "ENTITY_GROUP",
+    "valid_replicates": 2000,
+    "rows": 6000,
+    "groups_drawn_per_replicate": 176,
+    "paired_draws_across_models": true,
+    "seed": 24025,
+    "ci_rows_verified": 27,
+    "expected_ci_rows": 27
+  },
+  "overall_holdout_evaluation_audit_pass": true,
+  "audit_manifest": {
+    "file": "artifacts\\models\\evaluation\\manifests\\holdout_evaluation_audit.csv",
+    "sha256": "f73fa3e16985fb1f79d5f98e9b21c901a8b36e7354321d8946bd48d8a47a2399"
+  },
+  "provenance": {
+    "holdout_prediction_artifact": {
+      "file": "artifacts\\models\\evaluation\\predictions\\cycle24_holdout_predictions.parquet",
+      "sha256": "dbb864949293b92a8b450d5683e143f18841d5d4837f035298efc114791fd149"
+    },
+    "holdout_prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_prediction_contract.json",
+      "sha256": "e15e6c863689ef93abf0931c385a45faa0dd8067f7a23c061b4cb1d594d3eecc"
+    },
+    "holdout_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_protocol.json",
+      "sha256": "5331ba6793b8710cbe9f048c7fdb9f5a5c5dd30771659fd85941754cabfbb4de"
+    },
+    "point_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_metrics.csv",
+      "sha256": "63076cf6b2d2a43e801da473469b5b683081353d387679649dba17e5014ade5b"
+    },
+    "point_metrics_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_metrics_contract.json",
+      "sha256": "e6ef9cd4509e278b305699c3cccea3b7a3a54e9eece150682a396ffe46a414cc"
+    },
+    "bootstrap_replicates": {
+      "file": "artifacts\\models\\evaluation\\bootstrap\\holdout_group_bootstrap_replicates.parquet",
+      "sha256": "00e91e02d7d23acd7d4029cad5863ccf4a2e2fb50655637ed2ac8af0671d69f2"
+    },
+    "bootstrap_ci": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_bootstrap_ci.csv",
+      "sha256": "dc1f06a635ce4dc9883e033d68a4778ec666099d74e244a0a67288e3cb684a99"
+    },
+    "bootstrap_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_bootstrap_contract.json",
+      "sha256": "cb5c47ec8cfdbc914db12333ebefbbc238abb1f7ce2fda2d5c917c00a8c6e21f"
+    },
+    "frozen_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\holdout_frozen_model_registry.csv",
+      "sha256": "56d685ebd9c3283dd5971d1edb97137ea46132f4ad16acaf2864d27263f283fc"
+    }
+  },
+  "interpretation": "The independent audit verifies that the reported Cycle24 holdout point estimates are exactly reproducible from the frozen prediction artifact and frozen thresholds, and that the reported confidence intervals are reproducible from the saved connected-ENTITY_GROUP bootstrap replicates. No model fitting, threshold optimization, new bootstrap sampling, or Cycle25 access is performed."
+}

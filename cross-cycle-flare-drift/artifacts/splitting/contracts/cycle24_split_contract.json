@@ -1,0 +1,113 @@
+{
+  "contract_name": "Cycle24 Model Development Split",
+  "split_version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T10:05:21.391688+00:00",
+  "source_dataset": {
+    "dataset_version": "2.0",
+    "file": "data\\final\\dataset_v2\\cycle24_dataset_v2.parquet",
+    "rows": 88435,
+    "positive": 3462,
+    "negative": 84973,
+    "entity_groups": 1174,
+    "file_sha256": "72cc81f687f99608bfc751e584306c77c540051c028e04e7bd5482cd9b66387e",
+    "schema_sha256": "fc9f3816539c3d3142ebf82e6949ea40a3ae2a4f550a5eefda78b7782ff8b44f"
+  },
+  "split_design": {
+    "unit": "ENTITY_GROUP_ID",
+    "target_ratios": {
+      "TRAIN": 0.7,
+      "VALIDATION": 0.15,
+      "HOLDOUT": 0.15
+    },
+    "method": "Deterministic candidate search over ENTITY_GROUP_ID-level assignments using Cycle24 row count, target count, positive-group count, year-wise rows, and year-wise positive balance.",
+    "base_seed": 24025,
+    "candidate_count": 10000,
+    "selected_seed": 26311,
+    "selected_score": 0.2938984311921008,
+    "cycle25_used": false,
+    "feature_values_used": false,
+    "model_performance_used": false
+  },
+  "train": {
+    "file": "artifacts\\splitting\\data\\cycle24_train.parquet",
+    "rows": 62064,
+    "positive": 2420,
+    "negative": 59644,
+    "entity_groups": 822,
+    "sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def"
+  },
+  "validation": {
+    "file": "artifacts\\splitting\\data\\cycle24_validation.parquet",
+    "rows": 13299,
+    "positive": 515,
+    "negative": 12784,
+    "entity_groups": 176,
+    "sha256": "2122966dc83fbc658e04eb9363ce4064036109b3f7de3cab6637251ac18b17db"
+  },
+  "holdout": {
+    "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+    "rows": 13072,
+    "positive": 527,
+    "negative": 12545,
+    "entity_groups": 176,
+    "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc"
+  },
+  "integrity": {
+    "entity_group_overlap": 0,
+    "harp_overlap": 0,
+    "sample_key_overlap": 0,
+    "exact_source_partition": true,
+    "chapter_1_3_audit_pass": true,
+    "chapter_1_4_materialization_pass": true
+  },
+  "usage_rules": {
+    "train": "May be used to fit preprocessing and model parameters.",
+    "validation": "May be used for hyperparameter selection, model selection, and decision-threshold selection.",
+    "holdout": "Must remain untouched until the complete Cycle24 development pipeline is frozen.",
+    "cycle25": "Must remain untouched for model development and may only be used after the full model pipeline is frozen."
+  },
+  "immutability_rule": "This split is frozen. Train, validation, and holdout memberships must not be modified in response to model performance. Any scientifically necessary split change requires a new split version and explicit justification.",
+  "provenance": {
+    "cycle24_dataset_v2": {
+      "file": "data\\final\\dataset_v2\\cycle24_dataset_v2.parquet",
+      "sha256": "72cc81f687f99608bfc751e584306c77c540051c028e04e7bd5482cd9b66387e"
+    },
+    "dataset_v2_contract": {
+      "file": "data_manifests\\dataset_v2_contract.json",
+      "sha256": "4ddac968e73014641c9d4599ad7f8059eb165d7ca7c716ecc0ef13244872ecb8"
+    },
+    "pre_model_gate": {
+      "file": "data_manifests\\pre_model_gate.json",
+      "sha256": "8fa878cdb06cbc60c974294923ed137b90e2239752a18c86de7b3d78f063f9b3"
+    },
+    "split_assignments": {
+      "file": "data_manifests\\model_ch1_split_assignments.csv",
+      "sha256": "d280a3582c918be4cebdd502531e5ef324a86ef64b8ab0ade3902aafad87a347"
+    },
+    "split_search_summary": {
+      "file": "data_manifests\\model_ch1_split_search_summary.csv",
+      "sha256": "4ceae36fc222e59a16428844249cb6bb830468bd802a4c98e724332df09ad125"
+    },
+    "split_assignment_summary": {
+      "file": "data_manifests\\model_ch1_split_assignment_summary.csv",
+      "sha256": "bebc8c8a5e00cbde6c4dd614f2732e59961c01460bd1c06cfb1cd1038b25c803"
+    },
+    "split_audit_summary": {
+      "file": "artifacts\\splitting\\manifests\\model_ch1_split_audit_summary.csv",
+      "sha256": "3da9a0e584b290cabd62a61cbf691c69d7e90533b5b8b10e2436671a317f87b4"
+    },
+    "split_year_balance": {
+      "file": "artifacts\\splitting\\manifests\\model_ch1_split_year_balance.csv",
+      "sha256": "edca84284442b7b9a014cba6f28732cf91e3ee5b9024a7e2885d549f403ff41d"
+    },
+    "split_overlap_audit": {
+      "file": "artifacts\\splitting\\manifests\\model_ch1_split_overlap_audit.csv",
+      "sha256": "1d7ccf1071a434034d1593385202e20c013c45dc0486b0c273a5d94d4c2d1779"
+    },
+    "materialization_summary": {
+      "file": "artifacts\\splitting\\manifests\\model_ch1_materialization_summary.csv",
+      "sha256": "9e005226eaa8c84805048cb46cd84f48b253ae71e3975677e457d83ea1afbea7"
+    }
+  }
+}

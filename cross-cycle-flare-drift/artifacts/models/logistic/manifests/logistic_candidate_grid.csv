@@ -1,0 +1,11 @@
+candidate_id,C,class_weight,penalty,solver,fit_intercept,max_iter,tol,random_state,train_allowed,validation_used_in_chapter3,holdout_used,cycle25_used
+LR_01_C0p01_NONE,0.01,None,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_02_C0p01_BALANCED,0.01,balanced,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_03_C0p1_NONE,0.1,None,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_04_C0p1_BALANCED,0.1,balanced,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_05_C1p0_NONE,1.0,None,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_06_C1p0_BALANCED,1.0,balanced,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_07_C10p0_NONE,10.0,None,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_08_C10p0_BALANCED,10.0,balanced,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_09_C100p0_NONE,100.0,None,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False
+LR_10_C100p0_BALANCED,100.0,balanced,l2,lbfgs,True,5000,1e-06,24025,True,False,False,False

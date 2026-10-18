@@ -1,0 +1,2 @@
+candidates_checked,candidates_reproducible,boosted_round_match_count,exact_tree_dump_match_count,feature_importance_match_count,probability_match_count,max_feature_importance_abs_difference,feature_importance_atol,max_probability_abs_difference,probability_atol,fresh_warning_count,xgboost_version,validation_used,holdout_used,cycle25_used,model_selection_performed,threshold_selection_performed,fresh_models_saved,reproducibility_pass
+12,12,12,12,12,12,0.0,1e-12,0.0,1e-12,0,3.4.1,False,False,False,False,False,False,True

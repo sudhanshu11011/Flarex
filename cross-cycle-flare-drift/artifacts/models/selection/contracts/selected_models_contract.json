@@ -1,0 +1,128 @@
+{
+  "contract_name": "Frozen Selected Models and Thresholds",
+  "version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T13:33:05.911503+00:00",
+  "development_stage": "MODEL_SELECTION_COMPLETE",
+  "selected_model_count": 3,
+  "cross_family_winner_selected": false,
+  "selection_dataset": "CYCLE24_VALIDATION",
+  "selection_metric": "TSS",
+  "selected_models": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_file": "artifacts\\models\\logistic\\models\\LR_02_C0p01_BALANCED.joblib",
+      "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+      "selected_threshold": 0.4548081408379442,
+      "validation_tss": 0.7974450769772896,
+      "validation_pr_auc": 0.48918833402485
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_file": "artifacts\\models\\random_forest\\models\\RF_04_D12_L5_BALSUB.joblib",
+      "model_sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31",
+      "selected_threshold": 0.1196946372748545,
+      "validation_tss": 0.7811423867212657,
+      "validation_pr_auc": 0.4005495306655952
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_file": "artifacts\\models\\xgboost\\models\\XGB_02_LR0p03_D3_BAL.joblib",
+      "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+      "selected_threshold": 0.2638225555419922,
+      "validation_tss": 0.7772265392420137,
+      "validation_pr_auc": 0.4129415263717138
+    }
+  ],
+  "model_policy": {
+    "training_scope": "CYCLE24_TRAIN_ONLY",
+    "retrain_on_train_plus_validation": false,
+    "retraining_after_selection": false,
+    "hyperparameter_changes_after_selection": false,
+    "feature_changes_after_selection": false,
+    "preprocessing_changes_after_selection": false,
+    "candidate_substitution_after_selection": false
+  },
+  "threshold_policy": {
+    "source": "CYCLE24_VALIDATION",
+    "primary_metric": "TSS",
+    "frozen": true,
+    "reoptimization_on_holdout": false,
+    "reoptimization_on_cycle25": false,
+    "application_rule": "predict_positive_if_probability_greater_than_or_equal_to_threshold",
+    "apply_unchanged_to": [
+      "CYCLE24_HOLDOUT",
+      "CYCLE25"
+    ]
+  },
+  "next_evaluation_policy": {
+    "cycle24_holdout": {
+      "role": "independent within-cycle test",
+      "tuning_allowed": false,
+      "threshold_changes_allowed": false,
+      "retraining_allowed": false
+    },
+    "cycle25": {
+      "role": "temporal cross-cycle test",
+      "tuning_allowed": false,
+      "threshold_changes_allowed": false,
+      "retraining_allowed": false,
+      "feature_selection_allowed": false,
+      "preprocessing_refit_allowed": false
+    }
+  },
+  "scientific_scope": {
+    "retain_all_three_primary_model_families": true,
+    "overall_best_model_declared": false,
+    "prediction_stability_and_explanation_stability_evaluated_separately": true,
+    "shap_interpretation": "MODEL_ATTRIBUTION_NOT_CAUSAL_PHYSICS"
+  },
+  "verification": {
+    "chapter_6_1_selection_protocol": "PASS",
+    "chapter_6_2_validation_predictions": "PASS",
+    "chapter_6_3_validation_metrics": "PASS",
+    "chapter_6_4_family_selection": "PASS",
+    "chapter_6_5_independent_selection_audit": "PASS"
+  },
+  "data_isolation_at_freeze": {
+    "raw_validation_dataset_read_by_freeze_script": false,
+    "holdout_read": false,
+    "cycle25_read": false,
+    "models_retrained": false,
+    "thresholds_reoptimized": false
+  },
+  "immutability_rule": "These three selected TRAIN-only model artifacts and their Cycle24-validation-derived probability thresholds are frozen. They must be applied unchanged to the Cycle24 holdout and Cycle25 evaluation datasets. No retraining, threshold reoptimization, preprocessing refit, feature selection, hyperparameter modification, or candidate substitution is permitted in response to holdout or Cycle25 outcomes.",
+  "frozen_manifest": {
+    "file": "artifacts\\models\\selection\\manifests\\frozen_selected_models.csv",
+    "sha256": "a7799201cc8ad7c582b3f1378a7036b740c29cff5e4d7a11e49e7bcea8ef7936"
+  },
+  "provenance": {
+    "selected_family_winners": {
+      "file": "artifacts\\models\\selection\\manifests\\selected_family_winners.csv",
+      "sha256": "e2eaf36c12d16349e13cc1813fc75e2e0665ba8437b709bc8b6e0c048b4f0639"
+    },
+    "family_selection_result": {
+      "file": "artifacts\\models\\selection\\contracts\\family_selection_result.json",
+      "sha256": "4bbe37ab0a98d42b54a67d6176e0c4a8403258da8ac5d4b3491029abe88485db"
+    },
+    "family_selection_audit": {
+      "file": "artifacts\\models\\selection\\contracts\\family_selection_audit.json",
+      "sha256": "9cffef1af30a36f80fd334c5c00768f9aa51d2428f041ead104cff505f032201"
+    },
+    "selection_protocol": {
+      "file": "artifacts\\models\\selection\\contracts\\model_selection_protocol.json",
+      "sha256": "d95aae3e4daf4f8cfbfe67cbfdf80fef72796698a7ea91a3bd45906a7d8e5dd4"
+    },
+    "validation_metrics_contract": {
+      "file": "artifacts\\models\\selection\\contracts\\validation_metrics_contract.json",
+      "sha256": "3f9e852d2d310b85cccb0d3022da875cf7855fbb8cf72ca23a994fa30447887f"
+    },
+    "candidate_registry": {
+      "file": "artifacts\\models\\selection\\manifests\\frozen_candidate_registry.csv",
+      "sha256": "059fd000a8878d49acacbb1f4f3817b493b67101572b36dbf1f1ab8ac5082072"
+    }
+  }
+}

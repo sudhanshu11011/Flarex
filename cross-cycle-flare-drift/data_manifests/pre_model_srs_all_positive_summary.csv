@@ -1,0 +1,7 @@
+cycle,positive_source,positive_rows,positive_supported,censor_temporal_ambiguity,stale_all_matched_associations,censor_source_missing,requires_review
+cycle24,PRIMARY_AND_SECONDARY,39,39,0,0,0,0
+cycle24,PRIMARY_ONLY,3220,3127,79,14,0,0
+cycle24,SECONDARY_ONLY,361,296,43,22,0,0
+cycle25,PRIMARY_AND_SECONDARY,343,329,0,0,14,0
+cycle25,PRIMARY_ONLY,4071,3808,194,46,23,0
+cycle25,SECONDARY_ONLY,802,699,77,21,5,0

@@ -1,0 +1,4 @@
+split,rows,row_fraction,target_ratio,row_fraction_deviation,positive,negative,positive_rate_pct,overall_positive_rate_pct,positive_rate_deviation_pct,entity_groups,positive_groups,group_count_ok,row_fraction_ok,positive_rate_ok,positive_group_ok,split_audit_pass
+TRAIN,62064,0.7018035845536269,0.7,0.0018035845536269468,2420,59644,3.8992008249548857,3.9147396392830895,0.01553881432820381,822,116,True,True,True,True,True
+VALIDATION,13299,0.15038163622999942,0.15,0.0003816362299994269,515,12784,3.8724716144070985,3.9147396392830895,0.04226802487599102,176,25,True,True,True,True,True
+HOLDOUT,13072,0.14781477921637362,0.15,0.0021852207836263737,527,12545,4.031517747858017,3.9147396392830895,0.11677810857492776,176,25,True,True,True,True,True

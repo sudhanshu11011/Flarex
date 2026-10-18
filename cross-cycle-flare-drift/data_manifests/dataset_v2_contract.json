@@ -1,0 +1,132 @@
+{
+  "dataset_name": "Cross-Cycle Solar Flare Dataset",
+  "dataset_version": "2.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T09:41:54.543695+00:00",
+  "supersedes_for_primary_modeling": "Dataset v1.0",
+  "dataset_v1_preserved": true,
+  "reason_for_v2": "Dataset v1 used static SHARP NOAA association metadata for labels. Pre-model audits showed NOAA_ARS was effectively lifetime-level rather than time-resolved. Dataset v2 validates positive region associations using daily NOAA/NCEI Solar Region Summary temporal bracketing.",
+  "research_role": {
+    "cycle24": "Development domain. Future train, validation, and independent holdout partitions must remain ENTITY_GROUP_ID-safe.",
+    "cycle25": "Frozen temporal transfer domain. No model fitting, preprocessing fitting, feature selection, hyperparameter tuning, or threshold tuning is permitted."
+  },
+  "feature_contract": {
+    "total_model_features": 25,
+    "sharp_feature_count": 18,
+    "lorentz_feature_count": 7,
+    "sharp_features": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP"
+    ],
+    "lorentz_features": [
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ]
+  },
+  "sampling_contract": {
+    "primary_stride_minutes": 120,
+    "sampling_anchor": "00:00 TAI",
+    "sampling_method": "Fixed absolute two-hour TAI timestamp grid."
+  },
+  "label_contract": {
+    "threshold": "GOES M1.0+",
+    "event_timestamp": "GOES start_time",
+    "forecast_window": "(t, t+24h]",
+    "srs_temporal_validation": true,
+    "srs_rule": "Positive region association is supported when at least one matched flare NOAA region is present in both Solar Region Summary snapshots bracketing the UTC observation date.",
+    "temporal_ambiguity_policy": "CENSOR",
+    "missing_srs_source_policy": "CENSOR",
+    "stale_association_policy": "If all matched associations are absent from both SRS bracketing reports, the former positive is relabeled NEGATIVE unless a region-unassigned M1.0+ flare occurs in the forecast window, in which case it is censored.",
+    "region_unassigned_m1_policy": "CENSOR"
+  },
+  "correction_accounting": {
+    "censor_temporal_ambiguity": 393,
+    "censor_srs_source_missing": 42,
+    "censor_unassigned_m1_after_stale": 8,
+    "relabeled_negative_stale_association": 95,
+    "total_rows_removed": 443
+  },
+  "leakage_contract": {
+    "unit": "connected HARP-NOAA ENTITY_GROUP_ID",
+    "cross_cycle_entity_overlap": 0,
+    "cross_cycle_harp_overlap": 0
+  },
+  "cycle24": {
+    "file": "data\\final\\dataset_v2\\cycle24_dataset_v2.parquet",
+    "rows": 88435,
+    "positive": 3462,
+    "negative": 84973,
+    "unique_entity_groups": 1174,
+    "sha256": "72cc81f687f99608bfc751e584306c77c540051c028e04e7bd5482cd9b66387e"
+  },
+  "cycle25": {
+    "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+    "rows": 79361,
+    "positive": 4836,
+    "negative": 74525,
+    "unique_entity_groups": 1011,
+    "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d"
+  },
+  "schema_sha256": "fc9f3816539c3d3142ebf82e6949ea40a3ae2a4f550a5eefda78b7782ff8b44f",
+  "provenance": {
+    "dataset_v1_contract": {
+      "file": "data_manifests\\dataset_v1_contract.json",
+      "sha256": "00af562dea781ab163b8291ea976154d0fcf122c68a830d654a4300e8b237328"
+    },
+    "dataset_v2_candidate_audit": {
+      "file": "data_manifests\\pre_model_dataset_v2_full_audit.csv",
+      "sha256": "e1f65239be732287a41f0376a275b42e90fa5d2546c76cee428294cf008ec2ef"
+    },
+    "dataset_v2_candidate_summary": {
+      "file": "data_manifests\\pre_model_dataset_v2_candidate_summary.csv",
+      "sha256": "284c04f20e818c65adf4974acb6d9584d43dd7dc27ef6387fe310bb00f358b45"
+    },
+    "dataset_v2_label_corrections": {
+      "file": "data_manifests\\pre_model_dataset_v2_label_corrections.csv",
+      "sha256": "66de592c44c42574ccf7b5114f8fb930f8bedb7b7f863b5c01d381b128839e64"
+    },
+    "srs_all_positive_summary": {
+      "file": "data_manifests\\pre_model_srs_all_positive_summary.csv",
+      "sha256": "1e8ce82183fc03a1250b161792876f9cf42970ddaa04f1bf1a475ce39ce8a740"
+    },
+    "srs_all_positive_row_audit": {
+      "file": "data_manifests\\pre_model_srs_all_positive_row_audit.csv",
+      "sha256": "b16f683eeed0c121b39fbd9198596e64bfd327c2c523b872f32466aa868f1d4c"
+    },
+    "temporal_contract": {
+      "file": "data_manifests\\temporal_data_contract.json",
+      "sha256": "694ebb3e4b583a9934df5cf21214802a8f3796ea661d44900f8fa4676cc2bccb"
+    },
+    "sampling_contract": {
+      "file": "data_manifests\\sampling_stride_contract.json",
+      "sha256": "6add770595c2313fd135d629d86addac698b9c1e752dee882f56450684c59184"
+    }
+  },
+  "immutability_rule": "Dataset v2 files must never be modified in place. Any further methodological or data change requires Dataset v3.",
+  "modeling_gate": {
+    "dataset_frozen": true,
+    "cycle25_tuning_allowed": false,
+    "modeling_pending_methodology_closure": true
+  }
+}

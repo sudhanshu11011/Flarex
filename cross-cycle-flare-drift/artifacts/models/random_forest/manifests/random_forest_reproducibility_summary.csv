@@ -1,0 +1,2 @@
+candidates_checked,candidates_reproducible,max_feature_importance_abs_difference,max_tree_threshold_abs_difference,max_probability_abs_difference,feature_importance_atol,tree_threshold_atol,probability_atol,fresh_warning_count,validation_used,holdout_used,cycle25_used,model_selection_performed,threshold_selection_performed,fresh_models_saved,reproducibility_pass
+12,12,0.0,0.0,3.3306690738754696e-16,1e-12,1e-12,1e-12,0,False,False,False,False,False,False,True

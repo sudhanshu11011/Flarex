@@ -1,0 +1,175 @@
+{
+  "contract_name": "Frozen Independent Cycle24 Holdout Results",
+  "version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T13:54:01.582504+00:00",
+  "chapter": "MODEL_CHAPTER_7",
+  "evaluation_stage": "CYCLE24_HOLDOUT_COMPLETE",
+  "scientific_role": "Independent within-Cycle24 evaluation performed after all model-family selection, preprocessing, hyperparameters, and thresholds were frozen.",
+  "population": {
+    "rows": 13072,
+    "positive": 527,
+    "negative": 12545,
+    "entity_groups": 176
+  },
+  "model_count": 3,
+  "cross_family_winner_declared": false,
+  "models_retained_for_cycle25": [
+    "LR_02_C0p01_BALANCED",
+    "RF_04_D12_L5_BALSUB",
+    "XGB_02_LR0p03_D3_BAL"
+  ],
+  "results": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "frozen_threshold": 0.4548081408379442,
+      "TSS": {
+        "point": 0.719027440493162,
+        "ci95_lower": 0.5773922909084052,
+        "ci95_upper": 0.8221484574101067
+      },
+      "HSS": 0.3239216416326406,
+      "F1": 0.3664440734557596,
+      "PR_AUC": 0.5219494404032338,
+      "ROC_AUC": 0.9343790816060288,
+      "Brier_score": 0.075016912215921
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "frozen_threshold": 0.1196946372748545,
+      "TSS": {
+        "point": 0.7095955887079757,
+        "ci95_lower": 0.5863198574468085,
+        "ci95_upper": 0.7935052092852312
+      },
+      "HSS": 0.2617884456678467,
+      "F1": 0.3106267029972752,
+      "PR_AUC": 0.3562469161446527,
+      "ROC_AUC": 0.9275071223670688,
+      "Brier_score": 0.0368150441882017
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "frozen_threshold": 0.2638225555419922,
+      "TSS": {
+        "point": 0.7009902113302926,
+        "ci95_lower": 0.5776361643800711,
+        "ci95_upper": 0.7841073309536799
+      },
+      "HSS": 0.2310341752230642,
+      "F1": 0.2831105710814094,
+      "PR_AUC": 0.517488792235293,
+      "ROC_AUC": 0.9345271633126436,
+      "Brier_score": 0.0655653717399754
+    }
+  ],
+  "uncertainty": {
+    "bootstrap_unit": "ENTITY_GROUP",
+    "valid_replicates": 2000,
+    "seed": 24025,
+    "confidence_level": 0.95,
+    "ci_method": "percentile",
+    "paired_group_draws_across_models": true
+  },
+  "metric_policy": {
+    "TSS": "TPR - FPR",
+    "PR_AUC": "sklearn.metrics.average_precision_score",
+    "ROC_AUC": "sklearn.metrics.roc_auc_score",
+    "Brier_score": "sklearn.metrics.brier_score_loss"
+  },
+  "development_integrity": {
+    "selected_models_changed": false,
+    "models_retrained": false,
+    "train_plus_validation_refit": false,
+    "preprocessing_refit": false,
+    "features_changed": false,
+    "hyperparameters_changed": false,
+    "thresholds_reoptimized": false,
+    "holdout_used_for_selection": false
+  },
+  "cycle25_policy": {
+    "cycle25_used_so_far": false,
+    "models_must_remain_unchanged": true,
+    "preprocessing_must_remain_unchanged": true,
+    "features_must_remain_unchanged": true,
+    "thresholds_must_remain_unchanged": true,
+    "retraining_allowed": false,
+    "threshold_tuning_allowed": false,
+    "feature_selection_allowed": false,
+    "preprocessing_refit_allowed": false
+  },
+  "interpretation_constraints": {
+    "highest_point_tss_is_not_cross_family_selection": true,
+    "marginal_ci_overlap_does_not_test_pairwise_superiority": true,
+    "holdout_results_must_not_trigger_pipeline_changes": true,
+    "cycle25_is_temporal_test": true
+  },
+  "verification": {
+    "chapter_7_1_protocol": "PASS",
+    "chapter_7_2_predictions": "PASS",
+    "chapter_7_3_metrics_and_calibration": "PASS",
+    "chapter_7_4_group_bootstrap": "PASS",
+    "chapter_7_5_independent_audit": "PASS"
+  },
+  "artifacts": {
+    "frozen_holdout_manifest": {
+      "file": "artifacts\\models\\evaluation\\manifests\\frozen_holdout_results.csv",
+      "sha256": "4d4d7d1ab938c1d7f83d9c7ba8ec77a780013626817a4546064cdcf7766dfd95"
+    },
+    "point_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_metrics.csv",
+      "sha256": "63076cf6b2d2a43e801da473469b5b683081353d387679649dba17e5014ade5b"
+    },
+    "calibration": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_calibration.csv",
+      "sha256": "992692604052d5bc70b62b52b3dbb2f30709d26541c7070412dac1538b81a975"
+    },
+    "bootstrap_ci": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_bootstrap_ci.csv",
+      "sha256": "dc1f06a635ce4dc9883e033d68a4778ec666099d74e244a0a67288e3cb684a99"
+    },
+    "independent_audit": {
+      "file": "artifacts\\models\\evaluation\\manifests\\holdout_evaluation_audit.csv",
+      "sha256": "f73fa3e16985fb1f79d5f98e9b21c901a8b36e7354321d8946bd48d8a47a2399"
+    }
+  },
+  "data_access_at_freeze": {
+    "raw_holdout_dataset_read_by_freeze_script": false,
+    "prediction_artifact_read_by_freeze_script": false,
+    "model_files_loaded_by_freeze_script": false,
+    "cycle25_read": false,
+    "new_model_fitting": false,
+    "new_threshold_optimization": false,
+    "new_bootstrap_sampling": false
+  },
+  "provenance": {
+    "holdout_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_protocol.json",
+      "sha256": "5331ba6793b8710cbe9f048c7fdb9f5a5c5dd30771659fd85941754cabfbb4de"
+    },
+    "prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_prediction_contract.json",
+      "sha256": "e15e6c863689ef93abf0931c385a45faa0dd8067f7a23c061b4cb1d594d3eecc"
+    },
+    "point_metrics_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_metrics_contract.json",
+      "sha256": "e6ef9cd4509e278b305699c3cccea3b7a3a54e9eece150682a396ffe46a414cc"
+    },
+    "bootstrap_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_bootstrap_contract.json",
+      "sha256": "cb5c47ec8cfdbc914db12333ebefbbc238abb1f7ce2fda2d5c917c00a8c6e21f"
+    },
+    "audit_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_audit.json",
+      "sha256": "b951ed9ab608e4e36794dd6a0ee4de93ee7055a2e2e5bc3d70bf2115621b87cb"
+    },
+    "selected_models_contract": {
+      "file": "artifacts\\models\\selection\\contracts\\selected_models_contract.json",
+      "sha256": "2eea4b1f8f35d3a4a83dfecd5e74dea95aa3cdc6b79d700682f8446a6a8b6f30"
+    }
+  },
+  "immutability_rule": "The Cycle24 independent holdout results are final and frozen. No result from the holdout may be used to retrain a model, change a candidate, modify hyperparameters, alter features or preprocessing, or reoptimize a decision threshold. The same three frozen models and validation-derived thresholds must proceed unchanged to Cycle25 evaluation."
+}

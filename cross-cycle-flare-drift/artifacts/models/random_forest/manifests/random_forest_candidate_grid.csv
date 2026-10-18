@@ -1,0 +1,13 @@
+candidate_id,n_estimators,criterion,max_depth,min_samples_split,min_samples_leaf,max_features,bootstrap,max_samples,class_weight,oob_score,warm_start,ccp_alpha,random_state,n_jobs
+RF_01_D12_L1_NONE,500,gini,12,2,1,sqrt,True,None,None,False,False,0.0,24025,-1
+RF_02_D12_L1_BALSUB,500,gini,12,2,1,sqrt,True,None,balanced_subsample,False,False,0.0,24025,-1
+RF_03_D12_L5_NONE,500,gini,12,2,5,sqrt,True,None,None,False,False,0.0,24025,-1
+RF_04_D12_L5_BALSUB,500,gini,12,2,5,sqrt,True,None,balanced_subsample,False,False,0.0,24025,-1
+RF_05_D24_L1_NONE,500,gini,24,2,1,sqrt,True,None,None,False,False,0.0,24025,-1
+RF_06_D24_L1_BALSUB,500,gini,24,2,1,sqrt,True,None,balanced_subsample,False,False,0.0,24025,-1
+RF_07_D24_L5_NONE,500,gini,24,2,5,sqrt,True,None,None,False,False,0.0,24025,-1
+RF_08_D24_L5_BALSUB,500,gini,24,2,5,sqrt,True,None,balanced_subsample,False,False,0.0,24025,-1
+RF_09_DNONE_L1_NONE,500,gini,None,2,1,sqrt,True,None,None,False,False,0.0,24025,-1
+RF_10_DNONE_L1_BALSUB,500,gini,None,2,1,sqrt,True,None,balanced_subsample,False,False,0.0,24025,-1
+RF_11_DNONE_L5_NONE,500,gini,None,2,5,sqrt,True,None,None,False,False,0.0,24025,-1
+RF_12_DNONE_L5_BALSUB,500,gini,None,2,5,sqrt,True,None,balanced_subsample,False,False,0.0,24025,-1

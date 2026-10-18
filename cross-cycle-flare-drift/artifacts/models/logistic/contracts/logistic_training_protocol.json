@@ -1,0 +1,115 @@
+{
+  "contract_name": "Logistic Regression Training Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_TRAINING",
+  "generated_at_utc": "2026-10-18T10:25:15.269740+00:00",
+  "model_family": "LogisticRegression",
+  "task": "binary_classification",
+  "positive_class": 1,
+  "target_definition": "At least one associated GOES M1.0+ flare within (t, t+24h].",
+  "training_scope": "CYCLE24_TRAIN_ONLY",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "preprocessing": {
+    "method": "StandardScaler",
+    "artifact": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+    "artifact_sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5",
+    "fit_scope": "CYCLE24_TRAIN_ONLY",
+    "refit_allowed": false
+  },
+  "model_fixed_parameters": {
+    "penalty": "l2",
+    "solver": "lbfgs",
+    "fit_intercept": true,
+    "max_iter": 5000,
+    "tol": 1e-06,
+    "random_state": 24025
+  },
+  "candidate_search_space": {
+    "C": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "class_weight": [
+      null,
+      "balanced"
+    ],
+    "candidate_count": 10
+  },
+  "design_rationale": {
+    "l2_only": "L2 regularization preserves the full frozen 25-feature representation. L1/ElasticNet are excluded because they perform embedded feature selection, which is outside the primary feature contract.",
+    "class_weight_candidates": "Both unweighted and balanced training are pre-registered because the positive class is rare. Selection will occur only on Cycle24 validation data in Chapter 6.",
+    "standardization": "The frozen TRAIN-fitted StandardScaler is used because the 25 physical features span very different numerical scales."
+  },
+  "probability_output": "predict_proba(X)[:, 1]",
+  "chapter3_rules": {
+    "train_candidates": true,
+    "training_data": "CYCLE24_TRAIN",
+    "validation_metrics_allowed": false,
+    "holdout_access_allowed": false,
+    "cycle25_access_allowed": false,
+    "candidate_grid_change_allowed": false
+  },
+  "selection_protocol": {
+    "selection_stage": "MODEL_CHAPTER_6",
+    "development_dataset": "CYCLE24_VALIDATION",
+    "primary_selection_metric": "TSS",
+    "threshold_selection": "For each candidate, choose the decision threshold that maximizes TSS on Cycle24 VALIDATION only.",
+    "hyperparameter_selection": "Choose the pre-registered Logistic Regression candidate with the highest validation TSS after candidate-specific validation threshold selection.",
+    "tie_breaking_order": [
+      "higher_validation_TSS",
+      "higher_validation_PR_AUC",
+      "smaller_C_stronger_regularization",
+      "class_weight_None_before_balanced",
+      "lexicographically_smaller_candidate_id"
+    ],
+    "holdout_used_for_selection": false,
+    "cycle25_used_for_selection": false,
+    "grid_change_after_validation": false
+  },
+  "future_holdout_rule": "Cycle24 HOLDOUT remains untouched until model development and threshold selection are complete and the complete Cycle24 pipeline is frozen.",
+  "future_cycle25_rule": "Cycle25 remains untouched for model development. The frozen pipeline will later be transferred unchanged to Cycle25.",
+  "provenance": {
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    }
+  }
+}

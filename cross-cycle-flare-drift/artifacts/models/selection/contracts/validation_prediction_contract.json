@@ -1,0 +1,73 @@
+{
+  "contract_name": "Cycle24 Validation Prediction Artifact",
+  "version": "1.0",
+  "status": "FROZEN_VALIDATION_PREDICTIONS",
+  "created_at_utc": "2026-10-18T13:27:31.227664+00:00",
+  "validation_dataset": {
+    "file": "artifacts\\splitting\\data\\cycle24_validation.parquet",
+    "sha256": "2122966dc83fbc658e04eb9363ce4064036109b3f7de3cab6637251ac18b17db",
+    "rows": 13299,
+    "positive": 515,
+    "negative": 12784,
+    "feature_count": 25
+  },
+  "candidate_counts": {
+    "logistic": 10,
+    "random_forest": 12,
+    "xgboost": 12,
+    "total": 34
+  },
+  "prediction_artifact": {
+    "file": "artifacts\\models\\selection\\predictions\\cycle24_validation_predictions.parquet",
+    "sha256": "7f9a0e11f195c6bfce0289a7c3069626064553e95b4b8a49cf3a3f54b44399cd",
+    "rows": 13299,
+    "columns": 36,
+    "candidate_probability_columns": 34,
+    "decision_threshold_applied": false,
+    "classification_labels_generated": false,
+    "metrics_computed": false
+  },
+  "preprocessing": {
+    "logistic": "Frozen StandardScaler transform only",
+    "random_forest": "Identity raw features",
+    "xgboost": "Identity raw features",
+    "scaler_refit": false,
+    "logistic_scaler_file": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+    "logistic_scaler_sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5"
+  },
+  "selection_state": {
+    "thresholds_selected": false,
+    "candidate_metrics_computed": false,
+    "family_winners_selected": false,
+    "cross_family_winner_selected": false
+  },
+  "data_isolation": {
+    "train_used_for_new_fitting": false,
+    "validation_read": true,
+    "holdout_read": false,
+    "cycle25_read": false
+  },
+  "immutability_rule": "These validation probabilities were generated from the already-frozen TRAIN-only model artifacts using the frozen preprocessing rules. The prediction artifact must not be regenerated with changed models, features, preprocessing, or candidate definitions after validation outcomes are inspected.",
+  "provenance": {
+    "selection_protocol": {
+      "file": "artifacts\\models\\selection\\contracts\\model_selection_protocol.json",
+      "sha256": "d95aae3e4daf4f8cfbfe67cbfdf80fef72796698a7ea91a3bd45906a7d8e5dd4"
+    },
+    "candidate_registry": {
+      "file": "artifacts\\models\\selection\\manifests\\frozen_candidate_registry.csv",
+      "sha256": "059fd000a8878d49acacbb1f4f3817b493b67101572b36dbf1f1ab8ac5082072"
+    },
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    }
+  }
+}

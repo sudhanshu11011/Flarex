@@ -1,0 +1,64 @@
+{
+  "status": "OPEN_FOR_MODELING",
+  "generated_at_utc": "2026-10-18T09:43:05.053218+00:00",
+  "primary_dataset_version": "2.0",
+  "dataset_contract_sha256": "4ddac968e73014641c9d4599ad7f8059eb165d7ca7c716ecc0ef13244872ecb8",
+  "dataset_files_manifest_sha256": "4a96a0d837bbb9332fb389346294b3fc9089fbb5a1b43d2f835386296686d9d9",
+  "dataset_full_audit_sha256": "e1f65239be732287a41f0376a275b42e90fa5d2546c76cee428294cf008ec2ef",
+  "srs_summary_sha256": "1e8ce82183fc03a1250b161792876f9cf42970ddaa04f1bf1a475ce39ce8a740",
+  "methodology": {
+    "quality_filter": {
+      "rule": "QUALITY == 0",
+      "status": "FROZEN",
+      "interpretation": "Only HMI/SHARP records with no known QUALITY flags set are retained.",
+      "rationale": "HMI QUALITY is a bit-mask describing known acquisition or processing issues. QUALITY=0 represents a conservative nominal-quality-only selection.",
+      "important_note": "This is more conservative than some published flare-prediction pipelines that permit selected non-zero QUALITY states. The threshold was not optimized using Cycle25 outcomes."
+    },
+    "disk_filter": {
+      "rule": "|LON_FWT| <= 68 degrees",
+      "status": "FROZEN",
+      "rationale": "Restricts analysis to active regions sufficiently far from the solar limb to reduce projection and foreshortening effects.",
+      "important_note": "The 68-degree threshold is treated as a fixed literature/operational convention, not a threshold tuned against flare labels or Cycle25 results."
+    },
+    "srs_region_validation": {
+      "status": "FROZEN",
+      "purpose": "Resolve time-specific NOAA region association for positive flare labels.",
+      "method": "Use the Solar Region Summary reports bracketing the UTC observation date. A matched NOAA flare region must be present in both bracketing reports to receive high-confidence temporal support.",
+      "supported_positive_rows": 8298,
+      "temporal_ambiguity_censored": 393,
+      "source_missing_censored": 42,
+      "stale_association_relabeled_negative": 95,
+      "stale_with_unassigned_m1_censored": 8,
+      "limitation": "Historical SRS warehouse products are preliminary operational reports and may contain errors or later revisions. They are therefore used as a temporal association control with explicit censoring, not as model input features."
+    },
+    "cycle25_policy": {
+      "status": "FROZEN",
+      "allowed": [
+        "final frozen transfer evaluation",
+        "distribution-shift analysis",
+        "cross-cycle SHAP comparison"
+      ],
+      "forbidden": [
+        "model training",
+        "preprocessing fitting",
+        "feature selection",
+        "hyperparameter tuning",
+        "decision-threshold tuning"
+      ]
+    },
+    "modeling_dataset": {
+      "primary_version": "Dataset v2.0",
+      "dataset_v1_status": "Preserved as an immutable audit and sensitivity-analysis artifact.",
+      "cycle24_role": "Development domain for entity-group-safe train, validation, and independent holdout.",
+      "cycle25_role": "Frozen temporal/domain transfer test."
+    }
+  },
+  "modeling_rules": {
+    "cycle24_only_for_development": true,
+    "cycle25_tuning_allowed": false,
+    "entity_group_safe_splitting_required": true,
+    "preprocessing_fit_train_only": true,
+    "threshold_tuning_cycle24_validation_only": true,
+    "cycle25_evaluation_after_freeze_only": true
+  }
+}

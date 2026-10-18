@@ -1,0 +1,228 @@
+{
+  "contract_name": "Frozen XGBoost Candidate Family",
+  "version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T11:18:53.319232+00:00",
+  "model_family": "XGBClassifier",
+  "candidate_count": 12,
+  "candidate_ids": [
+    "XGB_01_LR0p03_D3_NONE",
+    "XGB_02_LR0p03_D3_BAL",
+    "XGB_03_LR0p03_D6_NONE",
+    "XGB_04_LR0p03_D6_BAL",
+    "XGB_05_LR0p03_D9_NONE",
+    "XGB_06_LR0p03_D9_BAL",
+    "XGB_07_LR0p1_D3_NONE",
+    "XGB_08_LR0p1_D3_BAL",
+    "XGB_09_LR0p1_D6_NONE",
+    "XGB_10_LR0p1_D6_BAL",
+    "XGB_11_LR0p1_D9_NONE",
+    "XGB_12_LR0p1_D9_BAL"
+  ],
+  "training_scope": "CYCLE24_TRAIN_ONLY",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "preprocessing": {
+    "method": "IDENTITY_RAW_FEATURES",
+    "scaling": false,
+    "imputation": false,
+    "feature_selection": false,
+    "refit_allowed": false
+  },
+  "training_protocol": {
+    "n_estimators": 500,
+    "booster": "gbtree",
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "random_state": 24025,
+    "n_jobs": -1,
+    "candidate_search_space": {
+      "learning_rate": [
+        0.03,
+        0.1
+      ],
+      "max_depth": [
+        3,
+        6,
+        9
+      ],
+      "scale_pos_weight": [
+        1.0,
+        24.646280991735537
+      ],
+      "candidate_count": 12
+    },
+    "early_stopping": false
+  },
+  "verification": {
+    "chapter_5_2_training": "PASS",
+    "candidate_count_trained": 12,
+    "boosted_rounds_per_candidate": 500,
+    "total_boosted_rounds": 6000,
+    "training_warning_count": 0,
+    "chapter_5_3_candidate_audit": "PASS",
+    "chapter_5_4_artifact_verification": "PASS",
+    "chapter_5_5_reproducibility": "PASS",
+    "exact_tree_dump_reproducibility": "PASS",
+    "max_feature_importance_difference": 0.0,
+    "feature_importance_tolerance": 1e-12,
+    "max_probability_difference": 0.0,
+    "probability_tolerance": 1e-12
+  },
+  "selection_state": {
+    "winner_selected": false,
+    "threshold_selected": false,
+    "validation_metrics_computed": false,
+    "selection_stage": "MODEL_CHAPTER_6",
+    "selection_dataset": "CYCLE24_VALIDATION",
+    "primary_selection_metric": "TSS",
+    "threshold_strategy": "Candidate-specific probability threshold maximizing TSS on Cycle24 validation only."
+  },
+  "data_isolation": {
+    "training_data": "CYCLE24_TRAIN_ONLY",
+    "validation_used": false,
+    "holdout_used": false,
+    "cycle25_used": false
+  },
+  "interpretation_note": "Built-in XGBoost feature importance is retained only as a model diagnostic. It is not treated as SHAP explanation, causal solar-physics evidence, or a basis for feature selection.",
+  "immutability_rule": "The 12 XGBoost candidate models, their hyperparameters, feature order, TRAIN provenance, class-weight definitions, boosted tree structures, candidate grid, and artifact hashes are frozen. Candidates must not be retrained, added, removed, or modified in response to validation, holdout, or Cycle25 results. Chapter 6 may only evaluate and select among this frozen candidate family.",
+  "software": {
+    "scikit_learn_version": "1.9.1",
+    "xgboost_version": "3.4.1"
+  },
+  "candidate_files": [
+    {
+      "candidate_id": "XGB_01_LR0p03_D3_NONE",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_01_LR0p03_D3_NONE.joblib",
+      "sha256": "f475e15eee5af4727feec1f8a7d73286dcdd160033cf50231d2496c69f48d212"
+    },
+    {
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_02_LR0p03_D3_BAL.joblib",
+      "sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b"
+    },
+    {
+      "candidate_id": "XGB_03_LR0p03_D6_NONE",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_03_LR0p03_D6_NONE.joblib",
+      "sha256": "8b4935aece46d606c135cccb4ff45abc2a8a988c9cb12a04355b0c0f7bf4f2a8"
+    },
+    {
+      "candidate_id": "XGB_04_LR0p03_D6_BAL",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_04_LR0p03_D6_BAL.joblib",
+      "sha256": "1e304a724fa5e5b30cb9213a9f84777d08879d2bcb1b7caa3ae76df7facefc18"
+    },
+    {
+      "candidate_id": "XGB_05_LR0p03_D9_NONE",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_05_LR0p03_D9_NONE.joblib",
+      "sha256": "7fb054215568a6707521166ff64070ced58b0b33f7a041e3b0f3bdfe074bef4c"
+    },
+    {
+      "candidate_id": "XGB_06_LR0p03_D9_BAL",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_06_LR0p03_D9_BAL.joblib",
+      "sha256": "6d96bdf01c12c0c81586333acab8c6053ff96a5ecb1d3203918aef8372e7e073"
+    },
+    {
+      "candidate_id": "XGB_07_LR0p1_D3_NONE",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_07_LR0p1_D3_NONE.joblib",
+      "sha256": "812ed86a297fedbc2db9f393f530818aa1c02743b8e5d1df7ac4131c3f930949"
+    },
+    {
+      "candidate_id": "XGB_08_LR0p1_D3_BAL",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_08_LR0p1_D3_BAL.joblib",
+      "sha256": "50b5ffac0724c4e3ccbb60d37699547c90af42818a515812b5604806fa8748e9"
+    },
+    {
+      "candidate_id": "XGB_09_LR0p1_D6_NONE",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_09_LR0p1_D6_NONE.joblib",
+      "sha256": "bda3675f658a3bd7be564930ebfde6456b8ff3bd0c1234d4e29df8abe800da91"
+    },
+    {
+      "candidate_id": "XGB_10_LR0p1_D6_BAL",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_10_LR0p1_D6_BAL.joblib",
+      "sha256": "2f862447151c15a1d766e5ba6f006f5b047c00b28390effc99c96ae60d4949b7"
+    },
+    {
+      "candidate_id": "XGB_11_LR0p1_D9_NONE",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_11_LR0p1_D9_NONE.joblib",
+      "sha256": "e1fd6f7d9d982d05cc78b3c354a0c27fb951cfeccd39008042d131d2b35e0997"
+    },
+    {
+      "candidate_id": "XGB_12_LR0p1_D9_BAL",
+      "file": "artifacts\\models\\xgboost\\models\\XGB_12_LR0p1_D9_BAL.joblib",
+      "sha256": "bd927ae6482987cd19d2c94be85bf5c60282b281ec2f68a695f212113473cd98"
+    }
+  ],
+  "provenance": {
+    "training_protocol": {
+      "file": "artifacts\\models\\xgboost\\contracts\\xgboost_training_protocol.json",
+      "sha256": "6cf48b97c7e5d4b8ec0f403168730efcefd20934efe1e93e7b0eed35b275ca37"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "candidate_grid": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_candidate_grid.csv",
+      "sha256": "f3fe8fbf2868f1c0ad47f6055834bf11409a833833dde8a0fdecbafe7b5d9b85"
+    },
+    "training_summary": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_training_summary.csv",
+      "sha256": "e61dfa4c8951ee9a1136e23eb26ba74abfaf15f33c727e664cd0ee9030a3452e"
+    },
+    "candidate_audit": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_candidate_audit.csv",
+      "sha256": "6096f6bd80510ea4b21fe77756b3df7da00b8f0da2b19adb40e4424ae55239ca"
+    },
+    "artifact_inventory": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_artifact_inventory.csv",
+      "sha256": "9148033abd9e80da335cbd5b71d605d16cf4b4f033aac4be9737bb3d4c4cfba2"
+    },
+    "artifact_verification": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_artifact_verification_summary.csv",
+      "sha256": "6529dc3d441f0e2e7b518a963046e7d92cb7ba4dbadb7e933eb7aa2d044fd227"
+    },
+    "reproducibility_audit": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_reproducibility_audit.csv",
+      "sha256": "46a268f9f1639eb7c5abd6f5e1eaf62a6cf2b8b83a9f5f7daa9d4b7555814f5d"
+    },
+    "reproducibility_summary": {
+      "file": "artifacts\\models\\xgboost\\manifests\\xgboost_reproducibility_summary.csv",
+      "sha256": "f34a40b267611642050abc8dc09cffa35dc7c02acf45c98b4a282560f3454196"
+    }
+  }
+}

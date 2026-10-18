@@ -1,0 +1,124 @@
+{
+  "contract_name": "Model Preprocessing Design",
+  "version": "1.0",
+  "status": "DESIGN_FROZEN",
+  "generated_at_utc": "2026-10-18T10:14:35.261875+00:00",
+  "feature_contract_version": "1.0",
+  "split_version": "1.0",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "global_rules": {
+    "missing_value_imputation": false,
+    "reason_no_imputation": "Frozen Dataset v2 and all Cycle24 splits contain no missing or non-finite model feature values.",
+    "feature_selection": false,
+    "pca": false,
+    "winsorization": false,
+    "outlier_clipping": false,
+    "log_transformation": false,
+    "polynomial_features": false,
+    "interaction_feature_engineering": false,
+    "feature_order_fixed": true,
+    "preserve_original_physical_features": true
+  },
+  "logistic_regression": {
+    "preprocessor": "StandardScaler",
+    "with_mean": true,
+    "with_std": true,
+    "fit_scope": "TRAIN_ONLY",
+    "validation_policy": "TRANSFORM_ONLY",
+    "holdout_policy": "TRANSFORM_ONLY_AFTER_MODEL_DEVELOPMENT_PIPELINE_IS_FROZEN",
+    "cycle25_policy": "TRANSFORM_ONLY_AFTER_FULL_CYCLE24_PIPELINE_IS_FROZEN",
+    "reason": "Logistic Regression is scale-sensitive, especially under regularization. StandardScaler places frozen features on comparable numerical scales without changing feature identity."
+  },
+  "random_forest": {
+    "preprocessor": "IDENTITY",
+    "scaling": false,
+    "fit_scope": "NONE",
+    "validation_policy": "RAW_FROZEN_FEATURES",
+    "holdout_policy": "RAW_FROZEN_FEATURES",
+    "cycle25_policy": "RAW_FROZEN_FEATURES",
+    "reason": "Tree-based split decisions are invariant to monotonic feature scaling. Preserving raw feature values also simplifies physical interpretation."
+  },
+  "xgboost": {
+    "preprocessor": "IDENTITY",
+    "scaling": false,
+    "fit_scope": "NONE",
+    "validation_policy": "RAW_FROZEN_FEATURES",
+    "holdout_policy": "RAW_FROZEN_FEATURES",
+    "cycle25_policy": "RAW_FROZEN_FEATURES",
+    "reason": "Gradient-boosted decision trees do not require feature standardization for tree split construction."
+  },
+  "data_isolation": {
+    "train": {
+      "may_fit_preprocessing": true,
+      "may_fit_models": true
+    },
+    "validation": {
+      "may_fit_preprocessing": false,
+      "may_transform": true,
+      "may_tune_models": true
+    },
+    "holdout": {
+      "may_fit_preprocessing": false,
+      "may_tune_models": false,
+      "may_select_threshold": false,
+      "use_before_pipeline_freeze": false
+    },
+    "cycle25": {
+      "may_fit_preprocessing": false,
+      "may_fit_models": false,
+      "may_tune_models": false,
+      "may_select_threshold": false,
+      "use_before_full_pipeline_freeze": false
+    }
+  },
+  "class_imbalance_policy": {
+    "handled_in_preprocessing": false,
+    "reason": "Class weighting and model-specific imbalance parameters belong to the model-training and validation stage rather than the feature preprocessing stage."
+  },
+  "interpretability_policy": {
+    "preserve_original_feature_names": true,
+    "preserve_25_feature_identity": true,
+    "no_pca": true,
+    "reason": "Cross-cycle explanation-drift analysis requires attribution to the same physical SHARP/Lorentz feature definitions."
+  },
+  "change_control": {
+    "performance_driven_preprocessing_changes": false,
+    "cycle25_driven_changes": false,
+    "distribution_audit_may_trigger_change": "Only if a genuine numerical or data-quality failure is demonstrated before model training. Any change requires a new preprocessing-design version."
+  },
+  "provenance": {
+    "feature_contract_file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+    "feature_contract_sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb",
+    "split_contract_file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+    "split_contract_sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3",
+    "pre_model_gate_file": "data_manifests\\pre_model_gate.json",
+    "pre_model_gate_sha256": "8fa878cdb06cbc60c974294923ed137b90e2239752a18c86de7b3d78f063f9b3"
+  }
+}

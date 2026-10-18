@@ -1,0 +1,85 @@
+{
+  "contract_name": "Cycle24 Independent Holdout Metrics",
+  "version": "1.0",
+  "status": "FROZEN_HOLDOUT_POINT_METRICS",
+  "created_at_utc": "2026-10-18T13:47:09.184488+00:00",
+  "evaluation_population": {
+    "rows": 13072,
+    "positive": 527,
+    "negative": 12545,
+    "entity_groups": 176
+  },
+  "model_count": 3,
+  "metric_implementations": {
+    "TSS": "TPR - FPR",
+    "HSS": "2*(TP*TN - FN*FP) / ((TP+FN)*(FN+TN) + (TP+FP)*(FP+TN))",
+    "F1": "2*TP / (2*TP + FP + FN)",
+    "PR_AUC": "sklearn.metrics.average_precision_score",
+    "ROC_AUC": "sklearn.metrics.roc_auc_score",
+    "Brier_score": "sklearn.metrics.brier_score_loss"
+  },
+  "threshold_policy": {
+    "source": "CYCLE24_VALIDATION",
+    "reoptimized_on_holdout": false,
+    "prediction_rule": "probability >= frozen_threshold"
+  },
+  "calibration": {
+    "method": "fixed_probability_width",
+    "bin_count": 10,
+    "bin_edges": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "recalibration_performed": false,
+    "diagnostic_only": true
+  },
+  "artifacts": {
+    "holdout_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_metrics.csv",
+      "sha256": "63076cf6b2d2a43e801da473469b5b683081353d387679649dba17e5014ade5b",
+      "rows": 3
+    },
+    "holdout_calibration": {
+      "file": "artifacts\\models\\evaluation\\metrics\\holdout_calibration.csv",
+      "sha256": "992692604052d5bc70b62b52b3dbb2f30709d26541c7070412dac1538b81a975",
+      "rows": 30
+    }
+  },
+  "evaluation_state": {
+    "point_metrics_computed": true,
+    "calibration_computed": true,
+    "bootstrap_confidence_intervals_computed": false,
+    "models_retrained": false,
+    "thresholds_reoptimized": false,
+    "family_selection_changed": false,
+    "cycle25_used": false
+  },
+  "provenance": {
+    "holdout_prediction_artifact": {
+      "file": "artifacts\\models\\evaluation\\predictions\\cycle24_holdout_predictions.parquet",
+      "sha256": "dbb864949293b92a8b450d5683e143f18841d5d4837f035298efc114791fd149"
+    },
+    "holdout_prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_prediction_contract.json",
+      "sha256": "e15e6c863689ef93abf0931c385a45faa0dd8067f7a23c061b4cb1d594d3eecc"
+    },
+    "holdout_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_evaluation_protocol.json",
+      "sha256": "5331ba6793b8710cbe9f048c7fdb9f5a5c5dd30771659fd85941754cabfbb4de"
+    },
+    "holdout_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\holdout_frozen_model_registry.csv",
+      "sha256": "56d685ebd9c3283dd5971d1edb97137ea46132f4ad16acaf2864d27263f283fc"
+    }
+  },
+  "immutability_rule": "These Cycle24 holdout point metrics and calibration diagnostics were computed using the already-frozen models and validation-derived thresholds. They must not trigger retraining, threshold changes, candidate replacement, preprocessing changes, or feature changes."
+}

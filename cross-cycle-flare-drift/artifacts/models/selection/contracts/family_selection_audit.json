@@ -1,0 +1,72 @@
+{
+  "contract_name": "Independent Cycle24 Validation Family Selection Audit",
+  "version": "1.0",
+  "status": "PASS",
+  "created_at_utc": "2026-10-18T13:32:03.943965+00:00",
+  "families_audited": 3,
+  "families_passed": 3,
+  "selection_protocol_verified": true,
+  "candidate_threshold_links_verified": 34,
+  "winner_contract_manifest_match": true,
+  "overall_selection_audit_pass": true,
+  "audit_scope": {
+    "independent_family_ranking": true,
+    "frozen_threshold_verification": true,
+    "winner_model_hash_verification": true,
+    "model_retraining": false,
+    "threshold_reoptimization": false,
+    "raw_validation_dataset_read": false,
+    "holdout_read": false,
+    "cycle25_read": false
+  },
+  "family_results": [
+    {
+      "family": "logistic",
+      "winner": "LR_02_C0p01_BALANCED",
+      "selection_decided_by": "PRIMARY_TSS",
+      "primary_tss_tie_count": 1,
+      "audit_pass": true
+    },
+    {
+      "family": "random_forest",
+      "winner": "RF_04_D12_L5_BALSUB",
+      "selection_decided_by": "PRIMARY_TSS",
+      "primary_tss_tie_count": 1,
+      "audit_pass": true
+    },
+    {
+      "family": "xgboost",
+      "winner": "XGB_02_LR0p03_D3_BAL",
+      "selection_decided_by": "PRIMARY_TSS",
+      "primary_tss_tie_count": 1,
+      "audit_pass": true
+    }
+  ],
+  "audit_manifest": {
+    "file": "artifacts\\models\\selection\\manifests\\family_selection_audit.csv",
+    "sha256": "92db56869a3360786c9a193aa2028f8a36bbbaa55e56c5523e4b2ec61f3d34c5"
+  },
+  "provenance": {
+    "selection_protocol": {
+      "file": "artifacts\\models\\selection\\contracts\\model_selection_protocol.json",
+      "sha256": "d95aae3e4daf4f8cfbfe67cbfdf80fef72796698a7ea91a3bd45906a7d8e5dd4"
+    },
+    "candidate_metrics": {
+      "file": "artifacts\\models\\selection\\manifests\\validation_candidate_metrics.csv",
+      "sha256": "3dc2a273645eddb4f7d17a1e42ceeedf4bd9c4bcb304ba5ae203c3421c2022ec"
+    },
+    "threshold_sweep": {
+      "file": "artifacts\\models\\selection\\metrics\\validation_threshold_sweep.parquet",
+      "sha256": "ce882e254526ae1eb80a298add6d7127f3858d4dd0fd7e61c1cfda3c786ff217"
+    },
+    "selected_winners": {
+      "file": "artifacts\\models\\selection\\manifests\\selected_family_winners.csv",
+      "sha256": "e2eaf36c12d16349e13cc1813fc75e2e0665ba8437b709bc8b6e0c048b4f0639"
+    },
+    "selection_result": {
+      "file": "artifacts\\models\\selection\\contracts\\family_selection_result.json",
+      "sha256": "4bbe37ab0a98d42b54a67d6176e0c4a8403258da8ac5d4b3491029abe88485db"
+    }
+  },
+  "interpretation": "This audit independently reapplies the pre-registered within-family ranking hierarchy to the frozen validation metrics. It does not introduce new model fitting, threshold tuning, candidate definitions, or performance criteria."
+}

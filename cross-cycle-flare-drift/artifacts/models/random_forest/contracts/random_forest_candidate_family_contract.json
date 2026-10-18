@@ -1,0 +1,226 @@
+{
+  "contract_name": "Frozen Random Forest Candidate Family",
+  "version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T11:03:16.152426+00:00",
+  "model_family": "RandomForestClassifier",
+  "candidate_count": 12,
+  "candidate_ids": [
+    "RF_01_D12_L1_NONE",
+    "RF_02_D12_L1_BALSUB",
+    "RF_03_D12_L5_NONE",
+    "RF_04_D12_L5_BALSUB",
+    "RF_05_D24_L1_NONE",
+    "RF_06_D24_L1_BALSUB",
+    "RF_07_D24_L5_NONE",
+    "RF_08_D24_L5_BALSUB",
+    "RF_09_DNONE_L1_NONE",
+    "RF_10_DNONE_L1_BALSUB",
+    "RF_11_DNONE_L5_NONE",
+    "RF_12_DNONE_L5_BALSUB"
+  ],
+  "training_scope": "CYCLE24_TRAIN_ONLY",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "preprocessing": {
+    "method": "IDENTITY_RAW_FEATURES",
+    "scaling": false,
+    "imputation": false,
+    "feature_selection": false,
+    "refit_allowed": false
+  },
+  "training_protocol": {
+    "n_estimators": 500,
+    "criterion": "gini",
+    "max_features": "sqrt",
+    "bootstrap": true,
+    "min_samples_split": 2,
+    "random_state": 24025,
+    "n_jobs": -1,
+    "candidate_search_space": {
+      "max_depth": [
+        12,
+        24,
+        null
+      ],
+      "min_samples_leaf": [
+        1,
+        5
+      ],
+      "class_weight": [
+        null,
+        "balanced_subsample"
+      ],
+      "candidate_count": 12
+    }
+  },
+  "verification": {
+    "chapter_4_2_training": "PASS",
+    "candidate_count_trained": 12,
+    "tree_count_per_candidate": 500,
+    "total_fitted_trees": 6000,
+    "training_warning_count": 0,
+    "chapter_4_3_candidate_audit": "PASS",
+    "chapter_4_4_artifact_verification": "PASS",
+    "chapter_4_5_reproducibility": "PASS",
+    "max_feature_importance_difference": 0.0,
+    "feature_importance_tolerance": 1e-12,
+    "max_tree_threshold_difference": 0.0,
+    "tree_threshold_tolerance": 1e-12,
+    "max_probability_difference": 3.3306690738754696e-16,
+    "probability_tolerance": 1e-12
+  },
+  "selection_state": {
+    "winner_selected": false,
+    "threshold_selected": false,
+    "validation_metrics_computed": false,
+    "selection_stage": "MODEL_CHAPTER_6",
+    "selection_dataset": "CYCLE24_VALIDATION",
+    "primary_selection_metric": "TSS"
+  },
+  "data_isolation": {
+    "training_data": "CYCLE24_TRAIN_ONLY",
+    "validation_used": false,
+    "holdout_used": false,
+    "cycle25_used": false
+  },
+  "interpretation_note": "Random Forest impurity-based feature_importances_ are retained only as model diagnostics. They are not treated as SHAP explanations, causal solar-physics evidence, or a basis for feature selection.",
+  "immutability_rule": "The 12 Random Forest candidate models, their hyperparameters, feature order, tree structures, TRAIN provenance, candidate definitions, and artifact hashes are frozen. Candidates must not be retrained, added, removed, or modified in response to validation, holdout, or Cycle25 results. Chapter 6 may only evaluate and select among this frozen candidate family.",
+  "software": {
+    "scikit_learn_version": "1.9.1"
+  },
+  "candidate_files": [
+    {
+      "candidate_id": "RF_01_D12_L1_NONE",
+      "file": "artifacts\\models\\random_forest\\models\\RF_01_D12_L1_NONE.joblib",
+      "sha256": "458ccda541bc3e91fab7875ee9ca224f28997d3f81520cb1564399a92ce0391e"
+    },
+    {
+      "candidate_id": "RF_02_D12_L1_BALSUB",
+      "file": "artifacts\\models\\random_forest\\models\\RF_02_D12_L1_BALSUB.joblib",
+      "sha256": "0336f273e6e63ca2582c5c29f16767e6ef2d73a0d4c298b4a123cf80980319d3"
+    },
+    {
+      "candidate_id": "RF_03_D12_L5_NONE",
+      "file": "artifacts\\models\\random_forest\\models\\RF_03_D12_L5_NONE.joblib",
+      "sha256": "0e8fe9e507f14ac2bf2fcdb04b873b3b618a9da74d90c7e117a7f9d3f0ed97c5"
+    },
+    {
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "file": "artifacts\\models\\random_forest\\models\\RF_04_D12_L5_BALSUB.joblib",
+      "sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31"
+    },
+    {
+      "candidate_id": "RF_05_D24_L1_NONE",
+      "file": "artifacts\\models\\random_forest\\models\\RF_05_D24_L1_NONE.joblib",
+      "sha256": "3d5768ccf79a54a31c380039601e6ddd982c792df1c35767a471d7136874473c"
+    },
+    {
+      "candidate_id": "RF_06_D24_L1_BALSUB",
+      "file": "artifacts\\models\\random_forest\\models\\RF_06_D24_L1_BALSUB.joblib",
+      "sha256": "4a157fe8d43e5b69d83a351bcf4890172f20908752f10291bc4974d9544a489d"
+    },
+    {
+      "candidate_id": "RF_07_D24_L5_NONE",
+      "file": "artifacts\\models\\random_forest\\models\\RF_07_D24_L5_NONE.joblib",
+      "sha256": "1f99f0ea5926e8f149d8f1d891dd9b76724920cfe4b5437119d7ef569913d14c"
+    },
+    {
+      "candidate_id": "RF_08_D24_L5_BALSUB",
+      "file": "artifacts\\models\\random_forest\\models\\RF_08_D24_L5_BALSUB.joblib",
+      "sha256": "7c58172a66eccb1866b457cb16d71961db4e50ef0cc981b854263cc76ed3b08b"
+    },
+    {
+      "candidate_id": "RF_09_DNONE_L1_NONE",
+      "file": "artifacts\\models\\random_forest\\models\\RF_09_DNONE_L1_NONE.joblib",
+      "sha256": "591215bd5c534d960ed3660586b8c6a2f4fd13140fc3a7fa6d984aed824d4b57"
+    },
+    {
+      "candidate_id": "RF_10_DNONE_L1_BALSUB",
+      "file": "artifacts\\models\\random_forest\\models\\RF_10_DNONE_L1_BALSUB.joblib",
+      "sha256": "7a73f1f84aefd9fdf8af1ace2457b06b00dbe1abd4583c1f3ddb606b030b8ae5"
+    },
+    {
+      "candidate_id": "RF_11_DNONE_L5_NONE",
+      "file": "artifacts\\models\\random_forest\\models\\RF_11_DNONE_L5_NONE.joblib",
+      "sha256": "549f67ef254feef700a06492db10cb0af87a47143868151c798cc4e43b141710"
+    },
+    {
+      "candidate_id": "RF_12_DNONE_L5_BALSUB",
+      "file": "artifacts\\models\\random_forest\\models\\RF_12_DNONE_L5_BALSUB.joblib",
+      "sha256": "5ff1e90ff0bd6d6da87209804aca8cdce0dfec1b886af8399fd506688a7ea599"
+    }
+  ],
+  "provenance": {
+    "training_protocol": {
+      "file": "artifacts\\models\\random_forest\\contracts\\random_forest_training_protocol.json",
+      "sha256": "d78f99e1266dbeb291f8fa446b326ce26ea07049a21a1ee4de1239d380e206a9"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "candidate_grid": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_candidate_grid.csv",
+      "sha256": "8ca40bd29f868689181ee1a30277a00c04b294644ecca6759d9abad85c8084fa"
+    },
+    "training_summary": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_training_summary.csv",
+      "sha256": "2ab99a326011355d7174799a34c997b18594b5fe997bd71cd1c79963f16e435a"
+    },
+    "candidate_audit": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_candidate_audit.csv",
+      "sha256": "633faec4eeb250f38d0025f651af6a78a879f257d912c0329f122e50efe63c9d"
+    },
+    "artifact_inventory": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_artifact_inventory.csv",
+      "sha256": "5267fd619e4f43a52d7d1a6e81347e634996c0bfb7b7e23b8a58cadde5e42a1b"
+    },
+    "artifact_verification": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_artifact_verification_summary.csv",
+      "sha256": "2dfb2f6e79e215589d4b907ad27bb5d0f900605b3c4038573bad1942cb815524"
+    },
+    "reproducibility_audit": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_reproducibility_audit.csv",
+      "sha256": "3ab8027a0c76d2c167f96c6ea495e006a9f772c379cee2a5b3d0ff2967f9b9a4"
+    },
+    "reproducibility_summary": {
+      "file": "artifacts\\models\\random_forest\\manifests\\random_forest_reproducibility_summary.csv",
+      "sha256": "7b239a45ab120c42812a0cc612faebb20a0a11196f4e9f709e3a6a16cc0ba480"
+    }
+  }
+}
