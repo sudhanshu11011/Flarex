@@ -1,0 +1,8 @@
+case,observation_date,report_date,full_noaa_region,srs_display_region,found,location,carrington_longitude,line_number,raw_line,source_url
+HARP_1834,2012-07-08,2012-07-09,11519,1519,True,S15E22,109.0,14.0,1519 S15E22   109  0080 Hsx  04   01 Alpha,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2012/07/20120709SRS.txt
+HARP_1834,2012-07-08,2012-07-09,11520,1520,True,S15E43,86.0,15.0,1520 S15E43   086  1070 Fhc  23   23 Beta-Gamma,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2012/07/20120709SRS.txt
+HARP_1834,2012-07-08,2012-07-09,11521,1521,False,,,,,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2012/07/20120709SRS.txt
+HARP_13354,2025-06-13,2025-06-14,11114,1114,False,,,,,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2025/06/20250614SRS.txt
+HARP_13354,2025-06-13,2025-06-14,14113,4113,True,N10E32,41.0,16.0,4113 N10E32   041  0030 Hsx  01   01 Alpha,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2025/06/20250614SRS.txt
+HARP_13354,2025-06-13,2025-06-14,14114,4114,True,N18E39,34.0,17.0,4114 N18E39   034  0080 Dai  07   14 Beta,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2025/06/20250614SRS.txt
+HARP_13354,2025-06-13,2025-06-14,14115,4115,True,N21E53,20.0,18.0,4115 N21E53   020  0150 Dso  10   03 Beta,https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_region_summaries/2025/06/20250614SRS.txt

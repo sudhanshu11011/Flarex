@@ -1,0 +1,3 @@
+cycle,total_harps,NOAA_AR_changed_harps,NOAA_AR_static_harps,NOAA_ARS_changed_harps,NOAA_ARS_static_harps,multi_region_NOAA_ARS_harps,multi_region_but_static_NOAA_ARS_harps,NOAA_AR_changed_pct,NOAA_ARS_changed_pct
+cycle24,4150,3,4147,0,4150,243,243,0.07228915662650602,0.0
+cycle25,3631,0,3631,0,3631,279,279,0.0,0.0
