@@ -1,0 +1,116 @@
+{
+  "protocol_name": "Random Forest Candidate Training Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_TRAINING",
+  "created_at_utc": "2026-10-18T10:45:16.832072+00:00",
+  "model_family": "RandomForestClassifier",
+  "scientific_role": "Nonlinear tree-ensemble baseline for cross-cycle predictive and explanation stability analysis.",
+  "training_scope": "CYCLE24_TRAIN_ONLY",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "preprocessing": {
+    "method": "IDENTITY_RAW_FEATURES",
+    "scaling": false,
+    "imputation": false,
+    "feature_selection": false,
+    "pca": false,
+    "clipping": false,
+    "log_transform": false
+  },
+  "model_fixed_parameters": {
+    "n_estimators": 500,
+    "criterion": "gini",
+    "min_samples_split": 2,
+    "max_features": "sqrt",
+    "bootstrap": true,
+    "max_samples": null,
+    "oob_score": false,
+    "warm_start": false,
+    "ccp_alpha": 0.0,
+    "random_state": 24025,
+    "n_jobs": -1
+  },
+  "candidate_search_space": {
+    "max_depth": [
+      12,
+      24,
+      null
+    ],
+    "min_samples_leaf": [
+      1,
+      5
+    ],
+    "class_weight": [
+      null,
+      "balanced_subsample"
+    ],
+    "candidate_count": 12
+  },
+  "candidate_design_rationale": {
+    "max_depth": "Tests moderate depth, deeper trees, and unrestricted depth while controlling the search space before validation.",
+    "min_samples_leaf": "Tests fine-grained leaves versus regularized leaves to reduce possible overfitting.",
+    "class_weight": "Compares the unweighted model against balanced_subsample because M/X flare positives are rare in Cycle24 TRAIN.",
+    "n_estimators": "Fixed at 500 to provide a sufficiently large ensemble while avoiding an unnecessary validation-tuned axis.",
+    "max_features": "sqrt is fixed as a standard RF decorrelation mechanism and is not tuned using validation data."
+  },
+  "training_provenance": {
+    "train_split": "CYCLE24_TRAIN",
+    "train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+    "split_contract": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+    "split_contract_sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3",
+    "feature_contract": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+    "feature_contract_sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb",
+    "preprocessing_contract": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+    "preprocessing_contract_sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+  },
+  "data_isolation": {
+    "train_used": true,
+    "validation_used": false,
+    "holdout_used": false,
+    "cycle25_used": false
+  },
+  "selection_protocol": {
+    "selection_stage": "MODEL_CHAPTER_6",
+    "selection_dataset": "CYCLE24_VALIDATION",
+    "primary_metric": "TSS",
+    "threshold_strategy": "For each frozen RF candidate, choose the decision threshold that maximizes TSS on Cycle24 validation only.",
+    "winner_rule": "Select the RF candidate with highest Cycle24 validation TSS after its candidate-specific threshold selection.",
+    "tie_break_order": [
+      "higher_validation_TSS",
+      "higher_validation_PR_AUC",
+      "smaller_max_depth",
+      "larger_min_samples_leaf",
+      "class_weight_None_before_balanced_subsample",
+      "lexicographically_smaller_candidate_id"
+    ],
+    "holdout_for_selection": false,
+    "cycle25_for_selection": false
+  },
+  "immutability_rule": "After this protocol is frozen, RF candidate hyperparameters, candidate count, feature set, training split, and preprocessing may not be changed in response to validation, holdout, or Cycle25 results."
+}
