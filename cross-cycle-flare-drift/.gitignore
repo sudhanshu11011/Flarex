@@ -126,3 +126,9 @@ artifacts/models/xgboost/models/*.joblib
 .venv/
 __pycache__/
 *.parquet
+
+*.parquet
+*.joblib
+.env
+.venv
+__pycache__
