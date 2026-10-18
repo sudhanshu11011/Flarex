@@ -1,0 +1,165 @@
+{
+  "protocol_name": "Cycle24 Validation Model and Threshold Selection Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_VALIDATION",
+  "created_at_utc": "2026-10-18T13:22:32.664572+00:00",
+  "scientific_role": "Select exactly one frozen candidate and one frozen probability threshold independently within each primary model family using only the Cycle24 validation partition.",
+  "model_families": [
+    "LogisticRegression",
+    "RandomForestClassifier",
+    "XGBClassifier"
+  ],
+  "candidate_counts": {
+    "logistic_regression": 10,
+    "random_forest": 12,
+    "xgboost": 12,
+    "total": 34
+  },
+  "selection_scope": {
+    "winner_per_family": 1,
+    "family_winners_total": 3,
+    "cross_family_winner_selected": false,
+    "reason": "All three primary model families are retained for later predictive and SHAP cross-cycle stability analysis."
+  },
+  "validation_dataset": {
+    "name": "CYCLE24_VALIDATION",
+    "source": "frozen Cycle24 split",
+    "sha256": "2122966dc83fbc658e04eb9363ce4064036109b3f7de3cab6637251ac18b17db",
+    "used_for": [
+      "candidate evaluation",
+      "candidate-specific threshold selection",
+      "within-family candidate selection"
+    ],
+    "used_for_training": false,
+    "used_for_retraining": false
+  },
+  "threshold_protocol": {
+    "prediction_rule": "predict_positive_if_probability_greater_than_or_equal_to_threshold",
+    "candidate_threshold_set": "All unique predicted probabilities on Cycle24 validation for that frozen candidate, plus one all-negative sentinel threshold immediately above the maximum predicted probability.",
+    "all_negative_sentinel": "numpy.nextafter(max_probability, +infinity)",
+    "primary_threshold_metric": "TSS",
+    "tss_definition": "TPR_minus_FPR",
+    "tpr_definition": "TP / (TP + FN)",
+    "fpr_definition": "FP / (FP + TN)",
+    "threshold_winner_rule": "maximum_validation_TSS",
+    "exact_threshold_tie_break": "If multiple thresholds produce exactly the same maximum TSS, select the highest threshold as a deterministic tie break.",
+    "default_0_5_threshold_used": false,
+    "threshold_optimized_on_holdout": false,
+    "threshold_optimized_on_cycle25": false
+  },
+  "validation_metrics": {
+    "selection_metrics": [
+      "TSS",
+      "PR_AUC"
+    ],
+    "diagnostic_metrics": [
+      "HSS",
+      "F1",
+      "ROC_AUC",
+      "Brier_score",
+      "sensitivity",
+      "specificity",
+      "precision"
+    ],
+    "primary_candidate_selection_metric": "TSS",
+    "secondary_candidate_selection_metric": "PR_AUC",
+    "note": "Diagnostic metrics may be reported but must not override the pre-registered family-specific selection hierarchy."
+  },
+  "family_selection_rules": {
+    "logistic_regression": {
+      "winner_order": [
+        "higher_validation_TSS",
+        "higher_validation_PR_AUC",
+        "smaller_C",
+        "class_weight_None_before_balanced",
+        "lexicographically_smaller_candidate_id"
+      ]
+    },
+    "random_forest": {
+      "winner_order": [
+        "higher_validation_TSS",
+        "higher_validation_PR_AUC",
+        "smaller_max_depth",
+        "larger_min_samples_leaf",
+        "class_weight_None_before_balanced_subsample",
+        "lexicographically_smaller_candidate_id"
+      ],
+      "max_depth_complexity_order": [
+        12,
+        24,
+        "None"
+      ],
+      "note": "max_depth=None is treated as unbounded and therefore ranks after numeric depths 12 and 24 when a complexity tie-break is required."
+    },
+    "xgboost": {
+      "winner_order": [
+        "higher_validation_TSS",
+        "higher_validation_PR_AUC",
+        "smaller_max_depth",
+        "smaller_learning_rate",
+        "scale_pos_weight_1_before_balanced",
+        "lexicographically_smaller_candidate_id"
+      ]
+    }
+  },
+  "post_selection_rule": {
+    "retraining_after_validation": false,
+    "winner_model_artifact": "Use the already-frozen TRAIN-only model artifact. Do not refit on TRAIN+VALIDATION.",
+    "winner_threshold": "Freeze the Cycle24-validation-selected threshold and apply it unchanged to Cycle24 holdout and Cycle25.",
+    "hyperparameter_changes": false,
+    "feature_changes": false,
+    "preprocessing_changes": false
+  },
+  "holdout_policy": {
+    "used_in_chapter_6_selection": false,
+    "allowed_after_selection_freeze": true,
+    "role": "Independent Cycle24 performance estimate after all model and threshold development decisions are frozen."
+  },
+  "cycle25_policy": {
+    "used_in_chapter_6_selection": false,
+    "allowed_after_development_freeze": true,
+    "role": "Temporal cross-cycle test only; never used for tuning, threshold selection, feature selection, or preprocessing fit."
+  },
+  "interpretation_constraints": [
+    "Validation-selected thresholds are operating points, not intrinsic physical flare-probability boundaries.",
+    "SHAP values later describe model attribution and must not be interpreted as causal solar physics.",
+    "Predictive stability and explanation stability will be evaluated separately."
+  ],
+  "immutability_rule": "After this protocol is frozen and before viewing validation outcomes, the threshold-search method, selection metrics, family-specific tie-break rules, candidate sets, preprocessing, and model artifacts must not be changed in response to validation, holdout, or Cycle25 results.",
+  "data_isolation_at_freeze": {
+    "candidate_family_contracts_read": true,
+    "validation_dataset_read": false,
+    "validation_predictions_generated": false,
+    "validation_metrics_computed": false,
+    "thresholds_selected": false,
+    "family_winners_selected": false,
+    "holdout_read": false,
+    "cycle25_read": false
+  },
+  "provenance": {
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "logistic_family_contract": {
+      "file": "artifacts\\models\\logistic\\contracts\\logistic_candidate_family_contract.json",
+      "sha256": "941647afe262474483b4aa8d23c4f55bb04ca681d5c545dfaed5d2685fb6256f"
+    },
+    "random_forest_family_contract": {
+      "file": "artifacts\\models\\random_forest\\contracts\\random_forest_candidate_family_contract.json",
+      "sha256": "2ace97567b98c6f8d34c3f1d3d8aac7d6263f21bc4334c20f872effe50b0088b"
+    },
+    "xgboost_family_contract": {
+      "file": "artifacts\\models\\xgboost\\contracts\\xgboost_candidate_family_contract.json",
+      "sha256": "d718b98d377a4a8b0812ec30e4ecfdfab0bc31166542b5fd425796c99b5103b0"
+    }
+  }
+}

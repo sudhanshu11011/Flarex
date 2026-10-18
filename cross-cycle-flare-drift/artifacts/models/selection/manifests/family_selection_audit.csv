@@ -1,0 +1,4 @@
+family,independently_expected_winner,official_selected_winner,candidate_match,expected_threshold,official_threshold,threshold_match,expected_validation_tss,official_validation_tss,tss_match,expected_validation_pr_auc,official_validation_pr_auc,pr_auc_match,model_sha256_match,primary_tss_tie_count,selection_decided_by,family_selection_audit_pass
+logistic,LR_02_C0p01_BALANCED,LR_02_C0p01_BALANCED,True,0.4548081408379442,0.4548081408379442,True,0.7974450769772896,0.7974450769772896,True,0.48918833402485,0.48918833402485,True,True,1,PRIMARY_TSS,True
+random_forest,RF_04_D12_L5_BALSUB,RF_04_D12_L5_BALSUB,True,0.1196946372748545,0.1196946372748545,True,0.7811423867212657,0.7811423867212657,True,0.4005495306655952,0.4005495306655952,True,True,1,PRIMARY_TSS,True
+xgboost,XGB_02_LR0p03_D3_BAL,XGB_02_LR0p03_D3_BAL,True,0.2638225555419922,0.2638225555419922,True,0.7772265392420137,0.7772265392420137,True,0.4129415263717138,0.4129415263717138,True,True,1,PRIMARY_TSS,True

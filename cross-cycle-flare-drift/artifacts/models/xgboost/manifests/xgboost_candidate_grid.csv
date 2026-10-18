@@ -1,0 +1,13 @@
+candidate_id,n_estimators,learning_rate,max_depth,min_child_weight,gamma,subsample,colsample_bytree,reg_alpha,reg_lambda,scale_pos_weight,max_delta_step,booster,objective,eval_metric,tree_method,random_state,n_jobs,verbosity
+XGB_01_LR0p03_D3_NONE,500,0.03,3,1.0,0.0,0.8,0.8,0.0,1.0,1.0,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_02_LR0p03_D3_BAL,500,0.03,3,1.0,0.0,0.8,0.8,0.0,1.0,24.646280991735537,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_03_LR0p03_D6_NONE,500,0.03,6,1.0,0.0,0.8,0.8,0.0,1.0,1.0,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_04_LR0p03_D6_BAL,500,0.03,6,1.0,0.0,0.8,0.8,0.0,1.0,24.646280991735537,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_05_LR0p03_D9_NONE,500,0.03,9,1.0,0.0,0.8,0.8,0.0,1.0,1.0,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_06_LR0p03_D9_BAL,500,0.03,9,1.0,0.0,0.8,0.8,0.0,1.0,24.646280991735537,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_07_LR0p1_D3_NONE,500,0.1,3,1.0,0.0,0.8,0.8,0.0,1.0,1.0,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_08_LR0p1_D3_BAL,500,0.1,3,1.0,0.0,0.8,0.8,0.0,1.0,24.646280991735537,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_09_LR0p1_D6_NONE,500,0.1,6,1.0,0.0,0.8,0.8,0.0,1.0,1.0,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_10_LR0p1_D6_BAL,500,0.1,6,1.0,0.0,0.8,0.8,0.0,1.0,24.646280991735537,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_11_LR0p1_D9_NONE,500,0.1,9,1.0,0.0,0.8,0.8,0.0,1.0,1.0,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0
+XGB_12_LR0p1_D9_BAL,500,0.1,9,1.0,0.0,0.8,0.8,0.0,1.0,24.646280991735537,0.0,gbtree,binary:logistic,logloss,hist,24025,-1,0

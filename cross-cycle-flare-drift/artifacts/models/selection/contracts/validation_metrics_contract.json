@@ -1,0 +1,79 @@
+{
+  "contract_name": "Cycle24 Validation Candidate Metrics",
+  "version": "1.0",
+  "status": "FROZEN_CANDIDATE_VALIDATION_METRICS",
+  "created_at_utc": "2026-10-18T13:29:29.565993+00:00",
+  "validation_population": {
+    "rows": 13299,
+    "positive": 515,
+    "negative": 12784
+  },
+  "candidate_count": 34,
+  "family_counts": {
+    "logistic": 10,
+    "random_forest": 12,
+    "xgboost": 12
+  },
+  "threshold_protocol": {
+    "prediction_rule": "probability >= threshold",
+    "threshold_candidates": "Every unique validation probability plus one all-negative sentinel above the maximum probability.",
+    "all_negative_sentinel": "numpy.nextafter(max_probability, +infinity)",
+    "primary_metric": "TSS",
+    "tss_definition": "TPR - FPR",
+    "exact_tss_comparison": "Compare integer quantity TP * N_negative - FP * N_positive.",
+    "tie_break": "highest threshold",
+    "default_threshold_0_5_forced": false
+  },
+  "metric_implementations": {
+    "PR_AUC": "sklearn.metrics.average_precision_score",
+    "PR_AUC_note": "Non-interpolated average precision implementation used as the operational PR-AUC quantity for the frozen selection hierarchy.",
+    "ROC_AUC": "sklearn.metrics.roc_auc_score",
+    "Brier_score": "sklearn.metrics.brier_score_loss",
+    "HSS": "2*(TP*TN - FN*FP) / ((TP+FN)*(FN+TN) + (TP+FP)*(FP+TN))",
+    "F1": "2*TP / (2*TP + FP + FN)"
+  },
+  "artifacts": {
+    "threshold_sweep": {
+      "file": "artifacts\\models\\selection\\metrics\\validation_threshold_sweep.parquet",
+      "sha256": "ce882e254526ae1eb80a298add6d7127f3858d4dd0fd7e61c1cfda3c786ff217",
+      "rows": 360674
+    },
+    "candidate_metrics": {
+      "file": "artifacts\\models\\selection\\manifests\\validation_candidate_metrics.csv",
+      "sha256": "3dc2a273645eddb4f7d17a1e42ceeedf4bd9c4bcb304ba5ae203c3421c2022ec",
+      "rows": 34
+    }
+  },
+  "selection_state": {
+    "candidate_thresholds_selected": true,
+    "candidate_validation_metrics_computed": true,
+    "family_winners_selected": false,
+    "cross_family_winner_selected": false,
+    "model_retraining_performed": false
+  },
+  "data_isolation": {
+    "validation_predictions_used": true,
+    "raw_validation_dataset_reread": false,
+    "holdout_read": false,
+    "cycle25_read": false
+  },
+  "immutability_rule": "Candidate-specific validation thresholds and validation metrics are now frozen. They must not be changed after viewing candidate performance. Chapter 6.4 may only apply the already-frozen family selection hierarchy to these results.",
+  "provenance": {
+    "validation_prediction_artifact": {
+      "file": "artifacts\\models\\selection\\predictions\\cycle24_validation_predictions.parquet",
+      "sha256": "7f9a0e11f195c6bfce0289a7c3069626064553e95b4b8a49cf3a3f54b44399cd"
+    },
+    "validation_prediction_contract": {
+      "file": "artifacts\\models\\selection\\contracts\\validation_prediction_contract.json",
+      "sha256": "7d4fa7b5a09ea0c2da117787f9c4895274d1ccc5fb8bcbb608da39c18a784d85"
+    },
+    "selection_protocol": {
+      "file": "artifacts\\models\\selection\\contracts\\model_selection_protocol.json",
+      "sha256": "d95aae3e4daf4f8cfbfe67cbfdf80fef72796698a7ea91a3bd45906a7d8e5dd4"
+    },
+    "candidate_registry": {
+      "file": "artifacts\\models\\selection\\manifests\\frozen_candidate_registry.csv",
+      "sha256": "059fd000a8878d49acacbb1f4f3817b493b67101572b36dbf1f1ab8ac5082072"
+    }
+  }
+}

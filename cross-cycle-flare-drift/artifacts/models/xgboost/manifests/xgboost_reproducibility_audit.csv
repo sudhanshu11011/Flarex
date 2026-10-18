@@ -1,0 +1,13 @@
+candidate_id,saved_boosted_rounds,fresh_boosted_rounds,boosted_round_match,classes_match,feature_count_match,booster_feature_count_match,feature_importance_max_abs_diff,feature_importance_match,saved_tree_count,fresh_tree_count,dumped_tree_count_match,exact_tree_matches,tree_dump_exact_match,probability_max_abs_diff,probability_match,fresh_warning_count,saved_xgboost_version,current_xgboost_version,xgboost_version_match,reproducibility_pass
+XGB_01_LR0p03_D3_NONE,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_02_LR0p03_D3_BAL,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_03_LR0p03_D6_NONE,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_04_LR0p03_D6_BAL,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_05_LR0p03_D9_NONE,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_06_LR0p03_D9_BAL,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_07_LR0p1_D3_NONE,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_08_LR0p1_D3_BAL,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_09_LR0p1_D6_NONE,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_10_LR0p1_D6_BAL,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_11_LR0p1_D9_NONE,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True
+XGB_12_LR0p1_D9_BAL,500,500,True,True,True,True,0.0,True,500,500,True,500,True,0.0,True,0,3.4.1,3.4.1,True,True

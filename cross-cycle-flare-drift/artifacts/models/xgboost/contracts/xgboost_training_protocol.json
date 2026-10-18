@@ -1,0 +1,133 @@
+{
+  "protocol_name": "XGBoost Candidate Training Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_TRAINING",
+  "created_at_utc": "2026-10-18T11:09:36.021745+00:00",
+  "model_family": "XGBClassifier",
+  "scientific_role": "Gradient-boosted tree model used as a nonlinear primary model for cross-cycle predictive and SHAP explanation-stability analysis.",
+  "training_scope": "CYCLE24_TRAIN_ONLY",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "preprocessing": {
+    "method": "IDENTITY_RAW_FEATURES",
+    "scaling": false,
+    "imputation": false,
+    "feature_selection": false,
+    "pca": false,
+    "clipping": false,
+    "winsorization": false,
+    "log_transform": false
+  },
+  "train_class_distribution": {
+    "rows": 62064,
+    "positive": 2420,
+    "negative": 59644,
+    "positive_rate": 0.038992008249548855,
+    "negative_to_positive_ratio": 24.646280991735537
+  },
+  "model_fixed_parameters": {
+    "n_estimators": 500,
+    "booster": "gbtree",
+    "objective": "binary:logistic",
+    "eval_metric": "logloss",
+    "tree_method": "hist",
+    "min_child_weight": 1.0,
+    "gamma": 0.0,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0.0,
+    "reg_lambda": 1.0,
+    "max_delta_step": 0.0,
+    "random_state": 24025,
+    "n_jobs": -1,
+    "verbosity": 0
+  },
+  "candidate_search_space": {
+    "learning_rate": [
+      0.03,
+      0.1
+    ],
+    "max_depth": [
+      3,
+      6,
+      9
+    ],
+    "scale_pos_weight": [
+      1.0,
+      24.646280991735537
+    ],
+    "candidate_count": 12
+  },
+  "candidate_design_rationale": {
+    "learning_rate": "Compares conservative boosting with a moderate learning rate while keeping the tree count fixed before validation.",
+    "max_depth": "Tests shallow, moderate, and deeper interaction structures without using validation information.",
+    "scale_pos_weight": "Compares unweighted boosting against a TRAIN-only class-imbalance correction. The balanced value is frozen as TRAIN negatives / TRAIN positives.",
+    "n_estimators": "Fixed at 500 to avoid turning the number of boosting rounds into an additional validation-tuned axis.",
+    "subsample_and_colsample": "Fixed at 0.8 to introduce controlled stochastic regularization without expanding the candidate grid."
+  },
+  "early_stopping": {
+    "enabled": false,
+    "reason": "Early stopping would require an evaluation dataset. Cycle24 validation is intentionally isolated until Chapter 6 model selection."
+  },
+  "training_provenance": {
+    "train_split": "CYCLE24_TRAIN",
+    "train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+    "split_contract": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+    "split_contract_sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3",
+    "feature_contract": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+    "feature_contract_sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb",
+    "preprocessing_contract": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+    "preprocessing_contract_sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+  },
+  "data_isolation": {
+    "train_design_information_used": true,
+    "validation_used": false,
+    "holdout_used": false,
+    "cycle25_used": false
+  },
+  "selection_protocol": {
+    "selection_stage": "MODEL_CHAPTER_6",
+    "selection_dataset": "CYCLE24_VALIDATION",
+    "primary_metric": "TSS",
+    "threshold_strategy": "For each frozen XGBoost candidate, choose the probability threshold that maximizes TSS on Cycle24 validation only.",
+    "winner_rule": "Select the frozen XGBoost candidate with highest Cycle24 validation TSS after candidate-specific threshold selection.",
+    "tie_break_order": [
+      "higher_validation_TSS",
+      "higher_validation_PR_AUC",
+      "smaller_max_depth",
+      "smaller_learning_rate",
+      "scale_pos_weight_1_before_balanced",
+      "lexicographically_smaller_candidate_id"
+    ],
+    "holdout_for_selection": false,
+    "cycle25_for_selection": false
+  },
+  "explainability_note": "Built-in XGBoost feature importance is not the primary explanation method. Final explanation analysis will use the frozen SHAP protocol. Feature importance from training is diagnostic only.",
+  "immutability_rule": "After this protocol is frozen, XGBoost candidate hyperparameters, candidate count, feature set, TRAIN class-weight ratio, training split, preprocessing, and candidate definitions may not be changed in response to validation, holdout, or Cycle25 results."
+}
