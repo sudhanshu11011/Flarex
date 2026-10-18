@@ -1,0 +1,11 @@
+candidate_id,C,class_weight,saved_n_iter,fresh_n_iter,n_iter_match,coefficient_max_abs_diff,coefficient_match,intercept_max_abs_diff,intercept_match,probability_max_abs_diff,probability_match,classes_match,fresh_convergence_warning_count,fresh_unexpected_warning_count,reproducibility_pass
+LR_01_C0p01_NONE,0.01,None,49,49,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_02_C0p01_BALANCED,0.01,balanced,82,82,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_03_C0p1_NONE,0.1,None,124,124,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_04_C0p1_BALANCED,0.1,balanced,144,144,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_05_C1p0_NONE,1.0,None,194,194,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_06_C1p0_BALANCED,1.0,balanced,176,176,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_07_C10p0_NONE,10.0,None,223,223,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_08_C10p0_BALANCED,10.0,balanced,191,191,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_09_C100p0_NONE,100.0,None,240,240,True,0.0,True,0.0,True,0.0,True,True,0,0,True
+LR_10_C100p0_BALANCED,100.0,balanced,181,181,True,0.0,True,0.0,True,0.0,True,True,0,0,True

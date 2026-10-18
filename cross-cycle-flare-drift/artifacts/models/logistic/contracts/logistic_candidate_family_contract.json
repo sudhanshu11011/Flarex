@@ -1,0 +1,208 @@
+{
+  "contract_name": "Frozen Logistic Regression Candidate Family",
+  "version": "1.0",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-10-18T10:40:23.115882+00:00",
+  "model_family": "LogisticRegression",
+  "candidate_count": 10,
+  "candidate_ids": [
+    "LR_01_C0p01_NONE",
+    "LR_02_C0p01_BALANCED",
+    "LR_03_C0p1_NONE",
+    "LR_04_C0p1_BALANCED",
+    "LR_05_C1p0_NONE",
+    "LR_06_C1p0_BALANCED",
+    "LR_07_C10p0_NONE",
+    "LR_08_C10p0_BALANCED",
+    "LR_09_C100p0_NONE",
+    "LR_10_C100p0_BALANCED"
+  ],
+  "training_scope": "CYCLE24_TRAIN_ONLY",
+  "feature_count": 25,
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "preprocessing": {
+    "method": "StandardScaler",
+    "fit_scope": "CYCLE24_TRAIN_ONLY",
+    "artifact_sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5",
+    "refit_allowed": false
+  },
+  "training_protocol": {
+    "penalty": "l2",
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "tol": 1e-06,
+    "random_state": 24025,
+    "candidate_search_space": {
+      "C": [
+        0.01,
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "class_weight": [
+        null,
+        "balanced"
+      ],
+      "candidate_count": 10
+    }
+  },
+  "verification": {
+    "chapter_3_2_training_complete": true,
+    "candidate_count_trained": 10,
+    "candidate_count_converged": 10,
+    "convergence_warning_count": 0,
+    "future_warning_count": 10,
+    "future_warning_status": "DOCUMENTED_NON_BLOCKING",
+    "unexpected_warning_count": 0,
+    "chapter_3_3_candidate_audit": "PASS",
+    "chapter_3_4_artifact_verification": "PASS",
+    "chapter_3_5_reproducibility": "PASS",
+    "max_reproducibility_coefficient_difference": 0.0,
+    "max_reproducibility_intercept_difference": 0.0,
+    "max_reproducibility_probability_difference": 0.0
+  },
+  "selection_state": {
+    "winner_selected": false,
+    "threshold_selected": false,
+    "validation_metrics_computed": false,
+    "selection_stage": "MODEL_CHAPTER_6",
+    "primary_selection_metric": "TSS",
+    "selection_dataset": "CYCLE24_VALIDATION"
+  },
+  "data_isolation": {
+    "training_data": "CYCLE24_TRAIN_ONLY",
+    "validation_used": false,
+    "holdout_used": false,
+    "cycle25_used": false
+  },
+  "immutability_rule": "The 10 Logistic Regression candidate models, their hyperparameters, feature order, fitted parameters, TRAIN provenance, scaler provenance, and model hashes are frozen. Candidates must not be retrained, removed, added, or modified in response to validation, holdout, or Cycle25 performance. Chapter 6 may only evaluate and select among this frozen candidate family.",
+  "future_warning_note": "Training under scikit-learn 1.9.1 emitted one FutureWarning per candidate because explicit penalty='l2' is deprecated. No convergence warnings or unexpected warnings occurred. The warning is documented and non-blocking; the pre-registered training protocol was preserved.",
+  "software": {
+    "scikit_learn_version": "1.9.1"
+  },
+  "candidate_files": [
+    {
+      "candidate_id": "LR_01_C0p01_NONE",
+      "file": "artifacts\\models\\logistic\\models\\LR_01_C0p01_NONE.joblib",
+      "sha256": "2498ec419e4af87ad8df758b906d8697a1565d7b003ee38afbd3f4a39e66b148"
+    },
+    {
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "file": "artifacts\\models\\logistic\\models\\LR_02_C0p01_BALANCED.joblib",
+      "sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd"
+    },
+    {
+      "candidate_id": "LR_03_C0p1_NONE",
+      "file": "artifacts\\models\\logistic\\models\\LR_03_C0p1_NONE.joblib",
+      "sha256": "c8374d5d5a76bbf19e1f155b384594f9f8e1dbf70ebc66f6c9970a24c02dc0e0"
+    },
+    {
+      "candidate_id": "LR_04_C0p1_BALANCED",
+      "file": "artifacts\\models\\logistic\\models\\LR_04_C0p1_BALANCED.joblib",
+      "sha256": "cfcb242dddaaf741ff77cc62eef8633368c7fdfeb6bd906791e206be0486e3ec"
+    },
+    {
+      "candidate_id": "LR_05_C1p0_NONE",
+      "file": "artifacts\\models\\logistic\\models\\LR_05_C1p0_NONE.joblib",
+      "sha256": "1d18d7a8bf05ffc9e4e1fd9e658a38087f94be02312e51762b64e678b1f3701b"
+    },
+    {
+      "candidate_id": "LR_06_C1p0_BALANCED",
+      "file": "artifacts\\models\\logistic\\models\\LR_06_C1p0_BALANCED.joblib",
+      "sha256": "3fb68e6be0c0ea064b71d51329332fe5229c939c15278448273b0f50c665a3d3"
+    },
+    {
+      "candidate_id": "LR_07_C10p0_NONE",
+      "file": "artifacts\\models\\logistic\\models\\LR_07_C10p0_NONE.joblib",
+      "sha256": "be635ff5c721c0a543ed4251155917a056a07ddae63e8bed9e6d1d0fad6bf16b"
+    },
+    {
+      "candidate_id": "LR_08_C10p0_BALANCED",
+      "file": "artifacts\\models\\logistic\\models\\LR_08_C10p0_BALANCED.joblib",
+      "sha256": "7a695a794985ec40d1a6c984d8d4c537e61906578a04ce9171220d41b07850c5"
+    },
+    {
+      "candidate_id": "LR_09_C100p0_NONE",
+      "file": "artifacts\\models\\logistic\\models\\LR_09_C100p0_NONE.joblib",
+      "sha256": "a47e4564aea0d0c21032cd96f8ba9e0c5021ef89a66cab56b914c8c149af847b"
+    },
+    {
+      "candidate_id": "LR_10_C100p0_BALANCED",
+      "file": "artifacts\\models\\logistic\\models\\LR_10_C100p0_BALANCED.joblib",
+      "sha256": "091b1b2e8fc64345beb8ec424ef3fb980b11d4f1a17a93a26f4a8398d0d2918f"
+    }
+  ],
+  "provenance": {
+    "training_protocol": {
+      "file": "artifacts\\models\\logistic\\contracts\\logistic_training_protocol.json",
+      "sha256": "5616d4be136048826a967b83f3418108c2ce9b241a92a0d35586df9a104b7e3e"
+    },
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "candidate_grid": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_candidate_grid.csv",
+      "sha256": "37915c8b2a66df0cc7947fd768784a69e295611b77be1d0a304e95c75ad18206"
+    },
+    "training_summary": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_training_summary.csv",
+      "sha256": "5f4ff8bef9857276284870db602b23e47d8c06aaf51121c59745e3aee3f61b6f"
+    },
+    "candidate_audit": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_candidate_audit.csv",
+      "sha256": "f972e2fd5da4214fba980bd961b7156735e6d5173f1a1390364931f6949fd4fa"
+    },
+    "artifact_inventory": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_artifact_inventory.csv",
+      "sha256": "08140afe457f758c09792758f471cf4879e0c653020f0a6052912d4aa265e782"
+    },
+    "artifact_verification": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_artifact_verification_summary.csv",
+      "sha256": "d2b87bf473bc29f61eddcd3424a0d47e27dc1101de944c5f652a725e7e42533c"
+    },
+    "reproducibility_audit": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_reproducibility_audit.csv",
+      "sha256": "f755cfb54a76825651a7d00d8f0c69c9bcc4e58d5063b4be003fc736ecb5eab2"
+    },
+    "reproducibility_summary": {
+      "file": "artifacts\\models\\logistic\\manifests\\logistic_reproducibility_summary.csv",
+      "sha256": "99eefb0c0a59c7c61e0f4157a49f7580747908ce6ebb60cd8fbbb1b252dbfdc9"
+    }
+  }
+}

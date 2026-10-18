@@ -1,0 +1,2 @@
+candidates_checked,candidates_reproducible,max_coefficient_abs_difference,max_intercept_abs_difference,max_probability_abs_difference,coefficient_atol,coefficient_rtol,intercept_atol,intercept_rtol,probability_atol,probability_rtol,fresh_convergence_warnings,fresh_unexpected_warnings,validation_used,holdout_used,cycle25_used,model_selection_performed,reproducibility_pass
+10,10,0.0,0.0,0.0,1e-10,1e-10,1e-10,1e-10,1e-10,1e-10,0,0,False,False,False,False,True

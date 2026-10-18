@@ -31,7 +31,6 @@ data/external/*
 !data/external/.gitkeep
 
 # Generated model artifacts
-artifacts/models/*
 artifacts/preprocessors/*
 
 # Temporary logs
@@ -97,3 +96,13 @@ data/processed/
 data/final/*.parquet
 artifacts/splitting/data/*.parquet
 artifacts/preprocessing/scalers/*.joblib
+
+.env
+.venv/
+__pycache__/
+data/raw/
+data/processed/
+data/final/*.parquet
+artifacts/splitting/data/*.parquet
+artifacts/preprocessing/scalers/*.joblib
+artifacts/models/logistic/models/*.joblib
