@@ -1,0 +1,10 @@
+candidate_id,stratum,structure_replicates,featurewise_rows,features,structure_metrics,finite_structure_metrics,finite_featurewise_values,integrity_pass
+LR_02_C0p01_BALANCED,OVERALL,2000,50000,25,8,True,True,True
+LR_02_C0p01_BALANCED,TARGET_0,2000,50000,25,8,True,True,True
+LR_02_C0p01_BALANCED,TARGET_1,2000,50000,25,8,True,True,True
+RF_04_D12_L5_BALSUB,OVERALL,2000,50000,25,8,True,True,True
+RF_04_D12_L5_BALSUB,TARGET_0,2000,50000,25,8,True,True,True
+RF_04_D12_L5_BALSUB,TARGET_1,2000,50000,25,8,True,True,True
+XGB_02_LR0p03_D3_BAL,OVERALL,2000,50000,25,8,True,True,True
+XGB_02_LR0p03_D3_BAL,TARGET_0,2000,50000,25,8,True,True,True
+XGB_02_LR0p03_D3_BAL,TARGET_1,2000,50000,25,8,True,True,True

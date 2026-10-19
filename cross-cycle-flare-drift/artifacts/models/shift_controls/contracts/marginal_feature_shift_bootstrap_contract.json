@@ -1,0 +1,415 @@
+{
+  "contract_name": "Cycle24 Holdout to Cycle25 Marginal Feature Shift ENTITY_GROUP Bootstrap",
+  "version": "1.0",
+  "status": "FROZEN_MARGINAL_SHIFT_BOOTSTRAP_CI",
+  "created_at_utc": "2026-10-18T17:14:05.614577+00:00",
+  "chapter": "MODEL_CHAPTER_9_2B",
+  "reference_domain": "CYCLE24_HOLDOUT",
+  "transfer_domain": "CYCLE25",
+  "transfer_scopes": [
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025",
+    "C25_ALL_2020_2025"
+  ],
+  "strata": [
+    "OVERALL",
+    "TARGET_0",
+    "TARGET_1"
+  ],
+  "features": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "feature_count": 25,
+  "point_comparisons": 300,
+  "bootstrap_design": {
+    "unit": "ENTITY_GROUP",
+    "domains_resampled_independently": true,
+    "reference_draw_rule": "Within each stratum, draw G_ref Cycle24-holdout ENTITY_GROUP clusters with replacement.",
+    "transfer_draw_rule": "Within each Cycle25 scope and stratum, draw G_transfer ENTITY_GROUP clusters with replacement.",
+    "group_count_distribution": "Multinomial count representation of G independent group draws with replacement.",
+    "same_group_draws_across_25_features": true,
+    "replicates": 2000,
+    "base_seed": 29021,
+    "rng": "numpy.random.SeedSequence + default_rng",
+    "comparison_child_streams": {
+      "C25_B1_2020_2021__OVERALL": {
+        "comparison_index": 0,
+        "derived_seed_uint32": 1016907219,
+        "spawn_key": [
+          0
+        ]
+      },
+      "C25_B1_2020_2021__TARGET_0": {
+        "comparison_index": 1,
+        "derived_seed_uint32": 1231594677,
+        "spawn_key": [
+          1
+        ]
+      },
+      "C25_B1_2020_2021__TARGET_1": {
+        "comparison_index": 2,
+        "derived_seed_uint32": 3004040154,
+        "spawn_key": [
+          2
+        ]
+      },
+      "C25_B2_2022_2023__OVERALL": {
+        "comparison_index": 3,
+        "derived_seed_uint32": 800078564,
+        "spawn_key": [
+          3
+        ]
+      },
+      "C25_B2_2022_2023__TARGET_0": {
+        "comparison_index": 4,
+        "derived_seed_uint32": 190085350,
+        "spawn_key": [
+          4
+        ]
+      },
+      "C25_B2_2022_2023__TARGET_1": {
+        "comparison_index": 5,
+        "derived_seed_uint32": 512613387,
+        "spawn_key": [
+          5
+        ]
+      },
+      "C25_B3_2024_2025__OVERALL": {
+        "comparison_index": 6,
+        "derived_seed_uint32": 366246734,
+        "spawn_key": [
+          6
+        ]
+      },
+      "C25_B3_2024_2025__TARGET_0": {
+        "comparison_index": 7,
+        "derived_seed_uint32": 3639923866,
+        "spawn_key": [
+          7
+        ]
+      },
+      "C25_B3_2024_2025__TARGET_1": {
+        "comparison_index": 8,
+        "derived_seed_uint32": 3256322688,
+        "spawn_key": [
+          8
+        ]
+      },
+      "C25_ALL_2020_2025__OVERALL": {
+        "comparison_index": 9,
+        "derived_seed_uint32": 1069002733,
+        "spawn_key": [
+          9
+        ]
+      },
+      "C25_ALL_2020_2025__TARGET_0": {
+        "comparison_index": 10,
+        "derived_seed_uint32": 827191531,
+        "spawn_key": [
+          10
+        ]
+      },
+      "C25_ALL_2020_2025__TARGET_1": {
+        "comparison_index": 11,
+        "derived_seed_uint32": 3582203494,
+        "spawn_key": [
+          11
+        ]
+      }
+    },
+    "comparison_order": [
+      {
+        "comparison_index": 0,
+        "transfer_scope": "C25_B1_2020_2021",
+        "stratum": "OVERALL"
+      },
+      {
+        "comparison_index": 1,
+        "transfer_scope": "C25_B1_2020_2021",
+        "stratum": "TARGET_0"
+      },
+      {
+        "comparison_index": 2,
+        "transfer_scope": "C25_B1_2020_2021",
+        "stratum": "TARGET_1"
+      },
+      {
+        "comparison_index": 3,
+        "transfer_scope": "C25_B2_2022_2023",
+        "stratum": "OVERALL"
+      },
+      {
+        "comparison_index": 4,
+        "transfer_scope": "C25_B2_2022_2023",
+        "stratum": "TARGET_0"
+      },
+      {
+        "comparison_index": 5,
+        "transfer_scope": "C25_B2_2022_2023",
+        "stratum": "TARGET_1"
+      },
+      {
+        "comparison_index": 6,
+        "transfer_scope": "C25_B3_2024_2025",
+        "stratum": "OVERALL"
+      },
+      {
+        "comparison_index": 7,
+        "transfer_scope": "C25_B3_2024_2025",
+        "stratum": "TARGET_0"
+      },
+      {
+        "comparison_index": 8,
+        "transfer_scope": "C25_B3_2024_2025",
+        "stratum": "TARGET_1"
+      },
+      {
+        "comparison_index": 9,
+        "transfer_scope": "C25_ALL_2020_2025",
+        "stratum": "OVERALL"
+      },
+      {
+        "comparison_index": 10,
+        "transfer_scope": "C25_ALL_2020_2025",
+        "stratum": "TARGET_0"
+      },
+      {
+        "comparison_index": 11,
+        "transfer_scope": "C25_ALL_2020_2025",
+        "stratum": "TARGET_1"
+      }
+    ]
+  },
+  "metric_implementation": {
+    "ks_statistic": "Maximum absolute difference between cluster-bootstrap weighted empirical CDFs.",
+    "wasserstein_distance": "Integral of absolute difference between weighted empirical CDFs over the combined fixed feature support.",
+    "normalized_wasserstein": "Bootstrap Wasserstein distance divided by the corresponding full-sample frozen Cycle24-holdout stratum IQR.",
+    "median_shift_iqr_units": "Bootstrap Cycle25 median minus bootstrap Cycle24 median, divided by the corresponding full-sample frozen Cycle24-holdout stratum IQR.",
+    "normalization_denominator_reestimated_in_bootstrap": false
+  },
+  "confidence_intervals": {
+    "method": "percentile",
+    "confidence_level": 0.95,
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "numpy_quantile_method": "linear"
+  },
+  "comparison_summary": [
+    {
+      "comparison_index": 0,
+      "transfer_scope": "C25_B1_2020_2021",
+      "stratum": "OVERALL",
+      "reference_rows": 13072,
+      "transfer_rows": 10411,
+      "reference_groups": 176,
+      "transfer_groups": 146,
+      "replicates": 2000,
+      "derived_seed_uint32": 1016907219
+    },
+    {
+      "comparison_index": 1,
+      "transfer_scope": "C25_B1_2020_2021",
+      "stratum": "TARGET_0",
+      "reference_rows": 12545,
+      "transfer_rows": 10278,
+      "reference_groups": 175,
+      "transfer_groups": 146,
+      "replicates": 2000,
+      "derived_seed_uint32": 1231594677
+    },
+    {
+      "comparison_index": 2,
+      "transfer_scope": "C25_B1_2020_2021",
+      "stratum": "TARGET_1",
+      "reference_rows": 527,
+      "transfer_rows": 133,
+      "reference_groups": 25,
+      "transfer_groups": 9,
+      "replicates": 2000,
+      "derived_seed_uint32": 3004040154
+    },
+    {
+      "comparison_index": 3,
+      "transfer_scope": "C25_B2_2022_2023",
+      "stratum": "OVERALL",
+      "reference_rows": 13072,
+      "transfer_rows": 33132,
+      "reference_groups": 176,
+      "transfer_groups": 414,
+      "replicates": 2000,
+      "derived_seed_uint32": 800078564
+    },
+    {
+      "comparison_index": 4,
+      "transfer_scope": "C25_B2_2022_2023",
+      "stratum": "TARGET_0",
+      "reference_rows": 12545,
+      "transfer_rows": 31331,
+      "reference_groups": 175,
+      "transfer_groups": 414,
+      "replicates": 2000,
+      "derived_seed_uint32": 190085350
+    },
+    {
+      "comparison_index": 5,
+      "transfer_scope": "C25_B2_2022_2023",
+      "stratum": "TARGET_1",
+      "reference_rows": 527,
+      "transfer_rows": 1801,
+      "reference_groups": 25,
+      "transfer_groups": 100,
+      "replicates": 2000,
+      "derived_seed_uint32": 512613387
+    },
+    {
+      "comparison_index": 6,
+      "transfer_scope": "C25_B3_2024_2025",
+      "stratum": "OVERALL",
+      "reference_rows": 13072,
+      "transfer_rows": 35818,
+      "reference_groups": 176,
+      "transfer_groups": 458,
+      "replicates": 2000,
+      "derived_seed_uint32": 366246734
+    },
+    {
+      "comparison_index": 7,
+      "transfer_scope": "C25_B3_2024_2025",
+      "stratum": "TARGET_0",
+      "reference_rows": 12545,
+      "transfer_rows": 32916,
+      "reference_groups": 175,
+      "transfer_groups": 458,
+      "replicates": 2000,
+      "derived_seed_uint32": 3639923866
+    },
+    {
+      "comparison_index": 8,
+      "transfer_scope": "C25_B3_2024_2025",
+      "stratum": "TARGET_1",
+      "reference_rows": 527,
+      "transfer_rows": 2902,
+      "reference_groups": 25,
+      "transfer_groups": 113,
+      "replicates": 2000,
+      "derived_seed_uint32": 3256322688
+    },
+    {
+      "comparison_index": 9,
+      "transfer_scope": "C25_ALL_2020_2025",
+      "stratum": "OVERALL",
+      "reference_rows": 13072,
+      "transfer_rows": 79361,
+      "reference_groups": 176,
+      "transfer_groups": 1011,
+      "replicates": 2000,
+      "derived_seed_uint32": 1069002733
+    },
+    {
+      "comparison_index": 10,
+      "transfer_scope": "C25_ALL_2020_2025",
+      "stratum": "TARGET_0",
+      "reference_rows": 12545,
+      "transfer_rows": 74525,
+      "reference_groups": 175,
+      "transfer_groups": 1011,
+      "replicates": 2000,
+      "derived_seed_uint32": 827191531
+    },
+    {
+      "comparison_index": 11,
+      "transfer_scope": "C25_ALL_2020_2025",
+      "stratum": "TARGET_1",
+      "reference_rows": 527,
+      "transfer_rows": 4836,
+      "reference_groups": 25,
+      "transfer_groups": 222,
+      "replicates": 2000,
+      "derived_seed_uint32": 3582203494
+    }
+  ],
+  "artifacts": {
+    "bootstrap_replicates": {
+      "file": "artifacts\\models\\shift_controls\\bootstrap\\marginal_shift_group_bootstrap_replicates.parquet",
+      "sha256": "86fa23ef4c92a6c046747477bb401f03b533cbd2bcce8e0fe41be79e8661f68b",
+      "rows": 600000
+    },
+    "bootstrap_ci": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\marginal_feature_shift_bootstrap_ci.csv",
+      "sha256": "139db3d2c506a4a9d5c80dbad1a333815dfb868c666c745e112611e29127ca29",
+      "rows": 1200
+    }
+  },
+  "evaluation_state": {
+    "marginal_point_results": true,
+    "marginal_bootstrap_ci": true,
+    "binary_feature_shift_declaration": false,
+    "joint_domain_classifier": false,
+    "common_support": false,
+    "correlated_feature_groups": false,
+    "shap_values": false,
+    "shap_null": false,
+    "explanation_drift": false
+  },
+  "data_access": {
+    "cycle24_holdout_read": true,
+    "cycle25_read": true,
+    "cycle24_train_read": false,
+    "models_loaded": false,
+    "models_retrained": false,
+    "shap_computed": false
+  },
+  "provenance": {
+    "chapter_9_1_protocol": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\shift_null_control_protocol.json",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    },
+    "chapter_9_2a_point_results": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\marginal_feature_shift_point.csv",
+      "sha256": "43d878d8c79d14ce77e446762e01849cedc664e75ca525d11c32c0b4e9db5d1c"
+    },
+    "chapter_9_2a_contract": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\marginal_feature_shift_point_contract.json",
+      "sha256": "b4603472494dc933b6f18b9ae966c40854508c97a3bcbfcac27fe072b399f6cc"
+    },
+    "feature_registry": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\shift_feature_registry.csv",
+      "sha256": "8433ceb5406accbb68172469d829c72ad675410b96a1a7bd20a8f0bb60d61183"
+    },
+    "cycle24_holdout": {
+      "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+      "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc"
+    },
+    "cycle25_dataset": {
+      "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+      "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d"
+    }
+  },
+  "interpretation_rule": "Bootstrap confidence intervals quantify ENTITY_GROUP-level sampling uncertainty for the frozen marginal distribution discrepancy metrics. Because KS and Wasserstein distances are non-negative, their percentile intervals are not interpreted as null-hypothesis tests of identical distributions. No binary feature-shift declaration is made here.",
+  "immutability_rule": "Observed bootstrap intervals must not change the frozen shift metrics, strata, temporal blocks, common-support design, correlated-feature grouping rule, SHAP background, or within-Cycle24 SHAP null-control design."
+}

@@ -1,0 +1,226 @@
+{
+  "contract_name": "Cycle24-TRAIN Correlated SHARP Feature Groups",
+  "version": "1.0",
+  "status": "FROZEN_CORRELATED_FEATURE_GROUPS",
+  "created_at_utc": "2026-10-18T17:27:20.797228+00:00",
+  "chapter": "MODEL_CHAPTER_9_5",
+  "source_population": {
+    "name": "CYCLE24_TRAIN_ONLY",
+    "file": "artifacts\\splitting\\data\\cycle24_train.parquet",
+    "sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+    "rows": 62064,
+    "entity_groups": 822,
+    "cycle24_validation_used": false,
+    "cycle24_holdout_used": false,
+    "cycle25_used": false
+  },
+  "features": {
+    "count": 25,
+    "order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "feature_selection_performed": false,
+    "feature_removed": false
+  },
+  "correlation_design": {
+    "method": "SPEARMAN",
+    "source_rows": "ALL_CYCLE24_TRAIN_ROWS",
+    "pair_count": 300,
+    "absolute_rho_threshold": 0.8,
+    "edge_rule": "ABS(SPEARMAN_RHO) >= 0.80",
+    "threshold_crossing_edges": 33,
+    "graph_type": "UNDIRECTED",
+    "grouping_method": "CONNECTED_COMPONENTS",
+    "transitive_grouping": true,
+    "singleton_features_preserved": true,
+    "group_order_rule": "Groups ordered by earliest member position in frozen 25-feature order."
+  },
+  "group_results": {
+    "group_count": 10,
+    "singleton_group_count": 6,
+    "multi_feature_group_count": 4,
+    "largest_group_size": 13,
+    "groups": [
+      {
+        "group_id": "CFG_01",
+        "group_size": 13,
+        "members": [
+          "TOTUSJH",
+          "TOTPOT",
+          "TOTUSJZ",
+          "ABSNJZH",
+          "SAVNCPP",
+          "USFLUX",
+          "AREA_ACR",
+          "MEANPOT",
+          "R_VALUE",
+          "SHRGT45",
+          "MEANSHR",
+          "MEANGAM",
+          "TOTBSQ"
+        ],
+        "is_singleton": false
+      },
+      {
+        "group_id": "CFG_02",
+        "group_size": 2,
+        "members": [
+          "MEANGBT",
+          "MEANGBZ"
+        ],
+        "is_singleton": false
+      },
+      {
+        "group_id": "CFG_03",
+        "group_size": 1,
+        "members": [
+          "MEANGBH"
+        ],
+        "is_singleton": true
+      },
+      {
+        "group_id": "CFG_04",
+        "group_size": 2,
+        "members": [
+          "MEANJZH",
+          "MEANALP"
+        ],
+        "is_singleton": false
+      },
+      {
+        "group_id": "CFG_05",
+        "group_size": 1,
+        "members": [
+          "MEANJZD"
+        ],
+        "is_singleton": true
+      },
+      {
+        "group_id": "CFG_06",
+        "group_size": 1,
+        "members": [
+          "TOTFX"
+        ],
+        "is_singleton": true
+      },
+      {
+        "group_id": "CFG_07",
+        "group_size": 2,
+        "members": [
+          "TOTFY",
+          "EPSY"
+        ],
+        "is_singleton": false
+      },
+      {
+        "group_id": "CFG_08",
+        "group_size": 1,
+        "members": [
+          "TOTFZ"
+        ],
+        "is_singleton": true
+      },
+      {
+        "group_id": "CFG_09",
+        "group_size": 1,
+        "members": [
+          "EPSX"
+        ],
+        "is_singleton": true
+      },
+      {
+        "group_id": "CFG_10",
+        "group_size": 1,
+        "members": [
+          "EPSZ"
+        ],
+        "is_singleton": true
+      }
+    ]
+  },
+  "future_shap_use": {
+    "individual_feature_analysis_retained": true,
+    "group_level_analysis_required": true,
+    "group_level_mean_abs_shap_rule": "Sum member-feature mean absolute SHAP magnitudes.",
+    "groups_may_not_be_changed_using_cycle25": true,
+    "correlation_is_not_causality": true
+  },
+  "artifacts": {
+    "spearman_correlation_matrix": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\cycle24_train_spearman_correlation.csv",
+      "sha256": "7780fb03642fcaaf1d72014a4e313cf41b4c291e1db482cd6fa41f07f1dd7ef9",
+      "rows": 25
+    },
+    "feature_pairs": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\correlated_feature_pairs.csv",
+      "sha256": "8d9f2ffb9fcdf10b4f7e92b215fd5aaabbb48387687e4d56c649e3453dbf7e91",
+      "rows": 300,
+      "threshold_crossing_edges": 33
+    },
+    "correlated_feature_groups": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\correlated_feature_groups.csv",
+      "sha256": "71d94de4a253c791469893650e159ee61e44253accb47e7cecf154ce2fb0b9bf",
+      "rows": 25,
+      "groups": 10
+    }
+  },
+  "data_access": {
+    "cycle24_train_read": true,
+    "cycle24_validation_read": false,
+    "cycle24_holdout_read": false,
+    "cycle25_read": false,
+    "model_artifacts_loaded": false,
+    "models_retrained": false,
+    "shap_computed": false
+  },
+  "evaluation_state": {
+    "marginal_shift": true,
+    "prevalence_ar_population": true,
+    "joint_domain_shift": true,
+    "common_support": true,
+    "correlated_feature_groups": true,
+    "within_cycle24_shap_null": false,
+    "cross_cycle_shap": false,
+    "explanation_drift": false
+  },
+  "provenance": {
+    "chapter_9_1_protocol": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\shift_null_control_protocol.json",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    },
+    "feature_registry": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\shift_feature_registry.csv",
+      "sha256": "8433ceb5406accbb68172469d829c72ad675410b96a1a7bd20a8f0bb60d61183"
+    },
+    "cycle24_train": {
+      "file": "artifacts\\splitting\\data\\cycle24_train.parquet",
+      "sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def"
+    }
+  },
+  "interpretation_rule": "Strong pairwise correlations identify sets of frozen model inputs that should also be interpreted jointly in later SHAP robustness analysis. Connected components are a robustness grouping device only; they do not imply causal, physical, or interchangeable variables.",
+  "immutability_rule": "After Chapter 9.5, the Spearman correlation source population, absolute-rho threshold, graph edges, connected components, and group membership must not be changed in response to Cycle25 or SHAP results."
+}

@@ -1,0 +1,163 @@
+{
+  "contract_name": "Cycle24 Holdout to Cycle25 Marginal Feature Shift Point Audit",
+  "version": "1.0",
+  "status": "FROZEN_MARGINAL_SHIFT_POINT_RESULTS",
+  "created_at_utc": "2026-10-18T16:51:40.973935+00:00",
+  "chapter": "MODEL_CHAPTER_9_2A",
+  "reference_domain": "CYCLE24_HOLDOUT",
+  "transfer_domain": "CYCLE25",
+  "features": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "feature_count": 25,
+  "transfer_scopes": [
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025",
+    "C25_ALL_2020_2025"
+  ],
+  "strata": [
+    "OVERALL",
+    "TARGET_0",
+    "TARGET_1"
+  ],
+  "comparison_count": 300,
+  "scope_populations": [
+    {
+      "scope_id": "C24_HOLDOUT",
+      "rows": 13072,
+      "positive": 527,
+      "negative": 12545,
+      "entity_groups": 176
+    },
+    {
+      "scope_id": "C25_B1_2020_2021",
+      "rows": 10411,
+      "positive": 133,
+      "negative": 10278,
+      "entity_groups": 146
+    },
+    {
+      "scope_id": "C25_B2_2022_2023",
+      "rows": 33132,
+      "positive": 1801,
+      "negative": 31331,
+      "entity_groups": 414
+    },
+    {
+      "scope_id": "C25_B3_2024_2025",
+      "rows": 35818,
+      "positive": 2902,
+      "negative": 32916,
+      "entity_groups": 458
+    },
+    {
+      "scope_id": "C25_ALL_2020_2025",
+      "rows": 79361,
+      "positive": 4836,
+      "negative": 74525,
+      "entity_groups": 1011
+    }
+  ],
+  "marginal_metrics": {
+    "ks_statistic": {
+      "definition": "Two-sample Kolmogorov-Smirnov D statistic",
+      "pvalue_used_for_claims": false
+    },
+    "wasserstein_distance": "1D Wasserstein distance on raw frozen feature values",
+    "normalized_wasserstein": "Raw Wasserstein distance divided by the corresponding Cycle24-holdout stratum IQR",
+    "median_shift_iqr_units": "(Cycle25 median - Cycle24-holdout median) / Cycle24-holdout stratum IQR"
+  },
+  "reference_iqr_zero_rows": 0,
+  "missingness": {
+    "scopes": [
+      "C24_HOLDOUT",
+      "C25_B1_2020_2021",
+      "C25_B2_2022_2023",
+      "C25_B3_2024_2025",
+      "C25_ALL_2020_2025"
+    ],
+    "feature_rows": 125,
+    "all_clean": true,
+    "silent_imputation": false
+  },
+  "artifacts": {
+    "point_shift_results": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\marginal_feature_shift_point.csv",
+      "sha256": "43d878d8c79d14ce77e446762e01849cedc664e75ca525d11c32c0b4e9db5d1c",
+      "rows": 300
+    },
+    "missingness_audit": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\missingness_audit.csv",
+      "sha256": "ee433873c03e28d6969ba6dd32aeda83416cd6528eca4ca8a11f8c3f1dacbaf0",
+      "rows": 125
+    }
+  },
+  "evaluation_state": {
+    "point_distribution_metrics": true,
+    "missingness_audit": true,
+    "entity_group_bootstrap_ci": false,
+    "joint_domain_classifier": false,
+    "common_support": false,
+    "correlated_feature_groups": false,
+    "shap_values": false,
+    "shap_null": false,
+    "explanation_drift": false
+  },
+  "data_access": {
+    "cycle24_holdout_read": true,
+    "cycle25_read": true,
+    "cycle24_train_read": false,
+    "models_loaded": false,
+    "prediction_artifacts_read": false,
+    "shap_artifacts_read": false
+  },
+  "provenance": {
+    "chapter_9_1_protocol": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\shift_null_control_protocol.json",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    },
+    "feature_registry": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\shift_feature_registry.csv",
+      "sha256": "8433ceb5406accbb68172469d829c72ad675410b96a1a7bd20a8f0bb60d61183"
+    },
+    "cycle25_temporal_blocks": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_temporal_blocks.csv",
+      "sha256": "7e3b06470c96a02a44abac3117e46a1e6b4f3d57e18e5716733de2db7b205bbf"
+    },
+    "cycle24_holdout": {
+      "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+      "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc"
+    },
+    "cycle25_dataset": {
+      "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+      "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d"
+    }
+  },
+  "interpretation_rule": "These are descriptive marginal distribution-shift point estimates. No feature is declared significantly shifted from these point values alone. The frozen ENTITY_GROUP bootstrap uncertainty analysis must be completed in Chapter 9.2B.",
+  "immutability_rule": "Observed point-shift results must not change the frozen metrics, strata, Cycle25 temporal blocks, bootstrap replicate count, bootstrap unit, or later SHAP-control design."
+}

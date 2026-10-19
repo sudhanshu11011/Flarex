@@ -1,0 +1,134 @@
+{
+  "contract_name": "Within-Cycle24 SHAP Null Bootstrap Execution",
+  "version": "1.0",
+  "status": "CYCLE24_SHAP_NULL_COMPUTED_PENDING_9_6D_AUDIT",
+  "created_at_utc": "2026-10-19T15:45:28.165528+00:00",
+  "chapter": "MODEL_CHAPTER_9_6C",
+  "source_contract": {
+    "file": "artifacts\\models\\shift_controls\\contracts\\cycle24_holdout_shap_contract.json",
+    "sha256": "ba8bf114bde867acb69da0f15ce67f0f4a8bb20685b155373f5751093eb4cfcc",
+    "required_status": "FROZEN_CYCLE24_HOLDOUT_SHAP"
+  },
+  "population": {
+    "name": "CYCLE24_HOLDOUT",
+    "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+    "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc",
+    "rows": 13072,
+    "entity_groups": 176
+  },
+  "bootstrap_design": {
+    "unit": "ENTITY_GROUP_ID",
+    "group_order_rule": "LEXICOGRAPHIC_STRING_ASCENDING",
+    "group_order_sha256": "52ecbbc1f1675c9e2df28788da57f69289ba50d25305c3587702328849c53916",
+    "replicates": 2000,
+    "sampled_groups_per_replicate": 176,
+    "replacement": true,
+    "a_seed": 29062,
+    "b_seed": 29063,
+    "rng": "numpy.random.default_rng (PCG64)",
+    "sampling_operation": "rng.choice(n_groups, size=(2000,n_groups), replace=True)",
+    "same_draws_across_models": true,
+    "same_draws_across_strata": true
+  },
+  "strata": [
+    "OVERALL",
+    "TARGET_0",
+    "TARGET_1"
+  ],
+  "structure_metrics": {
+    "spearman_rho": "Spearman correlation between A and B mean-|SHAP| feature vectors.",
+    "kendall_tau_b": "Kendall tau-b between A and B mean-|SHAP| feature vectors.",
+    "top5_overlap": "Intersection size of deterministic top-5 mean-|SHAP| features divided by 5.",
+    "top10_overlap": "Intersection size of deterministic top-10 mean-|SHAP| features divided by 10.",
+    "normalized_l1_mean_abs": "sum(abs(A-B)) / (sum(abs(A)) + sum(abs(B))).",
+    "cosine_distance_mean_abs": "1 - cosine_similarity(A_mean_abs, B_mean_abs).",
+    "signed_cosine_similarity": "Cosine similarity between A and B mean signed-SHAP vectors.",
+    "sign_agreement": "Fraction of 25 features with identical numpy.sign of A and B mean signed SHAP."
+  },
+  "featurewise_null": {
+    "retained": true,
+    "quantities": [
+      "A mean-|SHAP|",
+      "B mean-|SHAP|",
+      "signed delta mean-|SHAP| B-A",
+      "absolute delta mean-|SHAP|",
+      "A mean signed SHAP",
+      "B mean signed SHAP",
+      "signed delta mean signed SHAP B-A",
+      "absolute delta mean signed SHAP"
+    ],
+    "purpose": "Preserve the within-Cycle24 featurewise null distribution for later empirical featurewise testing and FDR procedures."
+  },
+  "input_shap_artifacts": [
+    {
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_family": "logistic",
+      "file": "artifacts\\models\\shift_controls\\shap\\cycle24_holdout\\LR_02_C0p01_BALANCED.parquet",
+      "sha256": "b4cf74dccb6024da734322eb11011cf19285631b065e529480980bc55d0568a5"
+    },
+    {
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_family": "random_forest",
+      "file": "artifacts\\models\\shift_controls\\shap\\cycle24_holdout\\RF_04_D12_L5_BALSUB.parquet",
+      "sha256": "294c7b2c53b0cd9613143a0c835f887ee76c4d08e9242ab7ce99787eea9fff79"
+    },
+    {
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_family": "xgboost",
+      "file": "artifacts\\models\\shift_controls\\shap\\cycle24_holdout\\XGB_02_LR0p03_D3_BAL.parquet",
+      "sha256": "8827ae0e1d0728d6116f96573e2f1e8542becb8515744f1b6e928ea80764a0dd"
+    }
+  ],
+  "artifacts": {
+    "metric_replicates": {
+      "file": "artifacts\\models\\shift_controls\\shap\\null\\cycle24_shap_null_replicates.parquet",
+      "sha256": "05e846c242f3b8f143a92451b729eb47eb400909353d221849cea059532eeea6",
+      "rows": 18000
+    },
+    "featurewise_replicates": {
+      "file": "artifacts\\models\\shift_controls\\shap\\null\\cycle24_shap_null_featurewise_replicates.parquet",
+      "sha256": "26a03b6f50ddac24f663328b43f47438c4b0921df7c9525bc55fd95db99d7a47",
+      "rows": 450000
+    },
+    "draw_counts": {
+      "file": "artifacts\\models\\shift_controls\\shap\\null\\cycle24_shap_null_draw_counts.npz",
+      "sha256": "4e1911758a9d15731ef29b4a79b276e902bd4feee09523c1be1aed5538735d51",
+      "shape_a": [
+        2000,
+        176
+      ],
+      "shape_b": [
+        2000,
+        176
+      ]
+    },
+    "group_order": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\cycle24_shap_null_group_order.csv",
+      "sha256": "a6997641610c491620469decd2246d1957bc26540197ab1fa7f72030570df7e1",
+      "rows": 176
+    },
+    "execution_manifest": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\cycle24_shap_null_execution_manifest.csv",
+      "sha256": "82a6d4b2f2fe3f6bd636bd477df5c83e0ef403fcba177da26873adac5c84503d",
+      "rows": 9
+    }
+  },
+  "software": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1"
+  },
+  "scientific_guardrails": {
+    "cycle25_read": false,
+    "models_loaded": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "cycle24_train_read": false,
+    "cycle24_holdout_shap_read": true,
+    "raw_sharp_features_required": false,
+    "thresholds_computed": false,
+    "drift_claims_made": false
+  },
+  "next_stage": "MODEL_CHAPTER_9_6D_NULL_THRESHOLDS_AND_INTEGRITY_AUDIT",
+  "interpretation_rule": "Chapter 9.6C only constructs the within-Cycle24 null distributions. No cross-cycle drift decision or null threshold interpretation is permitted until Chapter 9.6D is completed."
+}

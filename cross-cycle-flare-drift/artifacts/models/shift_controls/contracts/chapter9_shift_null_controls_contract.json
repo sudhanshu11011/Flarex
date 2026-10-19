@@ -1,0 +1,148 @@
+{
+  "contract_name": "Frozen Chapter 9 Distribution-Shift and SHAP-Null Controls",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER9_SHIFT_NULL_CONTROLS",
+  "created_at_utc": "2026-10-19T15:53:45.284031+00:00",
+  "chapter": "MODEL_CHAPTER_9_7",
+  "purpose": "Freeze all Chapter-9 distribution-shift, common-support, correlated-feature, Cycle24 SHAP, and within-Cycle24 SHAP-null control artifacts before cross-cycle Cycle25 SHAP attribution analysis.",
+  "source_stages": [
+    "9.1",
+    "9.2",
+    "9.3",
+    "9.4",
+    "9.5",
+    "9.6A",
+    "9.6B",
+    "9.6C",
+    "9.6D"
+  ],
+  "artifact_inventory": {
+    "file": "artifacts/models/shift_controls/manifests/chapter9_shift_null_controls_inventory.csv",
+    "sha256": "604fc736ca433492b0d5aa5e27f8da7bfd8d770cc6e2ca4ace9111d56ae81822",
+    "rows": 48,
+    "all_integrity_pass": true,
+    "checkpoint_files_included": false
+  },
+  "stage_artifact_counts": {
+    "9.1": 1,
+    "9.2": 8,
+    "9.3": 5,
+    "9.4": 4,
+    "9.5": 4,
+    "9.6A": 3,
+    "9.6B": 12,
+    "9.6C": 6,
+    "9.6D": 5
+  },
+  "critical_contracts": {
+    "artifacts/models/shift_controls/contracts/shift_null_control_protocol.json": {
+      "required_status": "FROZEN_BEFORE_SHIFT_AND_SHAP_ANALYSIS",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    },
+    "artifacts/models/shift_controls/contracts/shap_background_contract.json": {
+      "required_status": "FROZEN_SHAP_BACKGROUND",
+      "sha256": "ef8df3bd0ae21aa537a8c177c457ddcec3a5b44c19ec12683aab5bcf3bf6aac5"
+    },
+    "artifacts/models/shift_controls/contracts/cycle24_holdout_shap_contract.json": {
+      "required_status": "FROZEN_CYCLE24_HOLDOUT_SHAP",
+      "sha256": "ba8bf114bde867acb69da0f15ce67f0f4a8bb20685b155373f5751093eb4cfcc"
+    },
+    "artifacts/models/shift_controls/contracts/cycle24_shap_null_execution_contract.json": {
+      "required_status": "CYCLE24_SHAP_NULL_COMPUTED_PENDING_9_6D_AUDIT",
+      "sha256": "c8ad9878343760597708b1bcf9f7ec3421e5739796b2adbb9ce672608cb60c3b"
+    },
+    "artifacts/models/shift_controls/contracts/cycle24_shap_null_contract.json": {
+      "required_status": "FROZEN_CYCLE24_SHAP_NULL_BASELINE",
+      "sha256": "451e3ce85cb405bb7e87b5d9ed8f34fcde2c8f357aad12eebfcd084440c0d94f"
+    }
+  },
+  "scientific_state": {
+    "cycle24_holdout_shap": {
+      "status": "FROZEN",
+      "models": [
+        "LR_02_C0p01_BALANCED",
+        "RF_04_D12_L5_BALSUB",
+        "XGB_02_LR0p03_D3_BAL"
+      ],
+      "rows_per_model": 13072,
+      "features": 25,
+      "background_rows": 512,
+      "cycle25_read_during_shap_generation": false,
+      "model_retraining": false
+    },
+    "within_cycle24_shap_null": {
+      "status": "FROZEN",
+      "bootstrap_unit": "ENTITY_GROUP_ID",
+      "entity_groups": 176,
+      "replicates": 2000,
+      "seed_a": 29062,
+      "seed_b": 29063,
+      "same_draws_across_models": true,
+      "same_draws_across_strata": true,
+      "strata": [
+        "OVERALL",
+        "TARGET_0",
+        "TARGET_1"
+      ],
+      "cycle25_read": false
+    },
+    "null_thresholds": {
+      "status": "FROZEN",
+      "similarity_rule": "future observed similarity strictly below within-Cycle24 2.5th percentile",
+      "distance_rule": "future observed distance strictly above within-Cycle24 97.5th percentile",
+      "featurewise_empirical_null_retained": true,
+      "future_bh_fdr_q": 0.05
+    },
+    "shift_controls": {
+      "marginal_shift": "COMPLETE",
+      "prevalence_active_region": "COMPLETE",
+      "joint_domain_common_support": "COMPLETE",
+      "correlated_feature_groups": "COMPLETE"
+    }
+  },
+  "cycle25_usage_scope": {
+    "chapter9_shift_audits": "Cycle25 distribution/prevalence/domain-shift information was legitimately used in the predefined Chapter 9.2-9.4 transfer-shift diagnostics.",
+    "cycle24_shap_generation": "NO_CYCLE25_READ",
+    "within_cycle24_shap_null": "NO_CYCLE25_READ",
+    "cycle25_shap_attributions_generated_yet": false
+  },
+  "frozen_rules_for_chapter10": {
+    "models_must_remain_frozen": true,
+    "feature_order_must_remain_frozen": true,
+    "preprocessing_must_remain_frozen": true,
+    "classification_thresholds_must_remain_frozen": true,
+    "shap_background_must_remain_frozen": true,
+    "shap_output_space_per_model_must_remain_frozen": true,
+    "within_cycle24_null_must_remain_frozen": true,
+    "null_thresholds_must_not_be_changed_after_cycle25_shap": true,
+    "correlated_feature_groups_must_remain_frozen": true,
+    "common_support_definition_must_remain_frozen": true,
+    "cycle25_must_not_be_used_for_tuning": true
+  },
+  "interpretation_guardrails": {
+    "distribution_shift_is_not_explanation_drift": true,
+    "domain_classifier_auc_is_not_explanation_drift": true,
+    "null_threshold_crossing_alone_is_not_final_drift_claim": true,
+    "shap_is_not_causal": true,
+    "raw_shap_magnitudes_must_not_be_compared_between_model_families": true,
+    "same_model_cross_population_comparison_required": true,
+    "class_conditional_robustness_required": true,
+    "common_support_reweighting_sensitivity_required": true,
+    "correlated_feature_group_robustness_required": true,
+    "featurewise_empirical_inference_and_bh_fdr_required_where_applicable": true
+  },
+  "chapter9_completion": {
+    "9.1_protocol": "COMPLETE",
+    "9.2_marginal_shift": "COMPLETE",
+    "9.3_prevalence_ar": "COMPLETE",
+    "9.4_joint_shift_common_support": "COMPLETE",
+    "9.5_correlated_feature_groups": "COMPLETE",
+    "9.6a_shap_background": "COMPLETE",
+    "9.6b_cycle24_holdout_shap": "COMPLETE",
+    "9.6c_cycle24_shap_null_execution": "COMPLETE",
+    "9.6d_null_thresholds": "COMPLETE",
+    "9.7_final_freeze": "COMPLETE"
+  },
+  "next_stage": "MODEL_CHAPTER_9_8_GIT_CHECKPOINT",
+  "immutability_rule": "After this Chapter 9.7 contract is created, all inventoried Chapter-9 scientific control artifacts are treated as immutable inputs to Chapter 10. Any change requires explicit versioning, rationale, and invalidation of downstream cross-cycle SHAP results."
+}

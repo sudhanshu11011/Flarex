@@ -1,0 +1,167 @@
+{
+  "contract_name": "Joint Multivariate Domain Shift and Common-Support Analysis",
+  "version": "1.0",
+  "status": "FROZEN_JOINT_SHIFT_COMMON_SUPPORT",
+  "created_at_utc": "2026-10-18T17:25:18.418081+00:00",
+  "chapter": "MODEL_CHAPTER_9_4",
+  "reference_domain": "CYCLE24_HOLDOUT",
+  "transfer_domain": "CYCLE25",
+  "features": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "feature_count": 25,
+  "domain_classifier": {
+    "type": "LogisticRegression",
+    "penalty": "l2",
+    "C": 1.0,
+    "class_weight": "balanced",
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "random_state": 29041,
+    "input_preprocessing": "Frozen StandardScaler fit only on Cycle24 TRAIN.",
+    "scaler_fit_scope": "CYCLE24_TRAIN_ONLY",
+    "scaler_train_rows": 62064,
+    "scaler_train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+    "domain_target": {
+      "C24_HOLDOUT": 0,
+      "CYCLE25": 1
+    },
+    "probability_interpretation": "Out-of-fold discriminative Cycle25-domain score from the frozen domain-classifier design. It is used as the protocol-defined propensity/common-support score."
+  },
+  "cross_validation": {
+    "type": "StratifiedGroupKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 29041,
+    "group": "Cycle-prefixed ENTITY_GROUP_ID",
+    "group_leakage_detected": false,
+    "prediction_mode": "OUT_OF_FOLD"
+  },
+  "joint_shift_metrics": {
+    "oof_roc_auc": 0.7814190411780066,
+    "oof_balanced_accuracy": 0.7119892209093575,
+    "fold_roc_auc_mean": 0.7823922959603774,
+    "fold_roc_auc_std": 0.018229263386863915,
+    "fold_balanced_accuracy_mean": 0.7119660922547179,
+    "fold_balanced_accuracy_std": 0.022442967548314995,
+    "classification_threshold": 0.5,
+    "binary_domain_shift_cutoff": null
+  },
+  "common_support": {
+    "score": "OOF_CYCLE25_DOMAIN_PROBABILITY",
+    "cycle24_score_q01": 0.01415328544276278,
+    "cycle24_score_q99": 0.8694441142096352,
+    "cycle25_score_q01": 0.07324686945772173,
+    "cycle25_score_q99": 0.999175308992199,
+    "support_interval_rule": "Intersection of Cycle24 and Cycle25 OOF score 1st-to-99th percentile intervals.",
+    "support_lower": 0.07324686945772173,
+    "support_upper": 0.8694441142096352,
+    "cycle24_supported_rows": 12153,
+    "cycle25_supported_rows": 64732
+  },
+  "reweighting": {
+    "direction": "CYCLE25_TO_CYCLE24",
+    "raw_weight_formula": "((1-p)/p) * (N_C25/N_C24)",
+    "applied_only_inside_common_support": true,
+    "raw_weight_clip_quantiles": [
+      0.01,
+      0.99
+    ],
+    "raw_weight_clip_lower": 0.9641147033472371,
+    "raw_weight_clip_upper": 48.77713486859788,
+    "normalization": "Supported Cycle25 clipped weights normalized to mean 1.",
+    "normalized_weight_mean": 1.0,
+    "supported_cycle25_effective_sample_size": 27156.686994464613,
+    "primary_or_sensitivity": "SENSITIVITY_ONLY"
+  },
+  "artifacts": {
+    "joint_domain_shift_cv": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\joint_domain_shift_cv.csv",
+      "sha256": "0fb97dc0b88ae5094f0e9158a6c42a7f8c90470331ab8e2473b4d5ffc2e9055c",
+      "rows": 6
+    },
+    "common_support_summary": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\common_support_summary.csv",
+      "sha256": "3bd24a43acc4d085285b2dd3f8c13940e3a9134db2eace70f133a732b321e11e",
+      "rows": 5
+    },
+    "domain_oof_common_support": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\domain_oof_common_support.parquet",
+      "sha256": "e4f8feaad169a0c8666a1bb30fbd57d2a766782acf474c5f312db5d0db6b499f",
+      "rows": 92433
+    }
+  },
+  "data_access": {
+    "cycle24_train_raw_data_read": false,
+    "cycle24_holdout_read": true,
+    "cycle25_read": true,
+    "frozen_cycle24_train_scaler_loaded": true,
+    "frozen_scaler_fit_scope": "CYCLE24_TRAIN_ONLY",
+    "flare_models_loaded": false,
+    "flare_models_retrained": false,
+    "prediction_artifacts_read": false,
+    "shap_computed": false
+  },
+  "evaluation_state": {
+    "marginal_shift": true,
+    "prevalence_ar_population": true,
+    "joint_domain_shift": true,
+    "common_support": true,
+    "common_support_weights_frozen": true,
+    "correlated_feature_groups": false,
+    "within_cycle24_shap_null": false,
+    "cross_cycle_shap": false,
+    "explanation_drift": false
+  },
+  "provenance": {
+    "chapter_9_1_protocol": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\shift_null_control_protocol.json",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    },
+    "cycle25_temporal_blocks": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_temporal_blocks.csv",
+      "sha256": "7e3b06470c96a02a44abac3117e46a1e6b4f3d57e18e5716733de2db7b205bbf"
+    },
+    "cycle24_holdout": {
+      "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+      "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc"
+    },
+    "cycle25_dataset": {
+      "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+      "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d"
+    },
+    "frozen_standard_scaler": {
+      "file": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+      "sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5",
+      "fit_scope": "CYCLE24_TRAIN_ONLY",
+      "train_rows": 62064,
+      "train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def"
+    }
+  },
+  "interpretation_rule": "ROC-AUC and balanced accuracy quantify how separable Cycle24-holdout and Cycle25 feature vectors are under the pre-specified multivariate domain classifier. No arbitrary AUC threshold is used to make a binary shift claim. Common-support restriction and reweighting are sensitivity controls for later SHAP analysis and do not replace the primary unweighted analysis.",
+  "immutability_rule": "Observed domain-classifier performance, common-support fraction, or weights must not alter the frozen flare models, features, Cycle25 temporal blocks, correlated-feature grouping rule, SHAP background, or within-Cycle24 SHAP null-control design."
+}

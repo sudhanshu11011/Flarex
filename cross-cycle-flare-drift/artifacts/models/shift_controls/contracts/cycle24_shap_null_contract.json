@@ -1,0 +1,108 @@
+{
+  "contract_name": "Frozen Within-Cycle24 SHAP Null Baseline",
+  "version": "1.0",
+  "status": "FROZEN_CYCLE24_SHAP_NULL_BASELINE",
+  "created_at_utc": "2026-10-19T15:48:37.781728+00:00",
+  "chapter": "MODEL_CHAPTER_9_6D",
+  "source_execution": {
+    "file": "artifacts\\models\\shift_controls\\contracts\\cycle24_shap_null_execution_contract.json",
+    "sha256": "c8ad9878343760597708b1bcf9f7ec3421e5739796b2adbb9ce672608cb60c3b",
+    "status": "CYCLE24_SHAP_NULL_COMPUTED_PENDING_9_6D_AUDIT"
+  },
+  "source_shap_contract": {
+    "file": "artifacts\\models\\shift_controls\\contracts\\cycle24_holdout_shap_contract.json",
+    "sha256": "ba8bf114bde867acb69da0f15ce67f0f4a8bb20685b155373f5751093eb4cfcc",
+    "status": "FROZEN_CYCLE24_HOLDOUT_SHAP"
+  },
+  "null_design": {
+    "population": "CYCLE24_HOLDOUT",
+    "bootstrap_unit": "ENTITY_GROUP_ID",
+    "replicates": 2000,
+    "seed_a": 29062,
+    "seed_b": 29063,
+    "same_draws_across_models": true,
+    "same_draws_across_strata": true,
+    "models": [
+      "LR_02_C0p01_BALANCED",
+      "RF_04_D12_L5_BALSUB",
+      "XGB_02_LR0p03_D3_BAL"
+    ],
+    "strata": [
+      "OVERALL",
+      "TARGET_0",
+      "TARGET_1"
+    ]
+  },
+  "structure_threshold_rule": {
+    "similarity_metrics": [
+      "spearman_rho",
+      "kendall_tau_b",
+      "top5_overlap",
+      "top10_overlap",
+      "signed_cosine_similarity",
+      "sign_agreement"
+    ],
+    "similarity_drift_side": "OBSERVED_VALUE_STRICTLY_BELOW_WITHIN_C24_2P5_PERCENTILE",
+    "distance_metrics": [
+      "normalized_l1_mean_abs",
+      "cosine_distance_mean_abs"
+    ],
+    "distance_drift_side": "OBSERVED_VALUE_STRICTLY_ABOVE_WITHIN_C24_97P5_PERCENTILE",
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "quantile_method": "linear",
+    "equality_counts_as_exceedance": false
+  },
+  "featurewise_inference_rule": {
+    "primary_future_null": "FULL_2000_REPLICATE_ABSOLUTE_DELTA_DISTRIBUTION",
+    "mean_abs_shap_quantity": "abs_delta_mean_abs_shap",
+    "mean_signed_shap_quantity": "abs_delta_mean_signed_shap",
+    "threshold_summary_quantile": 0.975,
+    "empirical_p_values": "COMPUTED_LATER_AGAINST_FULL_NULL_REPLICATES",
+    "multiple_testing": "BH_FDR_Q_0.05_LATER",
+    "bh_fdr_applied_in_9_6d": false
+  },
+  "artifacts": {
+    "structure_thresholds": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\cycle24_shap_null_structure_thresholds.csv",
+      "sha256": "c8ffc3b04e7b72e79dc293aa4bdc67ed6f1de815f14cb2b4181a34298fa89361",
+      "rows": 72
+    },
+    "featurewise_thresholds": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\cycle24_shap_null_featurewise_thresholds.csv",
+      "sha256": "418f40f1b4d7a57f17a009186ee9a85ba1715b5060abf0dfb819de55de5c9287",
+      "rows": 225
+    },
+    "distribution_summary": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\cycle24_shap_null_distribution_summary.csv",
+      "sha256": "2a09ba72df6a1c7d6e91d35416f296e55694252148995ced71376a3fe0afcbfb",
+      "rows": 72
+    },
+    "integrity_manifest": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\cycle24_shap_null_integrity_manifest.csv",
+      "sha256": "82c5174662b812fc4b27c38d2162ec0b2ee3fed5793573274fb339e4ce8e85c2",
+      "rows": 9
+    },
+    "full_structure_null": {
+      "file": "artifacts\\models\\shift_controls\\shap\\null\\cycle24_shap_null_replicates.parquet",
+      "sha256": "05e846c242f3b8f143a92451b729eb47eb400909353d221849cea059532eeea6",
+      "rows": 18000
+    },
+    "full_featurewise_null": {
+      "file": "artifacts\\models\\shift_controls\\shap\\null\\cycle24_shap_null_featurewise_replicates.parquet",
+      "sha256": "26a03b6f50ddac24f663328b43f47438c4b0921df7c9525bc55fd95db99d7a47",
+      "rows": 450000
+    }
+  },
+  "scientific_guardrails": {
+    "cycle25_read": false,
+    "models_loaded": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "null_thresholds_frozen_before_cycle25_shap": true,
+    "cross_cycle_drift_claim_made": false,
+    "featurewise_fdr_performed": false
+  },
+  "interpretation": "These thresholds quantify ordinary within-Cycle24 explanation variability. A future Cycle25 SHAP difference can only be considered beyond the within-Cycle24 null when the corresponding same-model and same-stratum observed metric crosses the frozen drift-side threshold. Crossing a null threshold alone will not constitute the final explanation-drift conclusion; class-conditional, common-support/reweighting, correlated-feature-group, and featurewise robustness analyses remain required.",
+  "next_stage": "MODEL_CHAPTER_9_7_FREEZE_SHIFT_NULL_CONTROLS"
+}

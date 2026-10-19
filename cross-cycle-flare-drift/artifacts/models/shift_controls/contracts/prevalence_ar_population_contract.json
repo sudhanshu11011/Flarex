@@ -1,0 +1,165 @@
+{
+  "contract_name": "Label Prevalence and Active-Region Population Audit",
+  "version": "1.0",
+  "status": "FROZEN_PREVALENCE_AR_POPULATION_RESULTS",
+  "created_at_utc": "2026-10-18T17:18:37.607846+00:00",
+  "chapter": "MODEL_CHAPTER_9_3",
+  "scope_order": [
+    "C24_HOLDOUT",
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025",
+    "C25_ALL_2020_2025"
+  ],
+  "reference_scope": "C24_HOLDOUT",
+  "transfer_scopes": [
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025",
+    "C25_ALL_2020_2025"
+  ],
+  "label_prevalence": {
+    "definition": "positive rows / total rows",
+    "target": "target",
+    "bootstrap_unit": "ENTITY_GROUP",
+    "bootstrap_replicates": 2000,
+    "base_seed": 29031,
+    "rng": "numpy.random.SeedSequence + default_rng",
+    "domains_resampled": "Each scope independently resampled at ENTITY_GROUP level.",
+    "group_resampling": "Draw G ENTITY_GROUP clusters with replacement from a scope containing G unique groups.",
+    "confidence_interval": {
+      "method": "percentile",
+      "confidence_level": 0.95,
+      "lower_quantile": 0.025,
+      "upper_quantile": 0.975,
+      "numpy_quantile_method": "linear"
+    },
+    "scope_rng_streams": {
+      "C24_HOLDOUT": {
+        "scope_index": 0,
+        "spawn_key": [
+          0
+        ],
+        "derived_seed_uint32": 93783793
+      },
+      "C25_B1_2020_2021": {
+        "scope_index": 1,
+        "spawn_key": [
+          1
+        ],
+        "derived_seed_uint32": 1756680843
+      },
+      "C25_B2_2022_2023": {
+        "scope_index": 2,
+        "spawn_key": [
+          2
+        ],
+        "derived_seed_uint32": 2474697512
+      },
+      "C25_B3_2024_2025": {
+        "scope_index": 3,
+        "spawn_key": [
+          3
+        ],
+        "derived_seed_uint32": 3913721823
+      },
+      "C25_ALL_2020_2025": {
+        "scope_index": 4,
+        "spawn_key": [
+          4
+        ],
+        "derived_seed_uint32": 1638474091
+      }
+    }
+  },
+  "active_region_population": {
+    "unit": "ENTITY_GROUP",
+    "row_frequency_metrics": [
+      "mean",
+      "q25",
+      "median",
+      "q75",
+      "iqr",
+      "min",
+      "max"
+    ],
+    "positive_group_metrics": [
+      "positive_groups",
+      "zero_positive_groups",
+      "positive_group_fraction"
+    ],
+    "group_positive_rate_metrics": [
+      "mean",
+      "q25",
+      "median",
+      "q75",
+      "iqr",
+      "min",
+      "max"
+    ],
+    "cross_cycle_entity_group_overlap": 0,
+    "cross_cycle_overlap_expected": 0
+  },
+  "artifacts": {
+    "label_prevalence": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\label_prevalence.csv",
+      "sha256": "8e61eccbd08329e789bcf8815c306b690df32f04b5c2b58c428ca020cb694940",
+      "rows": 5
+    },
+    "active_region_population": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\active_region_population.csv",
+      "sha256": "19454e6e03c99f4b5e736080bee05df93c281121cfe9db9caa22b2e79349bd9b",
+      "rows": 5
+    },
+    "active_region_group_summary": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\active_region_group_summary.csv",
+      "sha256": "f443fb570f2dd594d40ee007f188f115b322aec925e139b7a75b2cec6566dd56",
+      "rows": 2205
+    },
+    "prevalence_bootstrap_replicates": {
+      "file": "artifacts\\models\\shift_controls\\bootstrap\\label_prevalence_group_bootstrap.parquet",
+      "sha256": "9224fafd6405abd84a8f2af69a379335944b002b42ac248c86499497fede4b3e",
+      "rows": 10000
+    }
+  },
+  "data_access": {
+    "cycle24_holdout_read": true,
+    "cycle25_read": true,
+    "cycle24_train_read": false,
+    "models_loaded": false,
+    "models_retrained": false,
+    "prediction_artifacts_read": false,
+    "shap_computed": false
+  },
+  "evaluation_state": {
+    "label_prevalence_audit": true,
+    "active_region_population_audit": true,
+    "marginal_shift_results_altered": false,
+    "joint_domain_classifier": false,
+    "common_support": false,
+    "correlated_feature_groups": false,
+    "shap_null": false,
+    "cross_cycle_shap": false
+  },
+  "provenance": {
+    "chapter_9_1_protocol": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\shift_null_control_protocol.json",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    },
+    "cycle25_temporal_blocks": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_temporal_blocks.csv",
+      "sha256": "7e3b06470c96a02a44abac3117e46a1e6b4f3d57e18e5716733de2db7b205bbf"
+    },
+    "cycle24_holdout": {
+      "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+      "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc"
+    },
+    "cycle25_dataset": {
+      "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+      "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d"
+    }
+  },
+  "interpretation_rule": "Differences in label prevalence and ENTITY_GROUP population composition are treated as potential contextual or confounding differences between cycles. They are not by themselves evidence of predictive drift, explanation drift, or altered solar-physics causality.",
+  "ci_interpretation_rule": "Scope-specific prevalence bootstrap confidence intervals quantify ENTITY_GROUP-level sampling uncertainty. Overlap or non-overlap between marginal scope CIs is not used as a formal hypothesis test of cross-cycle prevalence differences.",
+  "immutability_rule": "Observed prevalence or active-region population differences must not alter the frozen model, feature contract, Cycle25 temporal blocks, shift metrics, common-support design, correlated-feature grouping rule, SHAP background, or within-Cycle24 SHAP null design."
+}
