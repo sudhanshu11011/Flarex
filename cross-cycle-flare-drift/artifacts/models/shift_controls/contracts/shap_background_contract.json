@@ -1,0 +1,93 @@
+{
+  "contract_name": "Cycle24-TRAIN Fixed SHAP Background",
+  "version": "1.0",
+  "status": "FROZEN_SHAP_BACKGROUND",
+  "created_at_utc": "2026-10-18T17:33:01.959246+00:00",
+  "chapter": "MODEL_CHAPTER_9_6A",
+  "source_population": {
+    "name": "CYCLE24_TRAIN_ONLY",
+    "file": "artifacts\\splitting\\data\\cycle24_train.parquet",
+    "sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+    "rows": 62064,
+    "entity_groups": 822
+  },
+  "selection_design": {
+    "background_rows": 512,
+    "sampling_unit": "ENTITY_GROUP",
+    "groups_sampled": 512,
+    "groups_available": 822,
+    "replace": false,
+    "seed": 29061,
+    "rng": "numpy.random.default_rng",
+    "unique_group_sort_rule": "STRING_ASCENDING",
+    "representative_rows_per_group": 1,
+    "representative_row_rule": "TEMPORAL_MEDIAN",
+    "even_group_tie_rule": "LOWER_TEMPORAL_MEDIAN",
+    "time_column": "observation_time_utc"
+  },
+  "feature_contract": {
+    "feature_count": 25,
+    "feature_order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ]
+  },
+  "artifacts": {
+    "background": {
+      "file": "artifacts\\models\\shift_controls\\shap\\background\\cycle24_train_shap_background.parquet",
+      "sha256": "bd9775668a66e90d0576fbed69f56682729a1d1c6016a5ffbca874d4438ad598",
+      "rows": 512
+    },
+    "manifest": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\shap_background_manifest.csv",
+      "sha256": "3e1ed67dad5e2dd9734331e2eb6aaeeffd1685f962b80f2222c9cc06242fd0bc",
+      "rows": 512
+    }
+  },
+  "data_access": {
+    "cycle24_train_read": true,
+    "cycle24_validation_read": false,
+    "cycle24_holdout_read": false,
+    "cycle25_read": false,
+    "model_artifacts_loaded": false,
+    "shap_computed": false
+  },
+  "future_use": {
+    "primary_cross_cycle_background": true,
+    "within_cycle24_null_background": true,
+    "same_background_all_models": true,
+    "cycle25_may_modify_background": false,
+    "background_may_be_reselected_after_shap": false
+  },
+  "provenance": {
+    "chapter_9_1_protocol": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\shift_null_control_protocol.json",
+      "sha256": "1f4f946a08a71dbdd3bcb4c9a0a6ab20375f1c859bd2f901eba69028bac5eb91"
+    }
+  },
+  "interpretation_rule": "This background is a deterministic, Cycle24-TRAIN-derived reference for within-Cycle24 null analysis and later same-model cross-cycle SHAP analysis. It is not selected using Cycle25 or SHAP outcomes.",
+  "immutability_rule": "After Chapter 9.6A, selected groups, representative rows, feature order, background size, and sampling seed must not change in response to SHAP or Cycle25 results."
+}

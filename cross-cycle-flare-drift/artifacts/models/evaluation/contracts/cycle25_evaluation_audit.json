@@ -1,0 +1,60 @@
+{
+  "contract_name": "Independent Cycle25 Predictive Evaluation Audit",
+  "version": "1.0",
+  "status": "PASS",
+  "created_at_utc": "2026-10-18T16:35:31.343265+00:00",
+  "chapter": "MODEL_CHAPTER_8_6",
+  "overall_cycle25_evaluation_audit_pass": true,
+  "verification": {
+    "point_metric_rows": 12,
+    "point_metric_rows_passing": 12,
+    "cycle25_bootstrap_ci_rows_verified": 108,
+    "cycle25_bootstrap_expected_ci_rows": 108,
+    "cross_cycle_delta_rows_verified": 216000,
+    "cross_cycle_delta_expected_rows": 216000,
+    "cross_cycle_summary_rows_verified": 108,
+    "cross_cycle_summary_expected_rows": 108,
+    "tss_classifications_verified": 12,
+    "tss_classifications_expected": 12,
+    "artifact_hash_chain": "PASS"
+  },
+  "audit_scope": {
+    "point_metrics_independently_recomputed": true,
+    "cycle25_ci_independently_recomputed": true,
+    "cross_cycle_delta_values_independently_recomputed": true,
+    "cross_cycle_delta_ci_independently_recomputed": true,
+    "tss_classifications_independently_recomputed": true,
+    "bootstrap_samples_regenerated": false,
+    "bootstrap_rng_sequence_reproduced": false
+  },
+  "development_isolation": {
+    "raw_cycle25_dataset_reread": false,
+    "raw_cycle24_holdout_reread": false,
+    "model_files_loaded": false,
+    "model_retraining": false,
+    "preprocessing_refit": false,
+    "threshold_reoptimization": false,
+    "new_bootstrap_sampling": false,
+    "temporal_blocks_changed": false,
+    "shap_analysis_performed": false
+  },
+  "audit_manifest": {
+    "file": "artifacts\\models\\evaluation\\manifests\\cycle25_evaluation_audit.csv",
+    "sha256": "bdb02d9c0bc97d9aa43e4dd78d9b64167b65d4bc86e8ec49ef9c7b7885df4b36",
+    "rows": 12
+  },
+  "provenance": {
+    "cycle25_prediction_artifact_sha256": "f597db0fa056b10c0998d1ba0e53a6c602b8aeb59e2b13e7a3fdda5ba4692e10",
+    "cycle25_metrics_sha256": "097ed307200b299f98c329d9e08083caea1bcfdd28904b989ef4ba61f73638c6",
+    "cycle25_bootstrap_sha256": "75c485f8d238befb6f1188b2f0444b1938f0815539ce0ef7a6d704faef78fb1b",
+    "cycle25_bootstrap_ci_sha256": "6965c5a843892e8794ecb5f2664487979a6097665bfc58a2125be8c694a8aa9e",
+    "cross_cycle_delta_sha256": "f08fe85894be947056191a06385d5e0d688d1aa154eacd655b10ea8c7b2afb9b",
+    "cross_cycle_drift_summary_sha256": "b0bb88934864c049807c2e9ae7933d63b60e68dc107e684fa7bd3070e83e43e8"
+  },
+  "interpretation_constraints": {
+    "no_measurable_change_is_not_equivalence": true,
+    "predictive_stability_not_yet_declared_as_equivalence": true,
+    "predictive_results_do_not_imply_shap_results": true,
+    "shap_not_causal_physics": true
+  }
+}

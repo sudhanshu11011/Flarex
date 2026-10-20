@@ -1,0 +1,60 @@
+{
+  "contract_name": "Frozen Chapter-11 Final Hypothesis Evaluation",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_HYPOTHESIS_EVALUATION",
+  "created_at_utc": "2026-10-20T10:55:32.367094+00:00",
+  "chapter": "MODEL_CHAPTER_11_5B",
+  "source_protocol": {
+    "file": "artifacts/models/final_synthesis/contracts/chapter11_hypothesis_evaluation_protocol.json",
+    "sha256": "0fc9940d1dd6abb4251f4b3f4f7e0639558b84e83c71e6cc708c53d164b81d72",
+    "status": "FROZEN_CHAPTER11_HYPOTHESIS_EVALUATION_PROTOCOL"
+  },
+  "source_joint_evidence": {
+    "file": "artifacts/models/final_synthesis/contracts/joint_prediction_explanation_outcome_contract.json",
+    "sha256": "d6d97afa4d1d74715ff2262fc20a964251734984c44f82bd0d074e344e0cd6b8",
+    "status": "FROZEN_CHAPTER11_JOINT_PREDICTION_EXPLANATION_OUTCOME"
+  },
+  "final_hypothesis_statuses": {
+    "H0": "MIXED_NOT_SUFFICIENT_AS_UNIVERSAL_EXPLANATION",
+    "H1": "NOT_SUPPORTED_BY_PRIMARY_TSS_CRITERION",
+    "H2": "SUPPORTED_WITH_MODEL_DEPENDENCE",
+    "H3": "SUPPORTED_WITH_QUALIFICATION_BY_MAJORITY_MODEL_EVIDENCE"
+  },
+  "key_evidence_counts": {
+    "primary_tss_comparisons": 12,
+    "primary_tss_no_measurable_change": 12,
+    "tier0_explanation_models": 1,
+    "tier1_explanation_models": 0,
+    "tier2_explanation_models": 2,
+    "prediction_explanation_separation_models": 2
+  },
+  "evaluation_output": {
+    "file": "artifacts/models/final_synthesis/metrics/chapter11_hypothesis_evaluation.csv",
+    "sha256": "7676b809b107807ef60da9ff6d567588853fdcdc1a01b010a959a01daf70f6a0",
+    "rows": 4
+  },
+  "scientific_guardrails": {
+    "new_statistical_test_performed": false,
+    "new_bootstrap_performed": false,
+    "new_null_distribution_created": false,
+    "new_significance_threshold_created": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "equivalence_test_performed": false,
+    "predictive_equivalence_claimed": false,
+    "strict_predictive_stability_claimed": false,
+    "universal_explanation_drift_claimed": false,
+    "universal_explanation_stability_claimed": false,
+    "causal_shap_claim_made": false,
+    "right_for_wrong_reasons_claim_made": false,
+    "hypotheses_evaluated": true,
+    "final_paper_conclusion_assigned": false
+  },
+  "required_interpretation": {
+    "H0": "Mixed and insufficient as a universal explanation because RF and XGB exceed the frozen explanation evidence criteria, while model/shift dependence remains.",
+    "H1": "Not supported by the frozen primary TSS criterion; no measurable TSS change was detected in any of the 12 comparisons. This is not equivalence.",
+    "H2": "Supported with model dependence because RF and XGB are TIER_2 while LR is TIER_0.",
+    "H3": "Supported with qualification by majority-model evidence because RF and XGB show TIER_2 explanation evidence without a commensurate measurable primary TSS change."
+  },
+  "next_stage": "MODEL_CHAPTER_11_6_FINAL_SCIENTIFIC_CONCLUSION"
+}

@@ -1,0 +1,411 @@
+{
+  "contract_name": "Distribution Shift and Within-Cycle24 SHAP Null-Control Protocol",
+  "version": "1.0",
+  "status": "FROZEN_BEFORE_SHIFT_AND_SHAP_ANALYSIS",
+  "created_at_utc": "2026-10-18T16:46:33.918144+00:00",
+  "chapter": "MODEL_CHAPTER_9",
+  "design_timing": {
+    "cycle24_predictive_results_exist": true,
+    "cycle25_predictive_results_exist": true,
+    "distribution_shift_results_seen": false,
+    "within_cycle24_shap_null_seen": false,
+    "cross_cycle_shap_results_seen": false,
+    "important_note": "This protocol is frozen after predictive evaluation but before distribution-shift and SHAP analyses. Predictive outcomes must not be used to alter the shift or SHAP-control methodology."
+  },
+  "data_populations": {
+    "distribution_reference": "CYCLE24_HOLDOUT",
+    "distribution_transfer": "CYCLE25",
+    "shap_background_source": "CYCLE24_TRAIN_ONLY",
+    "shap_null_population": "CYCLE24_HOLDOUT",
+    "cycle25_primary_blocks": [
+      "C25_B1_2020_2021",
+      "C25_B2_2022_2023",
+      "C25_B3_2024_2025"
+    ],
+    "cycle25_secondary_pooled_scope": "C25_ALL_2020_2025",
+    "entity_group_column": "ENTITY_GROUP_ID",
+    "target_column": "target",
+    "time_column": "observation_time_utc"
+  },
+  "dataset_expectations": {
+    "cycle24_train": {
+      "file": "artifacts\\splitting\\data\\cycle24_train.parquet",
+      "sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+      "rows": 62064
+    },
+    "cycle24_holdout": {
+      "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+      "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc",
+      "rows": 13072
+    },
+    "cycle25": {
+      "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+      "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d",
+      "rows": 79361
+    }
+  },
+  "feature_contract": {
+    "feature_count": 25,
+    "feature_order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "feature_selection_allowed": false,
+    "cycle25_driven_feature_selection": false
+  },
+  "marginal_distribution_shift": {
+    "comparison": "Cycle24 holdout versus each Cycle25 temporal block and Cycle25 pooled scope",
+    "strata": [
+      "OVERALL",
+      "TARGET_0",
+      "TARGET_1"
+    ],
+    "metrics": {
+      "ks_statistic": "Two-sample Kolmogorov-Smirnov D statistic. Used as an effect-size-like distribution discrepancy; naive IID p-values are not used for scientific claims.",
+      "wasserstein_distance": "1D Wasserstein distance on the frozen raw feature.",
+      "normalized_wasserstein": "Wasserstein distance divided by Cycle24-holdout IQR. If IQR is zero, record NA and flag the feature.",
+      "median_shift_iqr_units": "(median_C25 - median_C24) / Cycle24-holdout IQR."
+    },
+    "uncertainty": {
+      "unit": "ENTITY_GROUP",
+      "replicates": 2000,
+      "seed": 29021,
+      "ci": "95% percentile",
+      "same_group_draws_across_features": true
+    },
+    "binary_drift_threshold": null,
+    "interpretation": "No single marginal metric or arbitrary threshold is sufficient to declare explanation drift."
+  },
+  "missingness_audit": {
+    "features": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "measure": [
+      "missing_fraction",
+      "nonfinite_fraction"
+    ],
+    "comparison_scopes": [
+      "C24_HOLDOUT",
+      "C25_B1_2020_2021",
+      "C25_B2_2022_2023",
+      "C25_B3_2024_2025",
+      "C25_ALL_2020_2025"
+    ],
+    "expected_primary_dataset_state": "No missing/nonfinite model features after frozen data pipeline; any violation is reported, not silently imputed."
+  },
+  "label_prevalence": {
+    "scopes": [
+      "C24_HOLDOUT",
+      "C25_B1_2020_2021",
+      "C25_B2_2022_2023",
+      "C25_B3_2024_2025",
+      "C25_ALL_2020_2025"
+    ],
+    "metrics": [
+      "row_count",
+      "positive_count",
+      "negative_count",
+      "positive_prevalence"
+    ],
+    "uncertainty": {
+      "unit": "ENTITY_GROUP",
+      "replicates": 2000,
+      "seed": 29031,
+      "ci": "95% percentile"
+    },
+    "prevalence_difference_is_real_shift": "Report observed prevalence difference; do not tune it away."
+  },
+  "active_region_population": {
+    "unit": "ENTITY_GROUP",
+    "metrics": [
+      "entity_group_count",
+      "rows_per_group_median",
+      "rows_per_group_iqr",
+      "positive_groups",
+      "positive_group_fraction",
+      "group_positive_rate_distribution"
+    ],
+    "cycle24_cycle25_group_overlap_expected": 0,
+    "interpretation": "Population composition differences are potential confounders for cross-cycle SHAP comparisons."
+  },
+  "joint_distribution_shift": {
+    "primary_method": "DOMAIN_CLASSIFIER",
+    "features": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "domain_target": {
+      "CYCLE24_HOLDOUT": 0,
+      "CYCLE25": 1
+    },
+    "preprocessing": "Use the already-frozen Cycle24-TRAIN StandardScaler for both domains. Do not refit scaling on Cycle24 holdout or Cycle25.",
+    "classifier": {
+      "type": "LogisticRegression",
+      "penalty": "l2",
+      "C": 1.0,
+      "class_weight": "balanced",
+      "solver": "lbfgs",
+      "max_iter": 5000,
+      "random_state": 29041
+    },
+    "validation": {
+      "type": "StratifiedGroupKFold",
+      "n_splits": 5,
+      "shuffle": true,
+      "random_state": 29041,
+      "group": "cycle-prefixed ENTITY_GROUP_ID"
+    },
+    "metrics": [
+      "ROC_AUC",
+      "balanced_accuracy"
+    ],
+    "purpose": "Quantify multivariate domain separability only. This classifier is not a solar-flare predictor."
+  },
+  "common_support_reweighting": {
+    "propensity": "OOF probability that a row belongs to Cycle25 from the frozen domain-classifier design.",
+    "common_support_interval": "Intersection of the Cycle24 and Cycle25 OOF propensity-score 1st-to-99th percentile intervals.",
+    "primary_support_rule": "retain rows inside common support",
+    "cycle25_to_cycle24_weight": "((1-p)/p) * (N_C25/N_C24)",
+    "weight_clipping": "After common-support restriction, clip Cycle25 raw weights to their 1st and 99th percentiles.",
+    "weight_normalization": "Normalize retained Cycle25 weights to mean 1.",
+    "use": "Sensitivity analysis only; does not replace the primary unweighted cross-cycle analysis."
+  },
+  "correlated_feature_control": {
+    "source_population": "CYCLE24_TRAIN_ONLY",
+    "correlation": "Spearman",
+    "edge_rule": "absolute_rho >= 0.80",
+    "grouping": "Construct an undirected feature graph and define connected components as correlated-feature groups. Singleton features remain single-member groups.",
+    "cycle25_used_to_form_groups": false,
+    "group_level_shap_magnitude": "Sum mean absolute SHAP magnitude of member features.",
+    "purpose": "Check whether apparent feature-level explanation drift persists after correlated SHARP variables are interpreted jointly."
+  },
+  "shap_background": {
+    "source": "CYCLE24_TRAIN_ONLY",
+    "size": 512,
+    "sampling_unit": "ENTITY_GROUP",
+    "selection": "Sort unique Cycle24-TRAIN ENTITY_GROUP_ID values, sample 512 groups without replacement using the frozen seed, then select the temporal-median row from each chosen group after sorting by observation_time_utc.",
+    "seed": 29061,
+    "cycle25_used": false,
+    "validation_used": false,
+    "holdout_used": false
+  },
+  "shap_explainers": {
+    "logistic": {
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "explainer": "shap.LinearExplainer",
+      "input_space": "Frozen StandardScaler output",
+      "background": "same frozen 512-row TRAIN background",
+      "comparison": "Within this model only; absolute SHAP magnitudes are not compared across different model families."
+    },
+    "random_forest": {
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "explainer": "shap.TreeExplainer",
+      "feature_perturbation": "interventional",
+      "input_space": "raw frozen 25 features",
+      "background": "same frozen 512-row TRAIN background"
+    },
+    "xgboost": {
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "explainer": "shap.TreeExplainer",
+      "feature_perturbation": "interventional",
+      "input_space": "raw frozen 25 features",
+      "background": "same frozen 512-row TRAIN background"
+    }
+  },
+  "within_cycle24_shap_null": {
+    "population": "CYCLE24_HOLDOUT",
+    "unit": "ENTITY_GROUP",
+    "replicates": 2000,
+    "pseudo_sample_A_seed": 29062,
+    "pseudo_sample_B_seed": 29063,
+    "sampling_rule": "For every replicate independently draw G Cycle24-holdout ENTITY_GROUP clusters with replacement for pseudo-sample A and independently draw G clusters for pseudo-sample B, where G equals the number of Cycle24-holdout groups.",
+    "same_group_draws_across_models": true,
+    "strata": [
+      "OVERALL",
+      "TARGET_0",
+      "TARGET_1"
+    ],
+    "valid_replicate_rule": "Both pseudo-samples must contain non-zero row weight for TARGET_0 and TARGET_1 so overall and class-conditional summaries can share the same replicate.",
+    "shap_summary_vector": [
+      "mean_absolute_shap_per_feature",
+      "mean_signed_shap_per_feature"
+    ],
+    "null_metrics": {
+      "spearman_rho": "similarity",
+      "kendall_tau_b": "similarity",
+      "top5_overlap_fraction": "similarity",
+      "top10_overlap_fraction": "similarity",
+      "normalized_l1_mean_abs": "distance",
+      "cosine_distance_mean_abs": "distance",
+      "signed_mean_cosine_similarity": "similarity",
+      "signed_direction_agreement_fraction": "similarity"
+    },
+    "null_thresholds": {
+      "similarity_metrics": "2.5th percentile",
+      "distance_metrics": "97.5th percentile",
+      "confidence_level": 0.95
+    },
+    "role": "Defines how much SHAP rank, magnitude and direction variation can occur naturally within Cycle24 under ENTITY_GROUP resampling."
+  },
+  "future_explanation_drift_rule": {
+    "cross_cycle_analysis_not_performed_in_chapter_9_1": true,
+    "raw_shap_difference_sufficient_for_drift": false,
+    "required_evidence": [
+      "Cross-cycle SHAP difference exceeds the corresponding within-Cycle24 null threshold.",
+      "Result is checked under class-conditional analysis.",
+      "Result is checked under common-support/reweighting sensitivity.",
+      "Result is checked at correlated feature-group level."
+    ],
+    "featurewise_multiple_testing_if_used": {
+      "method": "Benjamini-Hochberg FDR",
+      "q": 0.05
+    },
+    "shap_is_causal": false
+  },
+  "strict_prohibitions": [
+    "retrain_flare_models",
+    "replace_frozen_models",
+    "change_frozen_thresholds",
+    "change_25_feature_contract",
+    "refit_predictive_preprocessing",
+    "change_cycle25_temporal_blocks",
+    "select_shift_metrics_after_viewing_shift_results",
+    "select_shap_null_metrics_after_viewing_shap_results",
+    "use_cycle25_to_create_correlated_feature_groups",
+    "use_cycle25_to_select_shap_background",
+    "declare_explanation_drift_from_raw_shap_difference_only",
+    "interpret_shap_as_causal_solar_physics"
+  ],
+  "artifacts": {
+    "feature_registry": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\shift_feature_registry.csv",
+      "sha256": "8433ceb5406accbb68172469d829c72ad675410b96a1a7bd20a8f0bb60d61183",
+      "rows": 25
+    },
+    "analysis_registry": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\shift_analysis_registry.csv",
+      "sha256": "4c69e5a12814a1924e8d68d6ffea67dd7db35f082d5683cee388cab622ecf1a7",
+      "rows": 11
+    }
+  },
+  "provenance": {
+    "feature_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\model_feature_contract.json",
+      "sha256": "1a105ea2e556cedb8e886503dffc1b3309be98c059942d8f68aefba852a423cb"
+    },
+    "preprocessing_contract": {
+      "file": "artifacts\\preprocessing\\contracts\\preprocessing_contract.json",
+      "sha256": "6cc6b4784b6f4b11d5e5ac3bf0704b971e4fc3795550a6880c29ceadff4f4fc0"
+    },
+    "split_contract": {
+      "file": "artifacts\\splitting\\contracts\\cycle24_split_contract.json",
+      "sha256": "23c9331355a9b055bdbd696bb237bf765484889e1c7cca6e5abee8c1d0ae37a3"
+    },
+    "selected_models_contract": {
+      "file": "artifacts\\models\\selection\\contracts\\selected_models_contract.json",
+      "sha256": "2eea4b1f8f35d3a4a83dfecd5e74dea95aa3cdc6b79d700682f8446a6a8b6f30"
+    },
+    "cycle24_results_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_results_contract.json",
+      "sha256": "1622a51eab230d06376b6a1d18863bb7e23372d073866c13fc9a22609b614add"
+    },
+    "cycle25_results_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_results_contract.json",
+      "sha256": "227049d0b229c9774210d714fc0b00f95aab1b9c982114e0bb1f79bb99726c66"
+    },
+    "cycle25_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_evaluation_protocol.json",
+      "sha256": "11924e30c24b0ed592625c994b2764d900a8bf778d100f2dd8173fb737e6dae7"
+    },
+    "cycle25_temporal_blocks": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_temporal_blocks.csv",
+      "sha256": "7e3b06470c96a02a44abac3117e46a1e6b4f3d57e18e5716733de2db7b205bbf"
+    },
+    "frozen_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_frozen_model_registry.csv",
+      "sha256": "8e075be703da18a78760c5fe12e5946936e4d8bc7675002bdd727e3319d504ed"
+    }
+  },
+  "chapter_9_1_isolation": {
+    "cycle24_train_content_read": false,
+    "cycle24_holdout_content_read": false,
+    "cycle25_content_read": false,
+    "distribution_shift_metrics_computed": false,
+    "domain_classifier_trained": false,
+    "correlation_groups_computed": false,
+    "shap_values_computed": false,
+    "shap_null_computed": false,
+    "cross_cycle_shap_computed": false
+  },
+  "immutability_rule": "After Chapter 9.1 is frozen, the distribution-shift metrics, domain-classifier design, common-support rule, correlated-feature grouping rule, SHAP background selection, within-Cycle24 null sampling design, null metrics, and null threshold directions must not be changed in response to observed Cycle25 feature or SHAP results."
+}

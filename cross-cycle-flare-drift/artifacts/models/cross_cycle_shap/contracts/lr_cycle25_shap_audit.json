@@ -1,0 +1,75 @@
+{
+  "audit_name": "Cycle25 Logistic Regression SHAP",
+  "version": "1.0",
+  "status": "COMPLETE_LR_CYCLE25_SHAP",
+  "created_at_utc": "2026-10-19T16:19:10.606628+00:00",
+  "chapter": "MODEL_CHAPTER_10_2_1",
+  "source_execution_contract": {
+    "file": "artifacts/models/cross_cycle_shap/contracts/cycle25_shap_execution_inputs_contract.json",
+    "sha256": "e3fe5ccbc7d658700932d4a610a2024c61bf0a7062238ff9d34aa38454ac931d",
+    "required_status": "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS"
+  },
+  "candidate": {
+    "candidate_id": "LR_02_C0p01_BALANCED",
+    "model_family": "logistic",
+    "model_file": "artifacts/models/logistic/models/LR_02_C0p01_BALANCED.joblib",
+    "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+    "training_scope": "CYCLE24_TRAIN_ONLY"
+  },
+  "evaluation_population": {
+    "dataset": "data/final/dataset_v2/cycle25_dataset_v2.parquet",
+    "dataset_sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d",
+    "ordered_population_sha256": "ab1879bf772f6e24a6dab2cfbcb578f66befdb078125464752f29acf0942f172",
+    "rows": 79361,
+    "blocks": {
+      "B1": 10411,
+      "B2": 33132,
+      "B3": 35818
+    }
+  },
+  "preprocessing": {
+    "type": "StandardScaler",
+    "file": "artifacts/preprocessing/scalers/logistic_standard_scaler.joblib",
+    "sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5",
+    "fit_scope": "CYCLE24_TRAIN_ONLY",
+    "cycle25_fit": false
+  },
+  "shap": {
+    "explainer": "LinearExplainer",
+    "feature_input_space": "FROZEN_STANDARDIZED",
+    "background_input_space": "FROZEN_STANDARDIZED",
+    "background_file": "artifacts/models/shift_controls/shap/background/cycle24_train_shap_background.parquet",
+    "background_sha256": "bd9775668a66e90d0576fbed69f56682729a1d1c6016a5ffbca874d4438ad598",
+    "background_rows": 512,
+    "output_space": "LOG_ODDS_DECISION_FUNCTION",
+    "rows": 79361,
+    "features": 25
+  },
+  "additivity": {
+    "pass": true,
+    "atol": 1e-08,
+    "rtol": 1e-08,
+    "mean_abs_error": 4.0435614909553116e-16,
+    "p95_abs_error": 1.3322676295501878e-15,
+    "p99_abs_error": 2.6645352591003757e-15,
+    "max_abs_error": 1.4210854715202004e-14
+  },
+  "artifact": {
+    "file": "artifacts/models/cross_cycle_shap/shap/cycle25/LR_02_C0p01_BALANCED.parquet",
+    "sha256": "dda5b3ab448a47de0041b0374df996bc97c82d701ac2a2719d4a1dbdf31c6211",
+    "rows": 79361,
+    "features": 25
+  },
+  "scientific_guardrails": {
+    "cycle25_read": true,
+    "cycle25_used_for_training": false,
+    "cycle25_used_for_scaler_fit": false,
+    "model_retrained": false,
+    "model_retuned": false,
+    "feature_selection_changed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "drift_conclusion_made": false
+  },
+  "next_stage": "MODEL_CHAPTER_10_2_2_RF_CYCLE25_SHAP"
+}

@@ -1,0 +1,95 @@
+{
+  "contract_name": "Frozen Temporal-Block Cross-Cycle SHAP Inputs",
+  "version": "1.0",
+  "status": "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_INPUTS",
+  "created_at_utc": "2026-10-19T22:03:08.485947+00:00",
+  "chapter": "MODEL_CHAPTER_10_4_1",
+  "reference_population": {
+    "name": "CYCLE24_HOLDOUT",
+    "rows": 13072
+  },
+  "transfer_blocks": {
+    "B1": {
+      "year_definition": "2020-2021",
+      "rows": 10411,
+      "positives": 133,
+      "groups": 146
+    },
+    "B2": {
+      "year_definition": "2022-2023",
+      "rows": 33132,
+      "positives": 1801,
+      "groups": 414
+    },
+    "B3": {
+      "year_definition": "2024-2025",
+      "rows": 35818,
+      "positives": 2902,
+      "groups": 458
+    }
+  },
+  "models": {
+    "count": 3,
+    "candidate_ids": [
+      "LR_02_C0p01_BALANCED",
+      "RF_04_D12_L5_BALSUB",
+      "XGB_02_LR0p03_D3_BAL"
+    ],
+    "features": 25
+  },
+  "frozen_sources": {
+    "overall_input_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/overall_cross_cycle_shap_inputs_contract.json",
+      "sha256": "c24b6933830edd75c7cc5f466e067afb88a59624cbfef6d45dcb0ae2ee00bc1b",
+      "status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_INPUTS"
+    },
+    "overall_point_estimate_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/overall_cross_cycle_shap_point_estimates_contract.json",
+      "sha256": "86152f69ccf14688ee4e13516572cf16ebfba05c85e0ae0fe0601bb8ca138661",
+      "status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_POINT_ESTIMATES"
+    },
+    "cycle25_shap_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/cycle25_shap_contract.json",
+      "sha256": "5319c5dee324063ae4741e4915d370d5fe13fbc869054d4dc158f2efff55a1e9",
+      "status": "FROZEN_CYCLE25_SHAP"
+    }
+  },
+  "block_membership_sha256": {
+    "B1": "3cd101e2e4918a60b03fb5c2abd4e42a84d73dac7c2cc8b7ec456433b6608b86",
+    "B2": "22c28513c4af950d757df6cc8dcaa2a530140c4129c6401912fd0dafd73937a9",
+    "B3": "53bf66b3e10d9a3b0b98373fd8c538fada808890be7a366e5333180c704e28f3"
+  },
+  "input_registry": {
+    "file": "artifacts/models/cross_cycle_shap/manifests/temporal_block_cross_cycle_shap_input_registry.csv",
+    "sha256": "c84a8ec9549000f485156867a9a42c35410856c358f0143b5b5e2e9bbfe546ea",
+    "rows": 9
+  },
+  "comparison_rule": {
+    "within_same_frozen_model_only": true,
+    "reference": "CYCLE24_HOLDOUT",
+    "comparisons": [
+      "CYCLE24_HOLDOUT_VS_CYCLE25_B1",
+      "CYCLE24_HOLDOUT_VS_CYCLE25_B2",
+      "CYCLE24_HOLDOUT_VS_CYCLE25_B3"
+    ],
+    "same_feature_order": true,
+    "same_model_specific_output_space": true,
+    "same_frozen_background": true,
+    "cross_model_raw_shap_magnitude_comparison": false
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "temporal_metrics_computed": false,
+    "null_thresholds_applied": false,
+    "featurewise_inference_performed": false,
+    "drift_conclusion_made": false,
+    "stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "Temporal blocks are frozen before temporal SHAP metrics are computed. No temporal block may be redefined in response to observed SHAP results.",
+  "next_stage": "MODEL_CHAPTER_10_4_2_TEMPORAL_BLOCK_SHAP_POINT_ESTIMATES"
+}

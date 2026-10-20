@@ -1,0 +1,73 @@
+{
+  "contract_name": "Frozen Temporal-Block Cross-Cycle SHAP Point Estimates",
+  "version": "1.0",
+  "status": "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+  "created_at_utc": "2026-10-19T22:06:32.280445+00:00",
+  "chapter": "MODEL_CHAPTER_10_4_2",
+  "source_temporal_inputs": {
+    "contract_file": "artifacts/models/cross_cycle_shap/contracts/temporal_block_cross_cycle_shap_inputs_contract.json",
+    "contract_sha256": "1c08223a764dfac56bb1f56b9caa81140fda8ecbb2af2e171252217b64492434",
+    "required_status": "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_INPUTS",
+    "registry_file": "artifacts/models/cross_cycle_shap/manifests/temporal_block_cross_cycle_shap_input_registry.csv",
+    "registry_sha256": "c84a8ec9549000f485156867a9a42c35410856c358f0143b5b5e2e9bbfe546ea"
+  },
+  "comparison": {
+    "reference_population": "CYCLE24_HOLDOUT",
+    "transfer_populations": [
+      "CYCLE25_B1",
+      "CYCLE25_B2",
+      "CYCLE25_B3"
+    ],
+    "models": 3,
+    "features": 25,
+    "stratum": "OVERALL",
+    "comparison_unit": "WITHIN_SAME_FROZEN_MODEL"
+  },
+  "metric_definition": {
+    "epsilon": 1e-12,
+    "exact_chapter9_formulas_reused": true,
+    "metrics": [
+      "spearman_rho",
+      "kendall_tau_b",
+      "top5_overlap",
+      "top10_overlap",
+      "normalized_l1_mean_abs",
+      "cosine_distance_mean_abs",
+      "signed_cosine_similarity",
+      "sign_agreement"
+    ]
+  },
+  "structure_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/temporal_block_cross_cycle_shap_structure_point_estimates.csv",
+    "sha256": "8273b800955d0f08955a3f2339e9d126f532a1ba7feb8916a58941b70fa14023",
+    "rows": 72,
+    "metrics_per_model_per_block": 8
+  },
+  "featurewise_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/temporal_block_cross_cycle_shap_featurewise_point_estimates.csv",
+    "sha256": "6f7e9148e4dbd332db4404d7a647d92bdd4ddfc1607222e8d30134a8fa78a866",
+    "rows": 225,
+    "features_per_model_per_block": 25,
+    "descriptive_only": true
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "temporal_point_estimates_computed": true,
+    "null_thresholds_applied": false,
+    "null_exceedance_evaluated": false,
+    "featurewise_inference_performed": false,
+    "fdr_applied": false,
+    "class_conditional_analysis_performed": false,
+    "common_support_sensitivity_applied": false,
+    "correlated_group_robustness_applied": false,
+    "drift_conclusion_made": false,
+    "stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "Temporal-block values are observed descriptive point estimates only. No block may be classified as explanation drift or stability until the frozen within-Cycle24 null baseline and later robustness analyses are applied.",
+  "next_stage": "MODEL_CHAPTER_10_5_CLASS_CONDITIONAL_SHAP_ANALYSIS"
+}

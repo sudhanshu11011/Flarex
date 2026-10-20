@@ -1,0 +1,85 @@
+{
+  "contract_name": "Frozen Correlated Feature-Group Cross-Cycle SHAP Robustness",
+  "version": "1.0",
+  "status": "FROZEN_CORRELATED_GROUP_SHAP_ROBUSTNESS",
+  "created_at_utc": "2026-10-19T22:29:19.272734+00:00",
+  "chapter": "MODEL_CHAPTER_10_8_2",
+  "frozen_group_source": {
+    "contract_file": "artifacts/models/shift_controls/contracts/correlated_feature_groups_contract.json",
+    "contract_sha256": "cf366922fb3603e01e87729bd2108fa1cc2915e4667c2bcaefcad2775936274a",
+    "required_status": "FROZEN_CORRELATED_FEATURE_GROUPS",
+    "manifest_file": "artifacts/models/shift_controls/manifests/correlated_feature_groups.csv",
+    "manifest_sha256": "71d94de4a253c791469893650e159ee61e44253accb47e7cecf154ce2fb0b9bf",
+    "source_population": "CYCLE24_TRAIN_ONLY",
+    "correlation_method": "SPEARMAN",
+    "absolute_rho_threshold": 0.8,
+    "grouping_method": "CONNECTED_COMPONENTS",
+    "transitive_grouping": true,
+    "groups": 10,
+    "features": 25
+  },
+  "aggregation_rule": {
+    "group_level_mean_absolute_shap": "SUM_MEMBER_FEATURE_MEAN_ABSOLUTE_SHAP",
+    "matches_frozen_chapter9_contract": true,
+    "signed_group_aggregation_defined_by_frozen_contract": false,
+    "signed_group_metrics_computed": false,
+    "top10_overlap_computed": false,
+    "top10_omission_reason": "There are exactly 10 frozen groups, so top-10 overlap would be identically 1 and non-informative."
+  },
+  "group_structure_metrics": [
+    "spearman_rho",
+    "kendall_tau_b",
+    "top5_overlap",
+    "normalized_l1_mean_abs",
+    "cosine_distance_mean_abs"
+  ],
+  "analysis_variants": [
+    "PRIMARY_FULL_POPULATION",
+    "COMMON_SUPPORT_UNWEIGHTED",
+    "COMMON_SUPPORT_REWEIGHTED"
+  ],
+  "analysis_scopes": [
+    "OVERALL_POOLED",
+    "TEMPORAL_BLOCK_B1",
+    "TEMPORAL_BLOCK_B2",
+    "TEMPORAL_BLOCK_B3",
+    "CLASS_CONDITIONAL_TARGET_0",
+    "CLASS_CONDITIONAL_TARGET_1"
+  ],
+  "profile_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/correlated_group_shap_profiles.csv",
+    "sha256": "87fc77369dfbf6499c586d7dbcb7b1c0dc6fec6a1529c79dac391e58b3494ba0",
+    "rows": 540
+  },
+  "structure_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/correlated_group_shap_structure_robustness.csv",
+    "sha256": "70f84db4db96368d9d3c241e2bd069bdbe351f188e9144d07f72adc23739eab4",
+    "rows": 270
+  },
+  "null_handling": {
+    "individual_feature_null_screen_retained": true,
+    "group_level_cycle24_null_available": false,
+    "group_level_null_threshold_applied": false,
+    "reason": "Chapter 9 froze the null baseline for 25 individual features, not for the 10 aggregated correlated feature groups."
+  },
+  "scientific_guardrails": {
+    "cycle25_used_to_define_groups": false,
+    "groups_recomputed": false,
+    "correlation_threshold_changed": false,
+    "group_membership_changed": false,
+    "individual_feature_analysis_retained": true,
+    "frozen_group_aggregation_rule_used": true,
+    "signed_group_rule_invented": false,
+    "group_level_null_invented": false,
+    "common_support_group_robustness_checked": true,
+    "reweighting_group_robustness_checked": true,
+    "featurewise_inference_performed": false,
+    "fdr_applied": false,
+    "final_drift_conclusion_made": false,
+    "final_stability_conclusion_made": false,
+    "correlation_is_causality": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "Correlated-group analysis is a robustness check for individual-feature attribution structure. Member-feature mean absolute SHAP magnitudes are summed using the frozen Cycle24-TRAIN grouping. Group-level results must not be treated as causal solar-physics factors or as statistically significant drift because no group-level Cycle24 null distribution was frozen. CFG_01 contains 13 features and its magnitude reflects the predefined summation rule as well as group size.",
+  "next_stage": "MODEL_CHAPTER_10_9_FEATUREWISE_INFERENCE_AND_FDR"
+}

@@ -1,0 +1,84 @@
+{
+  "contract_name": "Frozen Class-Conditional Cross-Cycle SHAP Inputs",
+  "version": "1.0",
+  "status": "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_INPUTS",
+  "created_at_utc": "2026-10-19T22:09:37.431607+00:00",
+  "chapter": "MODEL_CHAPTER_10_5_1B",
+  "comparison": {
+    "reference_population": "CYCLE24_HOLDOUT",
+    "transfer_population": "CYCLE25_POOLED",
+    "strata": [
+      "TARGET_0",
+      "TARGET_1"
+    ],
+    "models": 3,
+    "features": 25,
+    "cycle24_rows": 13072,
+    "cycle25_rows": 79361,
+    "cycle24_target_0_rows": 12545,
+    "cycle24_target_1_rows": 527,
+    "cycle25_target_0_rows": 74525,
+    "cycle25_target_1_rows": 4836
+  },
+  "frozen_sources": {
+    "overall_input_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/overall_cross_cycle_shap_inputs_contract.json",
+      "sha256": "c24b6933830edd75c7cc5f466e067afb88a59624cbfef6d45dcb0ae2ee00bc1b",
+      "status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_INPUTS"
+    },
+    "overall_point_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/overall_cross_cycle_shap_point_estimates_contract.json",
+      "sha256": "86152f69ccf14688ee4e13516572cf16ebfba05c85e0ae0fe0601bb8ca138661",
+      "status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_POINT_ESTIMATES"
+    },
+    "temporal_point_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/temporal_block_cross_cycle_shap_point_estimates_contract.json",
+      "sha256": "b384271dae3e7bbdc13b39affba78eb6ee1d30ebf7241272b39fadcaacec3ce0",
+      "status": "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_POINT_ESTIMATES"
+    }
+  },
+  "membership_fingerprints": {
+    "C24": {
+      "TARGET_0": "b4a218aa120e3eff6197c853da56c39a0af8c67ed574801fa62b4dadc3b59bf7",
+      "TARGET_1": "63340e2123e31d308494af38c394394d218fbb670525f615216339a3d0a65378"
+    },
+    "C25": {
+      "TARGET_0": "553fe66962fc90658e0883d8b00c0cdced1d53b0d1f698cbe8f9d4b13a8c0b62",
+      "TARGET_1": "df410073c3193b50694060af3c358828ac3f98e23b206055e6a6f18490aa2c2b"
+    }
+  },
+  "input_registry": {
+    "file": "artifacts/models/cross_cycle_shap/manifests/class_conditional_cross_cycle_shap_input_registry.csv",
+    "sha256": "e2d370b33e95f4abf934eb06af0e41fcea217d88d8548a672d948bdcd2c3532d",
+    "rows": 6
+  },
+  "comparison_rules": {
+    "within_same_frozen_model_only": true,
+    "class_conditioning_variable": "target",
+    "target_0_comparison": "CYCLE24_HOLDOUT_TARGET_0 VS CYCLE25_POOLED_TARGET_0",
+    "target_1_comparison": "CYCLE24_HOLDOUT_TARGET_1 VS CYCLE25_POOLED_TARGET_1",
+    "same_feature_order": true,
+    "same_model_specific_output_space": true,
+    "same_frozen_background": true,
+    "cross_model_raw_shap_magnitude_comparison": false
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "class_conditional_populations_frozen": true,
+    "class_conditional_metrics_computed": false,
+    "null_thresholds_applied": false,
+    "featurewise_inference_performed": false,
+    "fdr_applied": false,
+    "common_support_sensitivity_applied": false,
+    "correlated_group_robustness_applied": false,
+    "drift_conclusion_made": false,
+    "stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "Class-conditioned comparisons are frozen before their SHAP structure metrics are computed. Their purpose is to distinguish cross-cycle explanation changes from changes that may be associated with differing class prevalence/composition. No drift or stability claim is made at this stage.",
+  "next_stage": "MODEL_CHAPTER_10_5_2_CLASS_CONDITIONAL_SHAP_POINT_ESTIMATES"
+}

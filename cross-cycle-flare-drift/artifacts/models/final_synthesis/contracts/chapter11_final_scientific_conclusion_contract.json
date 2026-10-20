@@ -1,0 +1,67 @@
+{
+  "contract_name": "Frozen Chapter-11 Final Scientific Conclusion",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_FINAL_SCIENTIFIC_CONCLUSION",
+  "created_at_utc": "2026-10-20T10:58:03.251410+00:00",
+  "chapter": "MODEL_CHAPTER_11_6",
+  "final_conclusion_class": "MAJORITY_MODEL_PREDICTION_EXPLANATION_SEPARATION_WITH_MODEL_DEPENDENCE",
+  "predictive_result": {
+    "primary_metric": "TSS",
+    "model_scope_comparisons": 12,
+    "no_measurable_change_at_95ci": 12,
+    "equivalence_established": false,
+    "strict_stability_established": false,
+    "conclusion": "Across all three frozen models and all four Cycle25 evaluation scopes, no measurable change in the primary TSS metric was detected under the predefined 95% bootstrap confidence-interval criterion. This does not establish predictive equivalence or strict stability."
+  },
+  "explanation_result": {
+    "tier0_models": [
+      "LR_02_C0p01_BALANCED"
+    ],
+    "tier2_models": [
+      "RF_04_D12_L5_BALSUB",
+      "XGB_02_LR0p03_D3_BAL"
+    ],
+    "model_dependent": true,
+    "universal_explanation_drift": false,
+    "universal_explanation_stability": false,
+    "conclusion": "Cross-cycle explanation evidence is model-dependent. Random Forest and XGBoost show TIER_2 evidence, combining OVERALL explanation-structure null exceedance with featurewise BH-FDR-significant attribution changes. Logistic Regression remains TIER_0 at the global structure level despite featurewise attribution changes."
+  },
+  "joint_result": {
+    "prediction_explanation_separation_models": 2,
+    "model_total": 3,
+    "majority_model_evidence": true,
+    "universal_across_models": false,
+    "conclusion": "The dominant cross-model result is majority-model evidence that explanation behavior can change even when a commensurate measurable change in primary predictive TSS is not detected. This prediction-explanation separation is observed in Random Forest and XGBoost, but is not universal across all model families."
+  },
+  "hypothesis_results": {
+    "H0": "MIXED_NOT_SUFFICIENT_AS_UNIVERSAL_EXPLANATION",
+    "H1": "NOT_SUPPORTED_BY_PRIMARY_TSS_CRITERION",
+    "H2": "SUPPORTED_WITH_MODEL_DEPENDENCE",
+    "H3": "SUPPORTED_WITH_QUALIFICATION_BY_MAJORITY_MODEL_EVIDENCE"
+  },
+  "robustness_qualification": "The interpretation remains qualified by distribution shift and robustness analyses. Common-support and Cycle25-to-Cycle24 reweighting analyses can attenuate some explanation differences, correlated-feature-group analysis is descriptive because no frozen group-level null was available, and temporal block screening did not use block-size-matched null distributions.",
+  "scientific_limitations": "The results do not prove predictive equivalence, strict predictive stability, universal explanation drift, causal relationships between SHARP variables and solar flares, or a 'right for the wrong reasons' mechanism.",
+  "paper_level_conclusion": "Within the frozen Cycle24-to-Cycle25 experimental design, predictive-change detection and explanation-change evidence do not necessarily move together. Primary TSS showed no measurable cross-cycle change under the predefined criterion, while two of three model families exhibited explanation changes beyond the frozen Cycle24 attribution baseline. Therefore, cross-cycle model evaluation should examine both predictive performance and explanation behavior rather than treating predictive metrics alone as evidence that a model's internal attribution structure has remained unchanged.",
+  "output": {
+    "file": "artifacts/models/final_synthesis/metrics/chapter11_final_scientific_conclusion.csv",
+    "sha256": "547e2648f7d214e3fc74f3935a826ed9a827820e7eadce213245de35a92a60be",
+    "rows": 7
+  },
+  "scientific_guardrails": {
+    "new_statistical_test_performed": false,
+    "new_bootstrap_performed": false,
+    "new_null_distribution_created": false,
+    "new_significance_threshold_created": false,
+    "models_retrained": false,
+    "predictions_recomputed": false,
+    "shap_recomputed": false,
+    "predictive_equivalence_claimed": false,
+    "strict_predictive_stability_claimed": false,
+    "universal_explanation_drift_claimed": false,
+    "universal_explanation_stability_claimed": false,
+    "causal_shap_claim_made": false,
+    "right_for_wrong_reasons_claim_made": false,
+    "final_scientific_conclusion_assigned": true
+  },
+  "next_stage": "MODEL_CHAPTER_11_7_FINAL_CHAPTER11_FREEZE"
+}

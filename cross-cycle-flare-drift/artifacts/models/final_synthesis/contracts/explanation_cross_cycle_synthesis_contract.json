@@ -1,0 +1,60 @@
+{
+  "contract_name": "Frozen Chapter-11 Explanation Cross-Cycle Synthesis",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_EXPLANATION_SYNTHESIS",
+  "created_at_utc": "2026-10-20T10:49:31.803440+00:00",
+  "chapter": "MODEL_CHAPTER_11_3",
+  "source_chapter": "MODEL_CHAPTER_10",
+  "model_evidence_tiers": {
+    "LR_02_C0p01_BALANCED": "TIER_0",
+    "RF_04_D12_L5_BALSUB": "TIER_2",
+    "XGB_02_LR0p03_D3_BAL": "TIER_2"
+  },
+  "cross_model_evidence": {
+    "pattern": "MAJORITY_MODEL_PATTERN",
+    "dominant_tier": "TIER_2",
+    "tier0_models": 1,
+    "tier1_models": 0,
+    "tier2_models": 2,
+    "universal_binary_drift_label": false,
+    "universal_binary_stability_label": false
+  },
+  "model_synthesis": {
+    "file": "artifacts/models/final_synthesis/metrics/explanation_cross_cycle_model_synthesis.csv",
+    "sha256": "af5b6ba5055bdf27f7eae9f7d7e8ee99444e85606ef2d07c7a8a4c67b7ad6aee",
+    "rows": 3
+  },
+  "cross_model_summary": {
+    "file": "artifacts/models/final_synthesis/metrics/explanation_cross_cycle_summary.csv",
+    "sha256": "201b9e1d6670d1a97dc62ec25743492518a7de6d0ae74c4f79f21c8a4777b044",
+    "rows": 1
+  },
+  "robustness_context": {
+    "class_conditional_required": true,
+    "support_reweighting_required": true,
+    "correlated_group_required": true,
+    "temporal_screening_required": true,
+    "support_reweighting_formal_null_applied": false,
+    "correlated_group_formal_null_applied": false,
+    "temporal_null_sample_size_matched": false,
+    "target1_cycle24_small_group_caution": true,
+    "target1_cycle24_entity_groups": 25
+  },
+  "scientific_guardrails": {
+    "shap_recomputed": false,
+    "new_null_distribution_created": false,
+    "new_fdr_computation_performed": false,
+    "new_statistical_threshold_created": false,
+    "models_retrained": false,
+    "preprocessing_refit": false,
+    "thresholds_reoptimized": false,
+    "raw_shap_pooled_across_model_families": false,
+    "binary_explanation_drift_label_created": false,
+    "binary_explanation_stability_label_created": false,
+    "shap_interpreted_as_causal": false,
+    "joint_prediction_explanation_outcome_assigned": false,
+    "hypotheses_evaluated": false
+  },
+  "required_interpretation": "The frozen cross-cycle explanation evidence is model-dependent. RF and XGB exhibit TIER_2 evidence, requiring both OVERALL global structure-null exceedance and featurewise BH-FDR evidence. LR remains TIER_0 because its OVERALL structure does not exceed the frozen Cycle24 null despite featurewise changes. Therefore Chapter 11 must preserve a majority-model TIER_2 result rather than claiming universal explanation drift or universal explanation stability.",
+  "next_stage": "MODEL_CHAPTER_11_4_JOINT_PREDICTION_EXPLANATION_OUTCOME"
+}

@@ -1,0 +1,71 @@
+{
+  "contract_name": "Frozen Chapter-11 Final Cross-Cycle Synthesis Inputs",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_SYNTHESIS_INPUTS",
+  "created_at_utc": "2026-10-20T10:46:07.913016+00:00",
+  "chapter": "MODEL_CHAPTER_11_1C",
+  "timing_disclosure": {
+    "chapter8_results_already_observed": true,
+    "chapter9_results_already_observed": true,
+    "chapter10_results_already_observed": true,
+    "joint_prediction_explanation_synthesis_computed_here": false,
+    "final_hypothesis_decisions_computed_here": false,
+    "final_scientific_conclusion_computed_here": false,
+    "interpretation": "This is a pre-joint-synthesis input freeze, not a preregistration before Cycle25 observations or prior analyses."
+  },
+  "model_ids": [
+    "LR_02_C0p01_BALANCED",
+    "RF_04_D12_L5_BALSUB",
+    "XGB_02_LR0p03_D3_BAL"
+  ],
+  "input_registry": {
+    "file": "artifacts/models/final_synthesis/manifests/chapter11_synthesis_input_registry.csv",
+    "sha256": "5c1fcd8bed47789332c283babd0e149c895d603ef04bf7e13b847edf0f586e89",
+    "rows": 9
+  },
+  "predictive_evidence_state": {
+    "contract_status": "FROZEN_CROSS_CYCLE_PREDICTIVE_DRIFT",
+    "primary_metric": "TSS",
+    "primary_comparisons": 12,
+    "no_measurable_change_at_95ci": 12,
+    "equivalence_claimed": false,
+    "models_retrained": false,
+    "thresholds_reoptimized": false,
+    "preprocessing_refit": false,
+    "required_interpretation": "No measurable primary TSS change detected at the 95% bootstrap-CI criterion. This is not evidence of statistical equivalence."
+  },
+  "shift_control_state": {
+    "chapter9_status": "FROZEN_CHAPTER9_SHIFT_NULL_CONTROLS",
+    "used_as_context_and_robustness_framework": true,
+    "new_shift_analysis_performed_here": false
+  },
+  "explanation_evidence_state": {
+    "chapter10_status": "FROZEN_CHAPTER10_CROSS_CYCLE_SHAP",
+    "synthesis_status": "FROZEN_CROSS_CYCLE_SHAP_SYNTHESIS",
+    "model_tiers": {
+      "LR_02_C0p01_BALANCED": "TIER_0",
+      "RF_04_D12_L5_BALSUB": "TIER_2",
+      "XGB_02_LR0p03_D3_BAL": "TIER_2"
+    },
+    "cross_model_pattern": "MAJORITY_MODEL_PATTERN",
+    "dominant_primary_evidence_tier": "TIER_2",
+    "automatic_binary_drift_label": false,
+    "automatic_binary_stability_label": false
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "model_retraining_allowed": false,
+    "threshold_retuning_allowed": false,
+    "preprocessing_refit_allowed": false,
+    "new_feature_selection_allowed": false,
+    "new_shap_computation_allowed": false,
+    "new_null_distribution_allowed": false,
+    "new_significance_threshold_allowed": false,
+    "predictive_no_change_equals_equivalence": false,
+    "shap_is_causal": false,
+    "final_joint_outcome_assigned": false,
+    "hypotheses_evaluated": false,
+    "final_paper_conclusion_assigned": false
+  },
+  "next_stage": "MODEL_CHAPTER_11_2_PREDICTIVE_SYNTHESIS"
+}

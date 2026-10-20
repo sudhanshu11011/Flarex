@@ -1,0 +1,133 @@
+{
+  "contract_name": "Frozen Final Cycle25 Predictive Evaluation Results",
+  "version": "1.0",
+  "status": "FROZEN",
+  "created_at_utc": "2026-10-18T16:37:15.900585+00:00",
+  "chapter": "MODEL_CHAPTER_8",
+  "evaluation_stage": "CYCLE25_PREDICTIVE_EVALUATION_COMPLETE",
+  "scientific_role": "Frozen cross-cycle predictive evaluation of the exact Cycle24-trained models on predeclared Cycle25 temporal blocks and the secondary pooled Cycle25 summary.",
+  "primary_metric": "TSS",
+  "primary_temporal_blocks": [
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025"
+  ],
+  "secondary_pooled_scope": "C25_ALL_2020_2025",
+  "model_count": 3,
+  "result_rows": 12,
+  "cross_family_winner_declared": false,
+  "predictive_change_summary": {
+    "total_tss_comparisons": 12,
+    "measurable_decrease": 0,
+    "measurable_increase": 0,
+    "no_measurable_change_at_95ci": 12,
+    "equivalence_claimed": false,
+    "interpretation": "Across all 12 predeclared Cycle24-holdout versus Cycle25 TSS comparisons, the 95% bootstrap delta interval contains zero. Therefore no statistically measurable TSS difference is identified at this uncertainty level. This is not a formal equivalence or proof-of-stability claim."
+  },
+  "bootstrap": {
+    "unit": "ENTITY_GROUP",
+    "valid_replicates_per_scope": 2000,
+    "confidence_level": 0.95,
+    "ci_method": "percentile"
+  },
+  "result_manifest": {
+    "file": "artifacts\\models\\evaluation\\manifests\\frozen_cycle25_predictive_results.csv",
+    "sha256": "cf08779ea4e329427ff29d13fd0bab11ff9b72a8bf5408bb07d0f95d3d79d104",
+    "rows": 12
+  },
+  "development_integrity": {
+    "cycle24_models_retrained": false,
+    "cycle25_training_performed": false,
+    "preprocessing_refit": false,
+    "feature_set_changed": false,
+    "thresholds_reoptimized": false,
+    "temporal_blocks_changed": false,
+    "probability_recalibration": false,
+    "candidate_replacement": false
+  },
+  "next_scientific_boundary": {
+    "distribution_shift_analysis": "NOT_YET_PERFORMED",
+    "within_cycle24_shap_null": "NOT_YET_PERFORMED",
+    "cross_cycle_shap_analysis": "NOT_YET_PERFORMED",
+    "predictive_results_must_not_determine_shap_conclusion": true
+  },
+  "interpretation_constraints": {
+    "no_measurable_change_not_equivalence": true,
+    "no_measurable_change_not_proof_of_stability": true,
+    "predictive_skill_and_explanation_stability_are_separate": true,
+    "cycle25_treated_as_temporal_domain_shift": true,
+    "cycle25_not_automatically_ood": true,
+    "shap_not_causal_solar_physics": true
+  },
+  "verification": {
+    "chapter_8_1_protocol": "PASS",
+    "chapter_8_2_predictions": "PASS",
+    "chapter_8_3_point_metrics": "PASS",
+    "chapter_8_4_bootstrap": "PASS",
+    "chapter_8_5_predictive_drift": "PASS",
+    "chapter_8_6_independent_audit": "PASS"
+  },
+  "artifacts": {
+    "cycle25_metrics": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cycle25_metrics.csv",
+      "sha256": "097ed307200b299f98c329d9e08083caea1bcfdd28904b989ef4ba61f73638c6"
+    },
+    "cycle25_bootstrap_ci": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cycle25_bootstrap_ci.csv",
+      "sha256": "6965c5a843892e8794ecb5f2664487979a6097665bfc58a2125be8c694a8aa9e"
+    },
+    "cross_cycle_predictive_drift": {
+      "file": "artifacts\\models\\evaluation\\metrics\\cross_cycle_predictive_drift.csv",
+      "sha256": "b0bb88934864c049807c2e9ae7933d63b60e68dc107e684fa7bd3070e83e43e8"
+    },
+    "independent_cycle25_audit": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_evaluation_audit.csv",
+      "sha256": "bdb02d9c0bc97d9aa43e4dd78d9b64167b65d4bc86e8ec49ef9c7b7885df4b36"
+    },
+    "frozen_cycle25_result_manifest": {
+      "file": "artifacts\\models\\evaluation\\manifests\\frozen_cycle25_predictive_results.csv",
+      "sha256": "cf08779ea4e329427ff29d13fd0bab11ff9b72a8bf5408bb07d0f95d3d79d104"
+    }
+  },
+  "data_access_at_freeze": {
+    "raw_cycle25_dataset_read": false,
+    "raw_cycle24_holdout_read": false,
+    "prediction_parquet_read": false,
+    "bootstrap_parquet_read": false,
+    "model_files_loaded": false,
+    "new_model_fitting": false,
+    "new_threshold_optimization": false,
+    "new_bootstrap_sampling": false
+  },
+  "provenance": {
+    "cycle25_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_evaluation_protocol.json",
+      "sha256": "11924e30c24b0ed592625c994b2764d900a8bf778d100f2dd8173fb737e6dae7"
+    },
+    "cycle25_prediction_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_prediction_contract.json",
+      "sha256": "96224f45350828c24c3008e8621a6299fd438ba1bd1e047e01e4d631830f9b77"
+    },
+    "cycle25_metrics_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_metrics_contract.json",
+      "sha256": "65172884b2ef58cc7238ea3fb389c8402ef47da4c31e44530d6ae8bed7176934"
+    },
+    "cycle25_bootstrap_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_bootstrap_contract.json",
+      "sha256": "28f5f6f91cc8d9154938bdff526339abf5b50ee4f6847acbfd5e4ee2613220a1"
+    },
+    "cross_cycle_drift_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cross_cycle_predictive_drift_contract.json",
+      "sha256": "fd4b7619e12e719b9da392c03944ba5f000b17b347c9b2f385360f8df6dee17e"
+    },
+    "cycle25_audit_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_evaluation_audit.json",
+      "sha256": "905cdb3e4788747a35572dd6880e20dd64debec1a0ead78ae8b2cd6a639ad0ab"
+    },
+    "cycle24_reference_contract": {
+      "file": "artifacts\\models\\evaluation\\contracts\\holdout_results_contract.json",
+      "sha256": "1622a51eab230d06376b6a1d18863bb7e23372d073866c13fc9a22609b614add"
+    }
+  },
+  "immutability_rule": "Cycle25 predictive evaluation is final and frozen. These results must not be used to retrain models, alter features, modify preprocessing, reoptimize thresholds, change temporal blocks, or select a replacement model. Subsequent distribution-shift and explanation-drift analyses must preserve this frozen predictive pipeline."
+}

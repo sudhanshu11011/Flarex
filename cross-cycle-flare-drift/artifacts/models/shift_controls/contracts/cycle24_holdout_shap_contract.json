@@ -1,0 +1,193 @@
+{
+  "contract_name": "Frozen Cycle24 HOLDOUT SHAP Attribution Set",
+  "version": "2.0",
+  "status": "FROZEN_CYCLE24_HOLDOUT_SHAP",
+  "created_at_utc": "2026-10-19T15:38:56.374330+00:00",
+  "chapter": "MODEL_CHAPTER_9_6B",
+  "software": {
+    "shap": "0.52.0",
+    "scikit_learn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
+  "evaluation_population": {
+    "name": "CYCLE24_HOLDOUT",
+    "file": "artifacts\\splitting\\data\\cycle24_holdout.parquet",
+    "sha256": "8abb3929febcde7d778c4781ac890ff5e658933c2ef2a06aa19da085e7e255fc",
+    "rows": 13072,
+    "entity_groups": 176,
+    "positive_rows": 527,
+    "negative_rows": 12545
+  },
+  "feature_contract": {
+    "count": 25,
+    "order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ]
+  },
+  "background": {
+    "source": "CYCLE24_TRAIN_ONLY",
+    "file": "artifacts\\models\\shift_controls\\shap\\background\\cycle24_train_shap_background.parquet",
+    "sha256": "bd9775668a66e90d0576fbed69f56682729a1d1c6016a5ffbca874d4438ad598",
+    "rows": 512,
+    "frozen": true
+  },
+  "models": [
+    {
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_family": "logistic",
+      "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+      "explainer": "LinearExplainer",
+      "input_space": "FROZEN_STANDARDIZED",
+      "output_space": "LOG_ODDS_DECISION_FUNCTION",
+      "background_rows": 512,
+      "shap_artifact": {
+        "file": "artifacts\\models\\shift_controls\\shap\\cycle24_holdout\\LR_02_C0p01_BALANCED.parquet",
+        "sha256": "b4cf74dccb6024da734322eb11011cf19285631b065e529480980bc55d0568a5",
+        "rows": 13072,
+        "features": 25
+      },
+      "additivity": {
+        "pass": true,
+        "atol": 1e-08,
+        "rtol": 1e-08,
+        "mean_abs_error": 4.372946992954411e-16,
+        "p95_abs_error": 1.7763568394002505e-15,
+        "p99_abs_error": 2.220446049250313e-15,
+        "max_abs_error": 1.021405182655144e-14,
+        "relative_error_diagnostic_only": true,
+        "max_relative_error_diagnostic": 1.241690019242845e-13,
+        "rows_over_1pct_relative_diagnostic": 0
+      }
+    },
+    {
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_family": "random_forest",
+      "model_sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31",
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+      "explainer": "TreeExplainer",
+      "input_space": "RAW",
+      "output_space": "POSITIVE_CLASS_PROBABILITY",
+      "background_rows": 512,
+      "shap_artifact": {
+        "file": "artifacts\\models\\shift_controls\\shap\\cycle24_holdout\\RF_04_D12_L5_BALSUB.parquet",
+        "sha256": "294c7b2c53b0cd9613143a0c835f887ee76c4d08e9242ab7ce99787eea9fff79",
+        "rows": 13072,
+        "features": 25
+      },
+      "additivity": {
+        "pass": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "mean_abs_error": 6.382766997444088e-06,
+        "p95_abs_error": 2.8120100256888695e-07,
+        "p99_abs_error": 2.8125073876714147e-07,
+        "max_abs_error": 0.0038242857826544796,
+        "relative_error_diagnostic_only": true,
+        "max_relative_error_diagnostic": 0.09605107971022335,
+        "rows_over_1pct_relative_diagnostic": 17
+      }
+    },
+    {
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_family": "xgboost",
+      "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+      "training_scope": "CYCLE24_TRAIN_ONLY",
+      "train_sha256": "4801a6e3b11d39cef8d4b0ef0eea4ae167c27862431662c3f43ff55e4c433def",
+      "explainer": "TreeExplainer",
+      "input_space": "RAW",
+      "output_space": "XGBOOST_RAW_MARGIN",
+      "background_rows": 512,
+      "shap_artifact": {
+        "file": "artifacts\\models\\shift_controls\\shap\\cycle24_holdout\\XGB_02_LR0p03_D3_BAL.parquet",
+        "sha256": "8827ae0e1d0728d6116f96573e2f1e8542becb8515744f1b6e928ea80764a0dd",
+        "rows": 13072,
+        "features": 25
+      },
+      "additivity": {
+        "pass": true,
+        "atol": 0.01,
+        "rtol": 0.01,
+        "mean_abs_error": 1.5639849598635873e-06,
+        "p95_abs_error": 5.029481715723705e-06,
+        "p99_abs_error": 7.10056146234983e-06,
+        "max_abs_error": 1.1272453136257354e-05,
+        "relative_error_diagnostic_only": true,
+        "max_relative_error_diagnostic": 3.583202003600062e-05,
+        "rows_over_1pct_relative_diagnostic": 0
+      }
+    }
+  ],
+  "execution_notes": {
+    "lr": "LinearExplainer using frozen Cycle24-TRAIN StandardScaler.",
+    "rf": "TreeExplainer interventional using frozen 512-row background. RF was executed in checkpointed parallel chunks. Native-style additivity validation passed.",
+    "xgb": "TreeExplainer interventional using the exact fitted Booster extracted from the frozen XGBClassifier bundle because SHAP 0.52 rejected the wrapper when enable_categorical=True. Wrapper and Booster raw margins were verified equivalent before SHAP generation."
+  },
+  "scientific_guardrails": {
+    "cycle24_train_raw_read_for_evaluation": false,
+    "cycle24_holdout_read": true,
+    "cycle25_read": false,
+    "models_retrained": false,
+    "models_retuned": false,
+    "feature_selection_changed": false,
+    "background_changed": false,
+    "sampling_reduction": false,
+    "shap_approximation": false,
+    "cross_model_raw_shap_magnitude_comparison_allowed": false
+  },
+  "comparison_rule": "SHAP attribution structure is compared within the same frozen model across resampled populations or cycles. Raw SHAP magnitudes are not directly compared between Logistic Regression, Random Forest and XGBoost because their explanation output spaces differ.",
+  "artifacts": {
+    "combined_summary": {
+      "file": "artifacts\\models\\shift_controls\\metrics\\cycle24_holdout_shap_summary.csv",
+      "sha256": "58e95b4315dbe9e289138092cd187b60109a0d125726e932b9eca19c217730ec",
+      "rows": 225
+    },
+    "combined_registry": {
+      "file": "artifacts\\models\\shift_controls\\manifests\\cycle24_holdout_shap_registry.csv",
+      "sha256": "da4ebe4a1297ca76980ffc75c8554a6defacd1995b260a37bb4f63438b09ad37",
+      "rows": 3
+    },
+    "rf_component_audit": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\rf_cycle24_holdout_shap_parallel_audit.json",
+      "sha256": "8e7e6792aee835ba055e01f99210f0724651690cd5accf5a48aa18a681a10835"
+    },
+    "xgb_component_audit": {
+      "file": "artifacts\\models\\shift_controls\\contracts\\xgb_cycle24_holdout_shap_parallel_audit.json",
+      "sha256": "b906c71550c4fa507eb149b13c268c1829204ee47a0bc688ef3f0af992efa595"
+    }
+  },
+  "evaluation_state": {
+    "cycle24_holdout_shap": true,
+    "within_cycle24_shap_null": false,
+    "cycle25_shap": false,
+    "cross_cycle_shap_drift": false
+  },
+  "next_stage": "MODEL_CHAPTER_9_6C",
+  "immutability_rule": "After Chapter 9.6B is frozen, the Cycle24 HOLDOUT SHAP values, model-specific explanation spaces, feature order, frozen background, and explainer configurations must not be changed in response to within-Cycle24 null or Cycle25 results."
+}

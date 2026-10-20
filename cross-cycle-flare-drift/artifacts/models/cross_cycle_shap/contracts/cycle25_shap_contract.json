@@ -1,0 +1,82 @@
+{
+  "contract_name": "Frozen Cycle25 SHAP Artifacts",
+  "version": "1.0",
+  "status": "FROZEN_CYCLE25_SHAP",
+  "created_at_utc": "2026-10-19T21:48:50.676484+00:00",
+  "chapter": "MODEL_CHAPTER_10_2_4",
+  "source_execution_contract": {
+    "file": "artifacts/models/cross_cycle_shap/contracts/cycle25_shap_execution_inputs_contract.json",
+    "sha256": "e3fe5ccbc7d658700932d4a610a2024c61bf0a7062238ff9d34aa38454ac931d",
+    "status": "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS"
+  },
+  "population": {
+    "rows": 79361,
+    "positive_rows": 4836,
+    "negative_rows": 74525,
+    "entity_groups": 1011,
+    "temporal_blocks": {
+      "B1": 10411,
+      "B2": 33132,
+      "B3": 35818
+    },
+    "population_manifest_file": "artifacts/models/cross_cycle_shap/manifests/cycle25_shap_population_manifest.csv",
+    "population_manifest_sha256": "f515a23b92b2729bba28da62c9f12574086e3ad7c97937a9550d93ef789cd1cb"
+  },
+  "models": {
+    "count": 3,
+    "candidate_ids": [
+      "LR_02_C0p01_BALANCED",
+      "RF_04_D12_L5_BALSUB",
+      "XGB_02_LR0p03_D3_BAL"
+    ],
+    "registry_file": "artifacts/models/cross_cycle_shap/manifests/cycle25_shap_registry.csv",
+    "registry_sha256": "3da0f600474c101362bee3a20c0de91b04adc62f1cb68f965041b18bde26b04e",
+    "registry_rows": 3
+  },
+  "summary": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/cycle25_shap_summary.csv",
+    "sha256": "f43ffb9e64cf344717f645f9fab55687c542a112950beac9f8120b01ecdc52a3",
+    "rows": 225,
+    "population": "CYCLE25_POOLED",
+    "strata": [
+      "OVERALL",
+      "TARGET_0",
+      "TARGET_1"
+    ],
+    "features_per_model_per_stratum": 25
+  },
+  "explanation_spaces": {
+    "LR_02_C0p01_BALANCED": "LOG_ODDS_DECISION_FUNCTION",
+    "RF_04_D12_L5_BALSUB": "POSITIVE_CLASS_PROBABILITY",
+    "XGB_02_LR0p03_D3_BAL": "XGBOOST_RAW_MARGIN"
+  },
+  "comparison_rules": {
+    "cross_cycle_comparison": "WITHIN_MODEL_ONLY",
+    "raw_shap_magnitude_across_models": "PROHIBITED",
+    "reason": "LR, RF and XGB explanations exist in different model-output spaces.",
+    "cycle25_population_same_across_models": true,
+    "cycle25_row_order_same_across_models": true,
+    "cycle25_targets_same_across_models": true,
+    "cycle25_entity_groups_same_across_models": true,
+    "cycle25_temporal_blocks_same_across_models": true
+  },
+  "scientific_guardrails": {
+    "cycle25_shap_generated": true,
+    "all_three_models_complete": true,
+    "cycle25_used_for_training": false,
+    "cycle25_used_for_model_selection": false,
+    "cycle25_used_for_feature_selection": false,
+    "cycle25_used_for_preprocessing_fit": false,
+    "models_retrained": false,
+    "models_retuned": false,
+    "shap_background_changed": false,
+    "cycle24_null_changed": false,
+    "common_support_definition_changed": false,
+    "correlated_feature_groups_changed": false,
+    "drift_analysis_performed": false,
+    "drift_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "immutability_rule": "After MODEL_CHAPTER_10_2_4, the three Cycle25 SHAP artifacts, their row order, model-specific explanation spaces, frozen Cycle24-TRAIN background, preprocessing, and model binaries must not be changed in response to subsequent cross-cycle drift results.",
+  "next_stage": "MODEL_CHAPTER_10_3_OVERALL_CROSS_CYCLE_SHAP"
+}

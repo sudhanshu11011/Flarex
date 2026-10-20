@@ -1,0 +1,91 @@
+{
+  "contract_name": "Frozen Final Cross-Cycle SHAP Evidence Synthesis",
+  "version": "1.0",
+  "status": "FROZEN_CROSS_CYCLE_SHAP_SYNTHESIS",
+  "created_at_utc": "2026-10-20T10:16:32.843537+00:00",
+  "chapter": "MODEL_CHAPTER_10_10_2",
+  "frozen_synthesis_protocol": {
+    "file": "artifacts/models/cross_cycle_shap/contracts/final_cross_cycle_shap_synthesis_protocol.json",
+    "sha256": "89afe98b78f725df55ea5a5eb3bce194f97bceb464c664a7f70c2ec8b82dda76",
+    "required_status": "FROZEN_FINAL_CROSS_CYCLE_SHAP_SYNTHESIS_PROTOCOL"
+  },
+  "evidence_sources": {
+    "structure_null": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/cross_cycle_shap_structure_null_comparison_contract.json",
+      "contract_sha256": "353546e1d33591dd1e78828cd765d1a569f71dfd71422610b68bafdebf97a5fd",
+      "summary": "artifacts/models/cross_cycle_shap/metrics/cross_cycle_shap_structure_null_summary.csv",
+      "summary_sha256": "948953cf22f2a8134939b0f7c9f98e5aa41d1f5ef7158234594b2488621891b9"
+    },
+    "support_reweighting": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/common_support_reweighting_shap_sensitivity_contract.json",
+      "contract_sha256": "76e5b3e4593a3058af4f6334ea6f2626ee03b0ca062fbbe5c88a5d80590c4c6c",
+      "structure": "artifacts/models/cross_cycle_shap/metrics/common_support_reweighting_shap_structure_sensitivity.csv",
+      "structure_sha256": "cbec8153b4c73ad0a15f3350ffb41bd7a8c68e6d14d8df718f0698896cd18ebd"
+    },
+    "correlated_groups": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/correlated_group_shap_robustness_contract.json",
+      "contract_sha256": "9ac41b15a7590841da8d73818c95894048b4e5540c5337d2bc0970089948b22e",
+      "structure": "artifacts/models/cross_cycle_shap/metrics/correlated_group_shap_structure_robustness.csv",
+      "structure_sha256": "70f84db4db96368d9d3c241e2bd069bdbe351f188e9144d07f72adc23739eab4"
+    },
+    "featurewise_fdr": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/featurewise_cross_cycle_inference_contract.json",
+      "contract_sha256": "292a1764a15e0da6d065b031813c9656bf44ebb38aebd4a5664258778fd8df89",
+      "summary": "artifacts/models/cross_cycle_shap/metrics/featurewise_cross_cycle_inference_summary.csv",
+      "summary_sha256": "d878e4d4785620c6afbc5b2f69f4a527a6790e5d2f6582bf6e98a2609621f60b"
+    }
+  },
+  "model_synthesis": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/final_cross_cycle_shap_model_synthesis.csv",
+    "sha256": "6f16a7b90fb9763499a4d89ee21768e00525bb2b9f725fdf64d8f80d02ce87ab",
+    "rows": 3
+  },
+  "cross_model_summary": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/final_cross_cycle_shap_cross_model_summary.csv",
+    "sha256": "c918ca6871bac7a74e16cc1245388968cf0f0dc844f65829168e021fca75055a",
+    "rows": 1,
+    "cross_model_primary_pattern": "MAJORITY_MODEL_PATTERN",
+    "dominant_primary_evidence_tier": "TIER_2",
+    "tier_counts": {
+      "TIER_0": 1,
+      "TIER_1": 0,
+      "TIER_2": 2
+    }
+  },
+  "model_primary_evidence_tiers": {
+    "LR_02_C0p01_BALANCED": {
+      "tier": "TIER_0",
+      "label": "NO_GLOBAL_STRUCTURE_NULL_EXCEEDANCE",
+      "overall_structure_null_exceedance": false,
+      "overall_fdr_significant_hypotheses": 13
+    },
+    "RF_04_D12_L5_BALSUB": {
+      "tier": "TIER_2",
+      "label": "GLOBAL_STRUCTURE_AND_FEATUREWISE_EVIDENCE",
+      "overall_structure_null_exceedance": true,
+      "overall_fdr_significant_hypotheses": 23
+    },
+    "XGB_02_LR0p03_D3_BAL": {
+      "tier": "TIER_2",
+      "label": "GLOBAL_STRUCTURE_AND_FEATUREWISE_EVIDENCE",
+      "overall_structure_null_exceedance": true,
+      "overall_fdr_significant_hypotheses": 11
+    }
+  },
+  "scientific_guardrails": {
+    "new_statistical_test_performed": false,
+    "new_null_distribution_created": false,
+    "new_significance_threshold_created": false,
+    "support_restricted_null_invented": false,
+    "correlated_group_null_invented": false,
+    "temporal_block_specific_null_invented": false,
+    "raw_shap_pooled_across_models": false,
+    "winner_model_selected": false,
+    "automatic_binary_explanation_drift_label_created": false,
+    "automatic_binary_explanation_stability_label_created": false,
+    "final_evidence_synthesis_computed": true,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "The synthesis reports frozen model-specific evidence tiers rather than forcing all models into one binary explanation-drift label. TIER_2 requires both an OVERALL structure-null exceedance and at least one OVERALL BH-FDR-significant featurewise hypothesis. TIER_0 means no global structure-null exceedance and must not be interpreted as proof of explanation stability, even when featurewise changes exist. Class-conditional, support/reweighting, correlated-group, and temporal results remain robustness/context evidence under their frozen limitations.",
+  "next_stage": "MODEL_CHAPTER_10_10_3_FINAL_CHAPTER10_FREEZE"
+}

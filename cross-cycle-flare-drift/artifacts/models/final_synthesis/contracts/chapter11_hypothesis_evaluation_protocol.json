@@ -1,0 +1,77 @@
+{
+  "contract_name": "Frozen Chapter-11 Hypothesis Evaluation Protocol",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_HYPOTHESIS_EVALUATION_PROTOCOL",
+  "created_at_utc": "2026-10-20T10:52:59.805726+00:00",
+  "chapter": "MODEL_CHAPTER_11_5A",
+  "source_joint_contract": {
+    "file": "artifacts/models/final_synthesis/contracts/joint_prediction_explanation_outcome_contract.json",
+    "sha256": "d6d97afa4d1d74715ff2262fc20a964251734984c44f82bd0d074e344e0cd6b8",
+    "status": "FROZEN_CHAPTER11_JOINT_PREDICTION_EXPLANATION_OUTCOME"
+  },
+  "hypotheses": {
+    "H0": {
+      "statement": "Observed cross-cycle explanation differences are consistent with ordinary Cycle24 variability and/or distributional shift, without robust explanation-change evidence.",
+      "evaluation_rule": "H0 cannot serve as a universal explanation if one or more frozen model families show TIER_2 explanation evidence. However, model dependence and shift-sensitivity must be retained, so H0 is not converted into a simple universally rejected binary label.",
+      "allowed_final_statuses": [
+        "CONSISTENT_WITH_ALL_EVIDENCE",
+        "MIXED_NOT_SUFFICIENT_AS_UNIVERSAL_EXPLANATION"
+      ]
+    },
+    "H1": {
+      "statement": "Predictive behavior differs between the Cycle24 reference evaluation and Cycle25.",
+      "primary_metric": "TSS",
+      "evaluation_rule": "Use only the frozen primary TSS cross-cycle classification. If all 12 model-by-scope comparisons are NO_MEASURABLE_CHANGE_AT_95CI, H1 is NOT_SUPPORTED_BY_PRIMARY_TSS_CRITERION. This does not establish equivalence or strict predictive stability.",
+      "allowed_final_statuses": [
+        "SUPPORTED_BY_PRIMARY_TSS_CRITERION",
+        "NOT_SUPPORTED_BY_PRIMARY_TSS_CRITERION"
+      ]
+    },
+    "H2": {
+      "statement": "Cross-cycle SHAP explanation structure differs beyond ordinary within-Cycle24 attribution variability.",
+      "evaluation_rule": "TIER_2 constitutes the frozen model-level evidence state combining OVERALL structure-null exceedance with OVERALL featurewise BH-FDR evidence. If some but not all model families are TIER_2, H2 is SUPPORTED_WITH_MODEL_DEPENDENCE rather than universally supported.",
+      "allowed_final_statuses": [
+        "SUPPORTED_ACROSS_ALL_MODELS",
+        "SUPPORTED_WITH_MODEL_DEPENDENCE",
+        "NOT_SUPPORTED"
+      ]
+    },
+    "H3": {
+      "statement": "Explanation behavior can change without a commensurate measurable change in primary predictive skill.",
+      "evaluation_rule": "A model contributes H3 evidence when its primary TSS comparisons show no measurable change at the frozen 95% CI criterion while its explanation evidence is TIER_2. If two of three model families satisfy this condition, H3 is SUPPORTED_WITH_QUALIFICATION_BY_MAJORITY_MODEL_EVIDENCE. This must not be reworded as proof of no predictive loss, predictive equivalence, or universal explanation drift.",
+      "allowed_final_statuses": [
+        "SUPPORTED_ACROSS_ALL_MODELS",
+        "SUPPORTED_WITH_QUALIFICATION_BY_MAJORITY_MODEL_EVIDENCE",
+        "NOT_SUPPORTED"
+      ]
+    }
+  },
+  "language_guardrails": {
+    "prohibited_claims": [
+      "PREDICTIVE_EQUIVALENCE_PROVEN",
+      "STRICT_PREDICTIVE_STABILITY_PROVEN",
+      "NO_PREDICTIVE_LOSS_PROVEN",
+      "UNIVERSAL_EXPLANATION_DRIFT_PROVEN",
+      "UNIVERSAL_EXPLANATION_STABILITY_PROVEN",
+      "SHAP_CAUSAL_SOLAR_PHYSICS",
+      "RIGHT_FOR_THE_WRONG_REASONS"
+    ],
+    "required_predictive_wording": "No measurable primary TSS change was detected under the frozen 95% bootstrap-CI criterion; equivalence and strict stability were not established.",
+    "required_explanation_wording": "Explanation-change evidence is model-dependent: RF and XGB are TIER_2, while LR is TIER_0 at the global-structure level despite featurewise changes.",
+    "required_joint_wording": "The dominant result is majority-model evidence of explanation change without a commensurate measurable primary TSS change."
+  },
+  "scientific_guardrails": {
+    "new_statistical_test_performed": false,
+    "new_bootstrap_performed": false,
+    "new_null_distribution_created": false,
+    "new_significance_threshold_created": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "equivalence_test_performed": false,
+    "hypothesis_decisions_computed_here": false,
+    "final_scientific_conclusion_computed_here": false,
+    "shap_is_causal": false
+  },
+  "timing_disclosure": "The research hypotheses were predefined earlier, but this explicit evidence-to-status mapping is being frozen after the underlying Chapter-8 through Chapter-11.4 results were observed. Therefore this is a pre-hypothesis-evaluation interpretation freeze, not a preregistration before Cycle25 analysis.",
+  "next_stage": "MODEL_CHAPTER_11_5B_HYPOTHESIS_EVALUATION"
+}

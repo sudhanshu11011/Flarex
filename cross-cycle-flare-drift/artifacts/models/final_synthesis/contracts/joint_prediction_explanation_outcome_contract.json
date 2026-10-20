@@ -1,0 +1,78 @@
+{
+  "contract_name": "Frozen Chapter-11 Joint Prediction-Explanation Outcome",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_JOINT_PREDICTION_EXPLANATION_OUTCOME",
+  "created_at_utc": "2026-10-20T10:51:19.805195+00:00",
+  "chapter": "MODEL_CHAPTER_11_4",
+  "predictive_state": {
+    "primary_metric": "TSS",
+    "models_with_no_measurable_change": 3,
+    "model_scope_comparisons": 12,
+    "no_measurable_change_classifications": 12,
+    "equivalence_established": false,
+    "strict_stability_established": false
+  },
+  "explanation_state": {
+    "tier0_models": 1,
+    "tier1_models": 0,
+    "tier2_models": 2,
+    "cross_model_pattern": "MAJORITY_MODEL_PATTERN",
+    "dominant_tier": "TIER_2",
+    "universal_drift_label": false,
+    "universal_stability_label": false
+  },
+  "joint_state": {
+    "models_with_no_measurable_tss_change_and_tier2_explanation": 2,
+    "models_with_no_measurable_tss_change_and_tier0_explanation": 1,
+    "cross_model_pattern": "MAJORITY_MODEL_EXPLANATION_CHANGE_EVIDENCE_WITHOUT_MEASURABLE_PRIMARY_TSS_CHANGE",
+    "dominant_joint_evidence": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_WITH_TIER2_EXPLANATION_EVIDENCE",
+    "universal_across_models": false,
+    "formal_four_cell_stable_drift_matrix_assigned": false,
+    "hypothesis_decision_made": false
+  },
+  "model_outcomes": {
+    "LR_02_C0p01_BALANCED": {
+      "predictive_state": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_AT_95CI",
+      "explanation_tier": "TIER_0",
+      "joint_evidence_label": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_PLUS_NO_GLOBAL_EXPLANATION_STRUCTURE_NULL_EXCEEDANCE"
+    },
+    "RF_04_D12_L5_BALSUB": {
+      "predictive_state": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_AT_95CI",
+      "explanation_tier": "TIER_2",
+      "joint_evidence_label": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_PLUS_GLOBAL_AND_FEATUREWISE_EXPLANATION_CHANGE_EVIDENCE"
+    },
+    "XGB_02_LR0p03_D3_BAL": {
+      "predictive_state": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_AT_95CI",
+      "explanation_tier": "TIER_2",
+      "joint_evidence_label": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_PLUS_GLOBAL_AND_FEATUREWISE_EXPLANATION_CHANGE_EVIDENCE"
+    }
+  },
+  "outputs": {
+    "model_outcomes": {
+      "file": "artifacts/models/final_synthesis/metrics/joint_prediction_explanation_model_outcomes.csv",
+      "sha256": "4ef1f1944a0419bddd05e84be82c9a8ff5bf27b92fca342a78642e564fc1400b",
+      "rows": 3
+    },
+    "cross_model_summary": {
+      "file": "artifacts/models/final_synthesis/metrics/joint_prediction_explanation_summary.csv",
+      "sha256": "9d51d7ead6d8ec352257171b0cea2f0d800280f057c681c237d490ce3f7fc344",
+      "rows": 1
+    }
+  },
+  "scientific_guardrails": {
+    "new_predictions_generated": false,
+    "new_shap_generated": false,
+    "new_bootstrap_performed": false,
+    "new_null_distribution_created": false,
+    "new_significance_threshold_created": false,
+    "models_retrained": false,
+    "predictive_equivalence_claimed": false,
+    "predictive_strict_stability_claimed": false,
+    "universal_explanation_drift_claimed": false,
+    "universal_explanation_stability_claimed": false,
+    "causal_shap_claim_made": false,
+    "hypotheses_evaluated": false
+  },
+  "required_interpretation": "The joint evidence shows that no measurable primary TSS change was detected for any model under the frozen 95% bootstrap-CI rule, while two of three model families (RF and XGB) show TIER_2 explanation-change evidence. LR shows featurewise changes but no global structure-null exceedance and therefore remains TIER_0. This constitutes a majority-model prediction-explanation separation pattern, but does not establish predictive equivalence, universal explanation drift, or a causal mechanism.",
+  "next_stage": "MODEL_CHAPTER_11_5_HYPOTHESIS_EVALUATION"
+}

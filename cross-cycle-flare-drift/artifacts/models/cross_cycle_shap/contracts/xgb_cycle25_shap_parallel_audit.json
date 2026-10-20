@@ -1,0 +1,90 @@
+{
+  "audit_name": "Cycle25 XGBoost Parallel SHAP",
+  "version": "1.0",
+  "status": "COMPLETE_XGB_CYCLE25_SHAP",
+  "created_at_utc": "2026-10-19T21:46:37.266147+00:00",
+  "chapter": "MODEL_CHAPTER_10_2_3",
+  "source_execution_contract": {
+    "file": "artifacts/models/cross_cycle_shap/contracts/cycle25_shap_execution_inputs_contract.json",
+    "sha256": "e3fe5ccbc7d658700932d4a610a2024c61bf0a7062238ff9d34aa38454ac931d",
+    "required_status": "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS"
+  },
+  "candidate": {
+    "candidate_id": "XGB_02_LR0p03_D3_BAL",
+    "model_family": "xgboost",
+    "model_file": "artifacts/models/xgboost/models/XGB_02_LR0p03_D3_BAL.joblib",
+    "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+    "training_scope": "CYCLE24_TRAIN_ONLY",
+    "shap_model_representation": "EXACT_FITTED_XGBOOST_BOOSTER",
+    "wrapper_booster_equivalence": true,
+    "wrapper_booster_mean_abs_error": 0.0,
+    "wrapper_booster_max_abs_error": 0.0
+  },
+  "evaluation_population": {
+    "dataset": "data/final/dataset_v2/cycle25_dataset_v2.parquet",
+    "dataset_sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d",
+    "ordered_population_sha256": "ab1879bf772f6e24a6dab2cfbcb578f66befdb078125464752f29acf0942f172",
+    "rows": 79361
+  },
+  "shap": {
+    "explainer": "TreeExplainer",
+    "feature_perturbation": "interventional",
+    "feature_input_space": "RAW",
+    "background_input_space": "RAW",
+    "background_file": "artifacts/models/shift_controls/shap/background/cycle24_train_shap_background.parquet",
+    "background_sha256": "bd9775668a66e90d0576fbed69f56682729a1d1c6016a5ffbca874d4438ad598",
+    "background_rows": 512,
+    "output_space": "XGBOOST_RAW_MARGIN",
+    "approximate": false,
+    "sampling_reduction": false
+  },
+  "parallel_execution": {
+    "workers": 6,
+    "internal_threads_per_worker": 1,
+    "chunk_size": 256,
+    "global_chunks": 311,
+    "checkpointed": true
+  },
+  "additivity": {
+    "native_shap_check_enabled": true,
+    "secondary_check": "NUMPY_ALLCLOSE",
+    "pass": true,
+    "atol": 0.0001,
+    "rtol": 0.0001,
+    "mean_abs_error": 1.522275455276958e-06,
+    "p95_abs_error": 4.8444272096048735e-06,
+    "p99_abs_error": 7.151773021973884e-06,
+    "max_abs_error": 1.2756033058280991e-05,
+    "relative_error_is_diagnostic_only": true,
+    "max_relative_error_diagnostic": 9.443563092039863e-05,
+    "rows_over_1pct_relative_diagnostic": 0
+  },
+  "artifact": {
+    "file": "artifacts/models/cross_cycle_shap/shap/cycle25/XGB_02_LR0p03_D3_BAL.parquet",
+    "sha256": "2b842b91459808e3294c292736b5f73e7f040dc2b0e43f21e307f5926ffbb921",
+    "rows": 79361,
+    "features": 25
+  },
+  "summary": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/xgb_cycle25_shap_summary.csv",
+    "sha256": "b71c8287e16559b0818003892d7f4d12aee07ea7a1d2f4800ca51e6af3bd3c0f",
+    "rows": 75
+  },
+  "chunk_manifest": {
+    "file": "artifacts/models/cross_cycle_shap/manifests/xgb_cycle25_shap_chunk_manifest.csv",
+    "sha256": "ca8fd08b10f586746c60d7261db1170bdbbd1d3808e629c0d16ae7d0d1efb021",
+    "rows": 311
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "cycle25_used_for_fitting": false,
+    "model_retrained": false,
+    "model_retuned": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "shap_approximation": false,
+    "sampling_reduction": false,
+    "drift_conclusion_made": false
+  },
+  "next_stage": "MODEL_CHAPTER_10_2_4_FINALIZE_CYCLE25_SHAP"
+}

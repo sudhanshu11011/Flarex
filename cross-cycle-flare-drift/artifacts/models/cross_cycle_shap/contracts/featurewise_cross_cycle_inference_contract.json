@@ -1,0 +1,119 @@
+{
+  "contract_name": "Frozen Featurewise Cross-Cycle SHAP Empirical Inference + BH-FDR",
+  "version": "1.0",
+  "status": "FROZEN_FEATUREWISE_CROSS_CYCLE_INFERENCE_BH_FDR",
+  "created_at_utc": "2026-10-19T22:37:19.718145+00:00",
+  "chapter": "MODEL_CHAPTER_10_9_2",
+  "frozen_protocol": {
+    "file": "artifacts/models/cross_cycle_shap/contracts/featurewise_inference_protocol.json",
+    "sha256": "f3a55b6bdf06828de8e6effce0ff4af35b511910efd6167ccb07f88dc83c4225",
+    "required_status": "FROZEN_FEATUREWISE_INFERENCE_PROTOCOL"
+  },
+  "null_source": {
+    "file": "artifacts/models/shift_controls/shap/null/cycle24_shap_null_featurewise_replicates.parquet",
+    "sha256": "26a03b6f50ddac24f663328b43f47438c4b0921df7c9525bc55fd95db99d7a47",
+    "replicates_per_feature": 2000,
+    "source_population": "CYCLE24_HOLDOUT",
+    "null_type": "WITHIN_CYCLE24_ENTITY_GROUP_BOOTSTRAP_ABSOLUTE_DELTA"
+  },
+  "formal_scope": {
+    "models": [
+      "LR_02_C0p01_BALANCED",
+      "RF_04_D12_L5_BALSUB",
+      "XGB_02_LR0p03_D3_BAL"
+    ],
+    "strata": [
+      "OVERALL",
+      "TARGET_0",
+      "TARGET_1"
+    ],
+    "features": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "feature_count": 25,
+    "quantities": [
+      "ABS_DELTA_MEAN_ABS_SHAP",
+      "ABS_DELTA_MEAN_SIGNED_SHAP"
+    ],
+    "bh_families": 18,
+    "formal_hypotheses": 450,
+    "temporal_B1_B2_B3_formal_inference": false
+  },
+  "empirical_p_rule": {
+    "formula": "(1 + count(null_abs_delta >= observed_abs_delta)) / 2001",
+    "plus_one_correction": true,
+    "equality_counts_as_null_exceedance": true,
+    "minimum_possible_p": 0.0004997501249375312
+  },
+  "multiple_testing": {
+    "method": "BENJAMINI_HOCHBERG",
+    "family": "CANDIDATE_ID_X_STRATUM_X_QUANTITY",
+    "tests_per_family": 25,
+    "family_count": 18,
+    "fdr_q": 0.05,
+    "significant_rule": "BH_ADJUSTED_P <= 0.05"
+  },
+  "results": {
+    "total_featurewise_hypotheses": 450,
+    "total_fdr_significant_hypotheses": 105,
+    "families_with_at_least_one_fdr_significant_feature": 14,
+    "family_count": 18
+  },
+  "inference_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/featurewise_cross_cycle_inference_bh_fdr.csv",
+    "sha256": "7022c15aceb6849be7c01365a5906af546078519fd60737b87cbe586573c3365",
+    "rows": 450
+  },
+  "summary_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/featurewise_cross_cycle_inference_summary.csv",
+    "sha256": "d878e4d4785620c6afbc5b2f69f4a527a6790e5d2f6582bf6e98a2609621f60b",
+    "rows": 18
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "cycle24_null_recomputed": false,
+    "featurewise_null_modified": false,
+    "inference_protocol_modified_after_results": false,
+    "empirical_p_values_computed": true,
+    "bh_fdr_applied": true,
+    "temporal_formal_featurewise_inference": false,
+    "common_support_featurewise_fdr_applied": false,
+    "correlated_group_fdr_applied": false,
+    "final_explanation_drift_conclusion_made": false,
+    "final_explanation_stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "sample_size_caution": {
+    "cycle24_target_1_rows": 527,
+    "cycle24_target_1_entity_groups": 25,
+    "target_1_results_require_caution": true
+  },
+  "interpretation_rule": "An FDR-significant feature indicates that its observed absolute cross-cycle SHAP change is unusually large relative to the frozen same-model, same-stratum, same-feature within-Cycle24 null distribution and survives the predefined 25-feature Benjamini-Hochberg family at q=0.05. This is evidence of feature-level attribution change, not causal solar physics and not by itself the final cross-cycle explanation-drift conclusion.",
+  "next_stage": "MODEL_CHAPTER_10_10_FINAL_CROSS_CYCLE_SHAP_FREEZE"
+}

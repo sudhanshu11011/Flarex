@@ -1,0 +1,164 @@
+{
+  "contract_name": "Frozen Solar Cycle 25 Prediction Artifact",
+  "version": "1.0",
+  "status": "FROZEN_CYCLE25_PREDICTIONS",
+  "created_at_utc": "2026-10-18T14:08:39.259771+00:00",
+  "chapter": "MODEL_CHAPTER_8_2",
+  "source_dataset": {
+    "file": "data\\final\\dataset_v2\\cycle25_dataset_v2.parquet",
+    "sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d",
+    "rows": 79361,
+    "positive": 4836,
+    "negative": 74525,
+    "entity_groups": 1011,
+    "entity_group_source_column": "ENTITY_GROUP_ID",
+    "time_assignment_column": "observation_time_utc"
+  },
+  "feature_contract": {
+    "feature_count": 25,
+    "feature_order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "changes_made": false
+  },
+  "temporal_assignment": {
+    "primary_block_count": 3,
+    "assignment_rule": "start-inclusive and end-exclusive using observation_time_utc",
+    "all_rows_assigned_exactly_once": true,
+    "blocks": [
+      {
+        "block_id": "C25_B1_2020_2021",
+        "rows": 10411,
+        "entity_groups": 146
+      },
+      {
+        "block_id": "C25_B2_2022_2023",
+        "rows": 33132,
+        "entity_groups": 414
+      },
+      {
+        "block_id": "C25_B3_2024_2025",
+        "rows": 35818,
+        "entity_groups": 458
+      }
+    ],
+    "pooled_summary_available": true,
+    "pooled_scope": "C25_ALL_2020_2025"
+  },
+  "models": [
+    {
+      "family": "logistic",
+      "candidate_id": "LR_02_C0p01_BALANCED",
+      "model_file": "artifacts\\models\\logistic\\models\\LR_02_C0p01_BALANCED.joblib",
+      "model_sha256": "7ab15bfc0f770e9ec12d5389aa51bbc1eac81f4b6b4580103642032ec9d61abd",
+      "frozen_threshold": 0.4548081408379442,
+      "threshold_source": "CYCLE24_VALIDATION"
+    },
+    {
+      "family": "random_forest",
+      "candidate_id": "RF_04_D12_L5_BALSUB",
+      "model_file": "artifacts\\models\\random_forest\\models\\RF_04_D12_L5_BALSUB.joblib",
+      "model_sha256": "519afcdf06e28f1da9b36d112bee9070bc51748e1c415fe2f3c244bd476bbd31",
+      "frozen_threshold": 0.1196946372748545,
+      "threshold_source": "CYCLE24_VALIDATION"
+    },
+    {
+      "family": "xgboost",
+      "candidate_id": "XGB_02_LR0p03_D3_BAL",
+      "model_file": "artifacts\\models\\xgboost\\models\\XGB_02_LR0p03_D3_BAL.joblib",
+      "model_sha256": "5839ac44333265b1b771008a82f6fc5a2f722e992386cde93fe8c04d48443d8b",
+      "frozen_threshold": 0.2638225555419922,
+      "threshold_source": "CYCLE24_VALIDATION"
+    }
+  ],
+  "prediction_policy": {
+    "probability_source": "frozen_Cycle24_TRAIN_only_models",
+    "classification_rule": "probability >= frozen_threshold",
+    "threshold_source": "CYCLE24_VALIDATION",
+    "threshold_reoptimization": false
+  },
+  "preprocessing_policy": {
+    "logistic": "Frozen StandardScaler transform only",
+    "random_forest": "Identity/raw frozen features",
+    "xgboost": "Identity/raw frozen features",
+    "scaler_refit": false,
+    "cycle25_fitted_preprocessing": false
+  },
+  "artifacts": {
+    "prediction_artifact": {
+      "file": "artifacts\\models\\evaluation\\predictions\\cycle25_predictions.parquet",
+      "sha256": "f597db0fa056b10c0998d1ba0e53a6c602b8aeb59e2b13e7a3fdda5ba4692e10",
+      "rows": 79361
+    },
+    "prediction_manifest": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_prediction_manifest.csv",
+      "sha256": "cf7af2ea3124fc1d91ff2d2c0b0aaf0542ace90e84f03159ff2e84488a64208c",
+      "rows": 3
+    }
+  },
+  "evaluation_state": {
+    "cycle25_dataset_opened": true,
+    "cycle25_probabilities_generated": true,
+    "frozen_thresholds_applied": true,
+    "point_metrics_computed": false,
+    "calibration_computed": false,
+    "bootstrap_ci_computed": false,
+    "cross_cycle_drift_computed": false,
+    "model_retraining": false,
+    "preprocessing_refit": false,
+    "threshold_reoptimization": false,
+    "candidate_replacement": false,
+    "feature_changes": false
+  },
+  "data_isolation": {
+    "cycle25_read": true,
+    "cycle24_holdout_raw_dataset_read": false,
+    "cycle24_validation_dataset_read": false,
+    "cycle24_train_dataset_read": false,
+    "new_model_fitting": false,
+    "new_threshold_tuning": false
+  },
+  "provenance": {
+    "cycle25_evaluation_protocol": {
+      "file": "artifacts\\models\\evaluation\\contracts\\cycle25_evaluation_protocol.json",
+      "sha256": "11924e30c24b0ed592625c994b2764d900a8bf778d100f2dd8173fb737e6dae7"
+    },
+    "cycle25_model_registry": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_frozen_model_registry.csv",
+      "sha256": "8e075be703da18a78760c5fe12e5946936e4d8bc7675002bdd727e3319d504ed"
+    },
+    "cycle25_temporal_blocks": {
+      "file": "artifacts\\models\\evaluation\\manifests\\cycle25_temporal_blocks.csv",
+      "sha256": "7e3b06470c96a02a44abac3117e46a1e6b4f3d57e18e5716733de2db7b205bbf"
+    },
+    "logistic_scaler": {
+      "file": "artifacts\\preprocessing\\scalers\\logistic_standard_scaler.joblib",
+      "sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5"
+    }
+  },
+  "immutability_rule": "These Cycle25 probabilities were produced using the exact Cycle24-frozen models, preprocessing, feature order, temporal blocks, and validation-derived thresholds. The prediction artifact must not be used to alter the models, preprocessing, features, thresholds, or temporal blocks."
+}

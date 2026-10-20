@@ -1,0 +1,83 @@
+{
+  "contract_name": "Frozen Overall Cross-Cycle SHAP Point Estimates",
+  "version": "1.0",
+  "status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+  "created_at_utc": "2026-10-19T21:59:49.573577+00:00",
+  "chapter": "MODEL_CHAPTER_10_3_2B",
+  "source_comparison_inputs": {
+    "contract_file": "artifacts/models/cross_cycle_shap/contracts/overall_cross_cycle_shap_inputs_contract.json",
+    "contract_sha256": "c24b6933830edd75c7cc5f466e067afb88a59624cbfef6d45dcb0ae2ee00bc1b",
+    "required_status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_INPUTS",
+    "registry_file": "artifacts/models/cross_cycle_shap/manifests/overall_cross_cycle_shap_input_registry.csv",
+    "registry_sha256": "bb93ee7dbff0ae5e9c6d1295e90724ab14a8a2a66051ad3c589ee59a50949f72"
+  },
+  "comparison": {
+    "reference_population": "CYCLE24_HOLDOUT",
+    "transfer_population": "CYCLE25_POOLED",
+    "stratum": "OVERALL",
+    "cycle24_rows": 13072,
+    "cycle25_rows": 79361,
+    "models": 3,
+    "features": 25,
+    "comparison_unit": "WITHIN_SAME_FROZEN_MODEL"
+  },
+  "metric_definition_source": {
+    "source_script": "src/modeling/evaluation/run_cycle24_shap_null_bootstrap.py",
+    "epsilon": 1e-12,
+    "exact_chapter9_formulas_reused": true,
+    "spearman": "scipy.stats.spearmanr on mean-|SHAP| vectors",
+    "kendall": "scipy.stats.kendalltau variant='b' on mean-|SHAP| vectors",
+    "top_k": "descending mean-|SHAP| with frozen feature-order tie break; intersection/k",
+    "normalized_l1": "sum(abs(A-B)) / (sum(abs(A)) + sum(abs(B)))",
+    "cosine_distance": "1 - cosine_similarity of mean-|SHAP| vectors",
+    "signed_cosine": "cosine similarity of mean signed-SHAP vectors",
+    "sign_agreement": "fraction of features with identical numpy.sign of mean signed SHAP"
+  },
+  "structure_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/overall_cross_cycle_shap_structure_point_estimates.csv",
+    "sha256": "f09c0ff724608e9afffd898bebbc8341af6ae07ac959dd34f332e2d3800dfa18",
+    "rows": 24,
+    "metrics_per_model": 8,
+    "metrics": [
+      "spearman_rho",
+      "kendall_tau_b",
+      "top5_overlap",
+      "top10_overlap",
+      "normalized_l1_mean_abs",
+      "cosine_distance_mean_abs",
+      "signed_cosine_similarity",
+      "sign_agreement"
+    ]
+  },
+  "featurewise_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/overall_cross_cycle_shap_featurewise_point_estimates.csv",
+    "sha256": "4c8baa51fa1fc787b4dd0d9f4b6ca00870e77d179ec92e612e68721fb210a1fd",
+    "rows": 75,
+    "features_per_model": 25,
+    "descriptive_only": true
+  },
+  "comparison_rules": {
+    "cross_cycle_within_model_only": true,
+    "cross_model_raw_shap_magnitude_comparison": false,
+    "model_specific_output_spaces_preserved": true
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "observed_point_estimates_computed": true,
+    "null_thresholds_applied": false,
+    "null_exceedance_evaluated": false,
+    "featurewise_inference_performed": false,
+    "fdr_applied": false,
+    "common_support_sensitivity_applied": false,
+    "correlated_group_robustness_applied": false,
+    "drift_conclusion_made": false,
+    "stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "These are observed descriptive cross-cycle point estimates only. No metric may be used to declare explanation drift or stability until it is compared against the frozen within-Cycle24 null baseline and required robustness analyses are completed.",
+  "next_stage": "MODEL_CHAPTER_10_4_CYCLE25_TEMPORAL_BLOCK_SHAP"
+}
