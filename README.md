@@ -17,35 +17,6 @@ The core question is:
 
 ---
 
-## Project Status
-
-The scientific computation is complete and frozen.
-
-| Component | Status |
-|---|---|
-| Dataset v2 construction and audit | Complete / Frozen |
-| Leakage-safe Cycle 24 split | Complete / Frozen |
-| Preprocessing | Complete / Frozen |
-| Logistic Regression training | Complete / Frozen |
-| Random Forest training | Complete / Frozen |
-| XGBoost training | Complete / Frozen |
-| Cycle 24 holdout evaluation | Complete / Frozen |
-| Cycle 25 frozen-model evaluation | Complete / Frozen |
-| Distribution-shift controls | Complete / Frozen |
-| Within-Cycle-24 SHAP null baseline | Complete / Frozen |
-| Cross-cycle SHAP analysis | Complete / Frozen |
-| Featurewise BH-FDR inference | Complete / Frozen |
-| Common-support / reweighting sensitivity | Complete / Frozen |
-| Correlated-feature robustness | Complete / Frozen |
-| Final scientific synthesis | Complete / Frozen |
-| Historical inference demo | Complete |
-| Manuscript writing | Pending professor guidance |
-| Publication figures / final paper tables | Pending |
-| Dependency lock / environment export | Pending |
-| License / `CITATION.cff` | Pending before public release |
-
----
-
 ## Final Scientific Result
 
 The frozen study conclusion is:
