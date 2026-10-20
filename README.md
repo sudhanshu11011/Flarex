@@ -1,598 +1,932 @@
-# Cross-Cycle Explanation Drift in Solar Flare Forecasting
+# Flarex
 
-> **SHAP Stability from Solar Cycle 24 to Solar Cycle 25**
+## Cross-Cycle Explanation Drift in Solar Flare Forecasting
 
-A reproducible research project investigating whether a solar-flare prediction model can maintain similar predictive performance across solar cycles while its internal feature-attribution pattern changes.
+**SHAP Stability from Solar Cycle 24 to Solar Cycle 25**
 
----
+Flarex is a reproducible machine-learning research project that studies whether a solar-flare forecasting model can preserve similar predictive performance across solar cycles while its internal feature-attribution behavior changes.
 
-## Overview
+The study trains three model families only on **Solar Cycle 24-era SDO/HMI SHARP data**, freezes the complete modeling pipeline, and evaluates the same frozen models on:
 
-Machine-learning models for solar-flare forecasting are commonly trained on historical active-region data. A model may appear to generalize well to a newer solar cycle based on metrics such as the **True Skill Statistic (TSS)**, but predictive accuracy alone does not tell us whether the model is relying on the same magnetic features.
+- an unseen **Cycle 24 holdout**, and
+- **Solar Cycle 25** temporal blocks.
 
-This project studies that second question.
+The core question is:
 
-We train flare-prediction models using **Solar Cycle 24-era SHARP active-region data**, freeze those models, and evaluate them on:
-
-1. an unseen **Cycle 24 holdout**, and  
-2. **Solar Cycle 25 temporal blocks**.
-
-We then compare both:
-
-- **Predictive behavior** — TSS and complementary metrics
-- **Explanation behavior** — SHAP feature-attribution structure
-
-The goal is to determine whether **prediction drift** and **explanation drift** occur together or independently.
+> **When a flare-prediction model trained only on Cycle 24 SHARP data is applied unchanged to Cycle 25, do predictive skill and SHAP feature-attribution structure remain stable, or can they change independently?**
 
 ---
 
-## Research Question
+## Project Status
 
-> **When a solar-flare prediction model trained only on Solar Cycle 24 SHARP data is applied unchanged to Solar Cycle 25, do its predictive skill and feature-attribution structure remain stable, or do they drift independently?**
+The scientific computation is complete and frozen.
 
-A secondary question is:
-
-> If SHAP explanations change, are those changes larger than normal within-cycle sampling variability, and do they remain meaningful after considering covariate shift, label-prevalence shift, and correlated SHARP features?
+| Component | Status |
+|---|---|
+| Dataset v2 construction and audit | Complete / Frozen |
+| Leakage-safe Cycle 24 split | Complete / Frozen |
+| Preprocessing | Complete / Frozen |
+| Logistic Regression training | Complete / Frozen |
+| Random Forest training | Complete / Frozen |
+| XGBoost training | Complete / Frozen |
+| Cycle 24 holdout evaluation | Complete / Frozen |
+| Cycle 25 frozen-model evaluation | Complete / Frozen |
+| Distribution-shift controls | Complete / Frozen |
+| Within-Cycle-24 SHAP null baseline | Complete / Frozen |
+| Cross-cycle SHAP analysis | Complete / Frozen |
+| Featurewise BH-FDR inference | Complete / Frozen |
+| Common-support / reweighting sensitivity | Complete / Frozen |
+| Correlated-feature robustness | Complete / Frozen |
+| Final scientific synthesis | Complete / Frozen |
+| Historical inference demo | Complete |
+| Manuscript writing | Pending professor guidance |
+| Publication figures / final paper tables | Pending |
+| Dependency lock / environment export | Pending |
+| License / `CITATION.cff` | Pending before public release |
 
 ---
 
-## Why This Research Matters
+## Final Scientific Result
 
-A model can preserve a similar prediction score while changing the features it relies on.
+The frozen study conclusion is:
 
-For example:
+> **Predictive-change detection and explanation-change evidence did not necessarily move together.**
+
+Across all three frozen models and all four Cycle 25 evaluation scopes, **no measurable change in the primary True Skill Statistic (TSS) was detected under the predefined 95% bootstrap confidence-interval criterion**.
+
+This is **not** a proof of predictive equivalence or strict predictive stability.
+
+At the explanation level:
+
+| Model | Final explanation evidence |
+|---|---|
+| Logistic Regression | TIER 0 |
+| Random Forest | TIER 2 |
+| XGBoost | TIER 2 |
+
+Random Forest and XGBoost showed both global explanation-structure null exceedance and featurewise BH-FDR-significant attribution changes. Logistic Regression did not exceed the frozen global structure null, although featurewise changes were still present.
+
+Therefore, the final cross-model interpretation is:
+
+> **Majority-model evidence of prediction-explanation separation with model dependence.**
+
+The result is not universal across all model families.
+
+---
+
+## Hypothesis Outcomes
+
+| Hypothesis | Frozen conclusion |
+|---|---|
+| **H0** — observed explanation differences are consistent with ordinary Cycle 24 variability and/or shift | Mixed; insufficient as a universal explanation |
+| **H1** — predictive behavior differs measurably across cycles | Not supported by the predefined primary TSS criterion |
+| **H2** — SHAP explanation structure differs beyond within-Cycle-24 variability | Supported with model dependence |
+| **H3** — explanation behavior can change without a commensurate measurable change in primary predictive skill | Supported with qualification by majority-model evidence |
+
+Important interpretation rules:
+
+- failure to detect a TSS change does not establish equivalence,
+- TIER 0 is not proof of explanation stability,
+- SHAP is interpreted as model-attribution evidence, not causal solar physics.
+
+---
+
+# Research Design
+
+## Prediction Task
+
+For each SHARP active-region observation at time `t`, predict:
+
+> **Will the associated active region produce at least one GOES M1.0+ flare within `(t, t + 24h]`?**
+
+Binary target:
 
 ```text
-Cycle 24
-R_VALUE  -> most important
-TOTUSJH  -> second
-USFLUX   -> third
-
-Cycle 25
-USFLUX   -> most important
-AREA     -> second
-R_VALUE  -> third
+1 = >= M1.0 flare occurs within the next 24 hours
+0 = no >= M1.0 flare occurs within the next 24 hours
 ```
-
-If predictive performance remains similar while attribution structure changes substantially, a normal performance-only evaluation may miss an important model-behavior shift.
-
-This project therefore evaluates **what the model predicts** and **how the model attributes importance to its inputs**.
-
----
-
-## Research Gap
-
-Previous research has already studied:
-
-- solar-flare prediction across different solar-cycle periods,
-- machine-learning models using SHARP parameters,
-- SHAP and other explainability methods in flare forecasting,
-- public Cycle 25 datasets and benchmarks.
-
-This project **does not claim** to be:
-
-- the first cross-cycle flare-prediction study,
-- the first use of SHAP in solar-flare forecasting,
-- the first Cycle 25 benchmark.
-
-The narrower contribution is:
-
-> **A controlled cross-cycle explanation-stability experiment in which the same frozen Cycle 24-trained model is evaluated on Cycle 24 and Cycle 25, while predictive drift and SHAP attribution drift are quantified separately and compared against a within-Cycle 24 null baseline.**
-
----
-
-## Hypotheses
-
-The study tests the following hypotheses rather than assuming them as results.
-
-- **H1:** Predictive skill on Cycle 25 differs measurably from Cycle 24 holdout performance.
-- **H2:** SHAP attribution structure differs across cycles beyond normal within-cycle resampling variability.
-- **H3:** Explanation drift can occur without a commensurate loss in predictive skill.
-- **H0:** Observed cross-cycle explanation differences are consistent with ordinary sampling and distribution-shift variability.
-
-Both stable and drifting outcomes are scientifically informative.
 
 ---
 
 ## Data Sources
 
-### Magnetic Features
-**SDO/HMI SHARP** active-region parameters from JSOC.
+### SDO/HMI SHARP
 
-Example features include:
-
-- `R_VALUE`
-- `TOTUSJH`
-- `USFLUX`
-- `AREA`
-- additional SHARP magnetic parameters
-
-### Flare Labels
-A single, consistent **GOES flare catalog** source will be used for event labels.
-
-### Study Windows
-
-- **Cycle 24-era training window:** May 2010 – December 2019
-- **Cycle 25 evaluation window:** 2020 onward, divided into temporal blocks
-
-These are analysis windows aligned with HMI/SHARP availability and the December 2019 solar minimum.
-
-### Prediction Task
-
-Binary classification:
+The project uses definitive SDO/HMI SHARP active-region data from:
 
 ```text
-Will this active region produce a >= M-class flare
-within the next 24 hours?
+hmi.sharp_cea_720s
+```
 
-Yes -> 1
-No  -> 0
+Primary sampling:
+
+```text
+120-minute deterministic TAI grid
+```
+
+### GOES flare events
+
+GOES flare information is used to construct the prediction labels.
+
+### NOAA/NCEI Solar Region Summary
+
+Daily Solar Region Summary information is used to temporally validate active-region associations and reduce stale or ambiguous HARP-to-NOAA label assignments.
+
+---
+
+## Dataset v2
+
+The frozen model input contains **25 magnetic / Lorentz-force-related features**:
+
+```text
+TOTUSJH
+TOTPOT
+TOTUSJZ
+ABSNJZH
+SAVNCPP
+USFLUX
+AREA_ACR
+MEANPOT
+R_VALUE
+SHRGT45
+MEANSHR
+MEANGAM
+MEANGBT
+MEANGBZ
+MEANGBH
+MEANJZH
+MEANJZD
+MEANALP
+TOTBSQ
+TOTFX
+TOTFY
+TOTFZ
+EPSX
+EPSY
+EPSZ
+```
+
+Dataset summary:
+
+| Dataset | Rows | Positive | Negative | Entity groups |
+|---|---:|---:|---:|---:|
+| Cycle 24 | 88,435 | 3,462 | 84,973 | 1,174 |
+| Cycle 25 | 79,361 | 4,836 | 74,525 | 1,011 |
+
+Frozen files:
+
+```text
+cross-cycle-flare-drift/data/final/dataset_v2/cycle24_dataset_v2.parquet
+cross-cycle-flare-drift/data/final/dataset_v2/cycle25_dataset_v2.parquet
+```
+
+Dataset contract:
+
+```text
+cross-cycle-flare-drift/data_manifests/dataset_v2_contract.json
 ```
 
 ---
 
-## Models
+# Leakage Control
 
-The primary models are:
+A major methodological requirement is preventing connected active-region identities from appearing across development partitions.
 
-- Logistic Regression
-- Random Forest
-- XGBoost
+The frozen leakage unit is:
 
-All models are trained **only on Cycle 24 training data**.
+> **Connected HARP-NOAA entity group (`ENTITY_GROUP_ID`)**
 
-After training, the models are frozen before cross-cycle evaluation.
+Cycle 24 is split deterministically into:
+
+| Split | Rows | Positive | Negative | Entity groups |
+|---|---:|---:|---:|---:|
+| Train | 62,064 | 2,420 | 59,644 | 822 |
+| Validation | 13,299 | 515 | 12,784 | 176 |
+| Holdout | 13,072 | 527 | 12,545 | 176 |
+
+Integrity checks confirm:
+
+- zero entity-group overlap,
+- zero HARP overlap,
+- zero sample-key overlap,
+- exact source partitioning.
+
+Cycle 25 is reserved as a **temporal transfer domain** and is not used for model development.
 
 ---
 
-## Experimental Flow
+# Preprocessing
+
+The 25-feature representation is frozen.
+
+### Logistic Regression
+
+Uses a `StandardScaler` fitted on **Cycle 24 TRAIN only**.
+
+After fitting:
 
 ```text
-JSOC SHARP Data + GOES Flare Labels
-                |
-                v
-      Common Dataset Pipeline
-                |
-                v
-     Cleaning + Quality Control
-                |
-                v
-     Active-Region-Level Split
-                |
-                v
-      Cycle 24 Training Data
-                |
-                v
-   LR / Random Forest / XGBoost
-                |
-                v
-          Freeze Models
-             /     \
-            /       \
-           v         v
- Cycle 24 Holdout   Cycle 25 Blocks
-           |         |
-           v         v
- Prediction Metrics
-           |         |
-           v         v
-         SHAP Explanations
-              \     /
-               \   /
-                v
-       Cross-Cycle Comparison
-                |
-                v
-     Distribution-Shift Audit
-                |
-                v
- Within-Cycle-24 Null Baseline
-                |
-                v
- Correlated-Feature Robustness
-                |
-                v
-      Final Drift Interpretation
+validation -> transform only
+holdout    -> transform only
+Cycle 25   -> transform only
+```
+
+No refitting is allowed.
+
+### Random Forest
+
+Uses the raw frozen feature representation.
+
+### XGBoost
+
+Uses the raw frozen feature representation.
+
+The pipeline does not apply:
+
+- PCA,
+- post-hoc feature selection,
+- imputation,
+- winsorization,
+- outlier clipping,
+- log transforms,
+- polynomial feature engineering.
+
+---
+
+# Models
+
+Three model families are retained. No overall cross-family winner was selected.
+
+## Logistic Regression
+
+Selected model:
+
+```text
+LR_02_C0p01_BALANCED
+```
+
+Key configuration:
+
+```text
+C = 0.01
+class_weight = balanced
+penalty = L2
+solver = lbfgs
+max_iter = 5000
+```
+
+Frozen threshold:
+
+```text
+0.4548081408
 ```
 
 ---
 
-# 7 Research Phases
+## Random Forest
 
-## Phase 1 — Data Collection & Dataset Design
-
-### What
-Collect SHARP magnetic features and GOES flare labels for Cycle 24 and Cycle 25.
-
-### Why
-Both cycles must be built using the same data definition and labeling logic so that any observed difference is not caused by inconsistent dataset construction.
-
-### How
-- Query JSOC for SHARP parameters
-- Retrieve flare events from one consistent GOES catalog
-- Record query dates and data provenance
-- Define one fixed forecast window
-- Build reproducible Cycle 24 and Cycle 25 datasets
-
----
-
-## Phase 2 — Cleaning, Preprocessing & Leakage-Safe Splitting
-
-### What
-Clean the data and create train, validation, and test partitions.
-
-### Why
-Samples from the same active region are highly related. Allowing the same AR to appear in both training and testing can create data leakage and inflated performance.
-
-### How
-- Remove invalid / poor-quality observations
-- Handle missing values
-- Apply justified limb filtering
-- Fit preprocessing only on Cycle 24 training data
-- Split by **HARP / active region**
-- Ensure no active region overlaps between train, validation, and test groups
-
----
-
-## Phase 3 — Cycle 24 Training & Baseline Evaluation
-
-### What
-Train the three primary models using only Cycle 24 training data.
-
-### Why
-Cycle 24 provides the historical training regime. The Cycle 24 holdout gives a clean in-era baseline before the model encounters Cycle 25.
-
-### How
-- Train Logistic Regression
-- Train Random Forest
-- Train XGBoost
-- Tune using Cycle 24 validation data only
-- Freeze the final models
-- Evaluate on unseen Cycle 24 holdout data
-
----
-
-## Phase 4 — Frozen-Model Evaluation on Cycle 25
-
-### What
-Apply the exact same frozen models to Cycle 25.
-
-### Why
-This tests genuine temporal / cross-cycle generalization.
-
-### How
-- No retraining
-- No Cycle 25 fine-tuning
-- Same threshold-selection rule
-- Evaluate multiple Cycle 25 temporal blocks
-- Compare Cycle 25 performance against the Cycle 24 holdout baseline
-
----
-
-## Phase 5 — Distribution Shift & Null Control
-
-### What
-Measure how Cycle 24 and Cycle 25 differ at the data level and establish normal within-cycle SHAP variability.
-
-### Why
-A SHAP difference does not automatically imply meaningful explanation drift. It may be caused by sampling noise, changed feature ranges, changed flare prevalence, or different active-region populations.
-
-### How
-Compare:
-
-- feature distributions,
-- missingness,
-- active-region properties,
-- positive-label prevalence.
-
-Then repeatedly resample Cycle 24 holdout data and measure how much SHAP normally changes **within the same cycle**.
-
-This creates the **null baseline**.
-
----
-
-## Phase 6 — SHAP Explanation-Drift Analysis
-
-### What
-Compare the feature-attribution structure of the same frozen model on Cycle 24 and Cycle 25.
-
-### Why
-This is the central explainability experiment.
-
-### How
-Use a fixed, documented SHAP background / reference derived from Cycle 24 training data.
-
-Measure:
-
-- mean `|SHAP|` changes,
-- attribution sign / direction,
-- Spearman rank correlation,
-- Kendall rank correlation,
-- top-k feature overlap,
-- attribution-distribution distances,
-- statistical significance with multiple-comparison correction.
-
-Cross-cycle explanation drift is considered meaningful only when it exceeds the expected within-Cycle-24 baseline.
-
----
-
-## Phase 7 — Robustness & Scientific Interpretation
-
-### What
-Combine predictive results, SHAP results, data-shift evidence, and correlated-feature analysis.
-
-### Why
-SHAP describes **model behavior**, not causal solar physics.
-
-### How
-Strongly correlated SHARP parameters will be analyzed both individually and as feature groups.
-
-Possible outcomes:
-
-| Predictive Skill | Explanation Stability | Interpretation |
-|---|---|---|
-| Stable | Stable | Model transfers with a stable attribution structure |
-| Stable | Drifts | Possible explanation drift despite similar aggregate skill |
-| Drops | Drifts | Predictive and attribution behavior are both unstable |
-| Drops | Stable | Similar features remain important, but predictive performance degrades |
-
-We will **not** claim that SHAP proves that solar physics changed.
-
----
-
-## Evaluation Metrics
-
-### Predictive Metrics
-
-Primary:
-
-- **TSS — True Skill Statistic**
-
-Complementary:
-
-- HSS and/or F1
-- PR-AUC
-- Brier score
-- calibration analysis
-
-Confidence intervals will be obtained using **active-region-level bootstrap resampling** rather than treating individual time samples as independent.
-
-### Explanation-Drift Metrics
-
-- Mean absolute SHAP change
-- SHAP sign consistency
-- Spearman correlation
-- Kendall correlation
-- Top-k overlap
-- Attribution-distribution distance
-- Within-cycle null comparison
-- Feature-group robustness
-
----
-
-## Critical Methodological Rules
-
-This project follows several non-negotiable rules:
-
-- No active region appears in both training and test sets.
-- Cycle 25 is never used to train the primary cross-cycle models.
-- Preprocessing parameters are fitted only on Cycle 24 training data.
-- The same frozen model is compared across cycles.
-- SHAP background selection is fixed and documented.
-- SHAP ranking alone is not treated as sufficient evidence.
-- Correlated SHARP features are explicitly considered.
-- Cross-cycle SHAP differences are compared against a within-cycle null baseline.
-- Predictive metrics include confidence intervals.
-- SHAP is interpreted as a model-explanation tool, **not causal evidence of solar physics**.
-- No result is assumed before running the experiment.
-
----
-
-## Reproducibility
-
-The repository will aim to include:
+Selected model:
 
 ```text
-.
-├── README.md
-├── data/
-│   ├── raw/
-│   ├── interim/
-│   └── processed/
-├── configs/
-├── notebooks/
-├── src/
-│   ├── data/
-│   ├── features/
-│   ├── models/
-│   ├── evaluation/
-│   ├── shap_analysis/
-│   └── utils/
-├── experiments/
-├── results/
-│   ├── metrics/
-│   ├── shap/
-│   └── figures/
-├── manifests/
-│   ├── train.csv
-│   ├── validation.csv
-│   └── test.csv
-├── tests/
-├── requirements.txt
-└── environment.yml
+RF_04_D12_L5_BALSUB
 ```
 
-The final release should preserve:
-
-- dataset query scripts,
-- data provenance,
-- HARP split manifests,
-- configuration files,
-- random seeds,
-- package versions,
-- trained-model metadata,
-- metric-generation scripts,
-- SHAP analysis scripts,
-- figure-generation scripts.
-
----
-
-## Expected Figures
-
-The analysis is expected to generate figures such as:
-
-1. Cycle 24 vs Cycle 25 predictive performance with confidence intervals
-2. Feature-distribution comparisons
-3. SHAP summary plots for each evaluation regime
-4. Side-by-side SHAP rankings
-5. Cross-cycle drift versus within-cycle null variability
-6. Feature-group attribution stability
-7. Temporal Cycle 25 performance / attribution trends
-8. Local SHAP case studies for selected active regions
-
----
-
-## Current Status
-
-**Research framing:** Locked  
-**Primary research question:** Locked  
-**Dataset strategy:** Defined  
-**Evaluation strategy:** Defined  
-**SHAP protocol:** Defined  
-**Null-control strategy:** Defined  
-**Implementation:** In progress / not yet completed  
-**Scientific result:** Not yet known
-
-> We do not assume that explanation drift exists. Stable and drifting results are both valid scientific outcomes.
-
----
-
-## Research Scope
-
-### In Scope
-
-- Solar flare forecasting
-- SDO/HMI SHARP parameters
-- GOES flare labels
-- Solar Cycles 24 and 25
-- Logistic Regression
-- Random Forest
-- XGBoost
-- TSS and complementary forecasting metrics
-- SHAP explainability
-- explanation-drift analysis
-- distribution-shift analysis
-- within-cycle null analysis
-- correlated-feature robustness
-
-### Out of Scope
-
-Unless the scope is formally revised:
-
-- claiming SHAP reveals causal solar physics,
-- using Cycle 25 to train the primary cross-cycle model,
-- claiming this is the first cross-cycle flare-prediction study,
-- claiming this is the first use of SHAP in flare forecasting,
-- claiming prediction stability automatically means explanation stability,
-- declaring a result before completing the experiment.
-
----
-
-## Literature Foundation
-
-The project builds on prior research including:
-
-1. Sun, Z. et al. (2022). *Predicting Solar Flares Using CNN and LSTM on Two Solar Cycles of Active Region Data.* The Astrophysical Journal, 931, 163.
-2. Goodwin, G. T., Sadykov, V. M., & Martens, P. C. (2024). *Investigating Performance Trends of Simulated Real-time Solar Flare Predictions.* The Astrophysical Journal, 964, 163.
-3. Hu, K. et al. (2025). *Data Quality Issues in Flare Prediction using Machine Learning Models.* arXiv:2512.13417.
-4. Wu, Z. et al. (2026). *Prediction of major solar flares using interpretable class-dependent reward framework.* MNRAS.
-5. Li, X. et al. (2026). *Operational Solar Flare Forecasting System Using an Explainable Large Language Model.* Space Weather.
-6. Roy, S. et al. (2026). *SuryaBench: Benchmark Dataset for Advancing Machine Learning in Heliophysics.* Scientific Data.
-7. Liu, N. et al. (2026). *FlareDB: A Database of Significant Flares in Solar Cycles 24 and 25.* Scientific Data.
-8. Chen, Y. et al. (2019). *Identifying Solar Flare Precursors Using Time Series of SDO/HMI Images and SHARP Parameters.* Space Weather.
-
-The literature search will be re-checked before submission, especially for any novelty-sensitive claim.
-
----
-
-## Project Checkpoint — `Duck`
-
-This project uses **`Duck`** as a research checkpoint command.
-
-Whenever a checkpoint is performed, the project should be audited against the locked research design for:
-
-- scope consistency,
-- data-source consistency,
-- HARP-level leakage prevention,
-- Cycle 24-only primary training,
-- frozen-model Cycle 25 evaluation,
-- predictive metrics,
-- distribution-shift analysis,
-- within-Cycle-24 SHAP null baseline,
-- SHAP protocol consistency,
-- correlated-feature robustness,
-- novelty / claim discipline,
-- reproducibility,
-- current phase status,
-- risks and deviations,
-- immediate next actions.
-
-Checkpoint output:
+Key configuration:
 
 ```text
-ON TRACK
-MISSING
-RISKS / DEVIATIONS
-NEXT ACTIONS
-FINAL DECISION:
-Continue / Fix before continuing / Re-scope
+n_estimators = 500
+max_depth = 12
+min_samples_leaf = 5
+class_weight = balanced_subsample
+max_features = sqrt
+bootstrap = True
 ```
+
+Frozen threshold:
+
+```text
+0.1196946373
+```
+
+---
+
+## XGBoost
+
+Selected model:
+
+```text
+XGB_02_LR0p03_D3_BAL
+```
+
+Key configuration:
+
+```text
+n_estimators = 500
+learning_rate = 0.03
+max_depth = 3
+subsample = 0.8
+colsample_bytree = 0.8
+scale_pos_weight = 24.6462809917
+tree_method = hist
+```
+
+Frozen threshold:
+
+```text
+0.2638225555
+```
+
+---
+
+# Model Selection Policy
+
+Model candidates are trained on:
+
+```text
+Cycle 24 TRAIN only
+```
+
+Model and threshold selection use:
+
+```text
+Cycle 24 VALIDATION only
+```
+
+Cycle 24 HOLDOUT and Cycle 25 are not used for:
+
+- hyperparameter tuning,
+- threshold optimization,
+- feature selection,
+- preprocessing fitting,
+- candidate substitution,
+- retraining.
+
+---
+
+# Predictive Results
+
+## Cycle 24 Holdout
+
+| Model | TSS | 95% group-bootstrap CI | PR-AUC |
+|---|---:|---:|---:|
+| Logistic Regression | 0.7190 | [0.5774, 0.8221] | 0.5219 |
+| Random Forest | 0.7096 | [0.5863, 0.7935] | 0.3562 |
+| XGBoost | 0.7010 | [0.5776, 0.7841] | 0.5175 |
+
+The primary metric is **TSS**.
+
+Bootstrap uncertainty uses entity-group resampling rather than treating every time sample as independent.
+
+---
+
+## Cycle 25 Evaluation
+
+Cycle 25 is evaluated in three predefined temporal blocks:
+
+```text
+B1 = 2020-2021
+B2 = 2022-2023
+B3 = 2024-2025
+```
+
+plus a pooled 2020-2025 summary.
+
+### TSS by temporal block
+
+| Model | B1 | B2 | B3 | Pooled |
+|---|---:|---:|---:|---:|
+| Logistic Regression | 0.7283 | 0.6785 | 0.7237 | 0.7156 |
+| Random Forest | 0.7231 | 0.6600 | 0.7084 | 0.7019 |
+| XGBoost | 0.6990 | 0.6368 | 0.7001 | 0.6873 |
+
+### Pooled C25 vs C24 holdout
+
+| Model | C24 holdout TSS | C25 pooled TSS | Delta |
+|---|---:|---:|---:|
+| Logistic Regression | 0.7190 | 0.7156 | -0.0034 |
+| Random Forest | 0.7096 | 0.7019 | -0.0077 |
+| XGBoost | 0.7010 | 0.6873 | -0.0137 |
+
+All 12 model-by-C25-scope primary TSS delta confidence intervals contain zero.
+
+Formal primary classification:
+
+```text
+NO_MEASURABLE_CHANGE_AT_95CI
+```
+
+This must not be described as a formal equivalence result.
+
+---
+
+# Distribution Shift and Robustness Controls
+
+The study does not treat a raw Cycle 24-vs-Cycle 25 SHAP difference as sufficient evidence.
+
+The frozen control pipeline includes:
+
+- marginal feature-shift analysis,
+- label-prevalence analysis,
+- active-region population analysis,
+- domain-classifier shift diagnostics,
+- common-support analysis,
+- C25-to-C24 reweighting sensitivity,
+- correlated-feature grouping,
+- class-conditional SHAP comparisons,
+- within-Cycle-24 SHAP null distributions,
+- featurewise empirical inference with BH-FDR.
+
+---
+
+## Label Prevalence
+
+Positive prevalence changes substantially across the temporal domains.
+
+Representative frozen values:
+
+| Scope | Positive prevalence |
+|---|---:|
+| Cycle 24 holdout | 0.0403 |
+| C25 B1: 2020-2021 | 0.0128 |
+| C25 B2: 2022-2023 | 0.0544 |
+| C25 B3: 2024-2025 | 0.0810 |
+| C25 pooled | 0.0609 |
+
+Prevalence is reported as a real distribution shift. No post-hoc prevalence-standardized SHAP rule is introduced.
+
+---
+
+# Correlated Feature Robustness
+
+Feature correlation structure is estimated from **Cycle 24 TRAIN only**.
+
+Rule:
+
+```text
+absolute Spearman rho >= 0.80
+```
+
+Connected components are used as robustness groups.
+
+The final design contains 10 feature groups, including four multi-feature groups and six singletons.
+
+These groups are an attribution-robustness device only and do not imply that correlated SHARP variables are physically identical or causally interchangeable.
+
+---
+
+# SHAP Protocol
+
+SHAP is used to analyze model behavior, not causal solar physics.
+
+The fixed SHAP background contains:
+
+```text
+512 Cycle 24 TRAIN-derived observations
+```
+
+The same frozen source background is used for cross-cycle attribution comparison.
+
+Model-specific explainers:
+
+- Logistic Regression -> linear explainer
+- Random Forest -> tree-based SHAP
+- XGBoost -> tree-based SHAP / raw-margin-compatible evaluation
+
+Raw SHAP magnitudes are not pooled across different model families because their output spaces differ.
+
+---
+
+# Within-Cycle-24 SHAP Null Baseline
+
+A key contribution of the study is the use of a frozen within-cycle explanation-variability baseline.
+
+Population:
+
+```text
+Cycle 24 HOLDOUT
+```
+
+Bootstrap unit:
+
+```text
+ENTITY_GROUP_ID
+```
+
+Replicates:
+
+```text
+2000
+```
+
+Strata:
+
+```text
+OVERALL
+TARGET_0
+TARGET_1
+```
+
+Metrics include:
+
+- Spearman correlation,
+- Kendall tau-b,
+- top-5 overlap,
+- top-10 overlap,
+- normalized L1 distance,
+- cosine distance,
+- signed cosine similarity,
+- sign agreement.
+
+A future cross-cycle difference is interpreted relative to this frozen same-cycle baseline.
+
+---
+
+# Cross-Cycle SHAP Results
+
+Final evidence tiers:
+
+| Model | Global structure result | Featurewise evidence | Final tier |
+|---|---|---|---|
+| Logistic Regression | No global null exceedance | Present | TIER 0 |
+| Random Forest | Global null exceedance | Present | TIER 2 |
+| XGBoost | Global null exceedance | Present | TIER 2 |
+
+Overall featurewise BH-FDR evidence includes:
+
+```text
+LR  : 13 significant hypotheses / 8 unique features
+RF  : 23 significant hypotheses / 14 unique features
+XGB : 11 significant hypotheses / 9 unique features
+```
+
+TIER 0 does not mean "stable." It only means the predefined global structure-null criterion was not exceeded.
+
+---
+
+# Final Interpretation
+
+The strongest defensible conclusion is:
+
+> **Within the frozen Cycle 24-to-Cycle 25 experimental design, predictive-change detection and explanation-change evidence do not necessarily move together.**
+
+Primary TSS showed no measurable cross-cycle change under the predefined criterion, while Random Forest and XGBoost exhibited explanation changes beyond the frozen Cycle 24 attribution baseline.
+
+Therefore:
+
+> Cross-cycle evaluation should examine both predictive performance and explanation behavior rather than using predictive metrics alone as evidence that a model's internal attribution structure remained unchanged.
+
+---
+
+# Historical Inference Demo
+
+The project includes:
+
+```text
+cross-cycle-flare-drift/main.py
+```
+
+It provides a reproducible historical inference interface using the frozen artifacts.
+
+Workflow:
+
+```text
+Historical date
+    |
+    v
+Available NOAA active regions
+    |
+    v
+Observation time
+    |
+    v
+Exact 25 frozen features
+    |
+    +--> Logistic Regression
+    |
+    +--> Random Forest
+    |
+    +--> XGBoost
+    |
+    v
+Probability + frozen threshold + model-specific prediction
+```
+
+Run from the research directory:
+
+```powershell
+cd cross-cycle-flare-drift
+python main.py --date 2021-04-18
+```
+
+The program verifies frozen model/scaler artifacts before inference.
+
+It reports the three models individually and intentionally does **not** generate a majority-vote ensemble because no ensemble rule was frozen during model development.
+
+---
+
+## Example Historical Output
+
+For one Cycle 25 positive historical observation:
+
+```text
+Date      : 2021-04-18
+NOAA AR   : 12816
+HARPNUM   : 7570
+Observation: 2021-04-18 23:59:23 UTC
+
+Logistic Regression
+Probability = 0.418768
+Threshold   = 0.454808
+Prediction  = NO FLARE
+
+Random Forest
+Probability = 0.077669
+Threshold   = 0.119695
+Prediction  = NO FLARE
+
+XGBoost
+Probability = 0.407424
+Threshold   = 0.263823
+Prediction  = FLARE
+
+Actual historical target:
+FLARE >= M1.0 within the next 24 hours
+```
+
+This model disagreement is expected and is not treated as a software error.
+
+---
+
+# Prospective / Live Inference
+
+The current validated demo is historical.
+
+A date outside the frozen Cycle 24 / Cycle 25 datasets is intentionally rejected.
+
+Example:
+
+```text
+2026-01-01
+```
+
+produces a controlled message indicating that a separate SHARP data-fetch pipeline would be required.
+
+No 2026 live-data performance claim is made.
+
+---
+
+# Repository Structure
+
+```text
+Flarex/
+|
++-- README.md
+|
++-- docs/
+|   +-- Solar_Flare_Master_Research_Reference_v2.pdf
+|   +-- 01_WHAT_We_Are_Doing_BASE_v2.pdf
+|   +-- 02_WHY_We_Are_Doing_BASE_v2.pdf
+|   +-- 03_HOW_We_Are_Doing_BASE_v2.pdf
+|
++-- cross-cycle-flare-drift/
+    |
+    +-- main.py
+    +-- pyproject.toml
+    +-- configs/
+    +-- data/
+    +-- data_manifests/
+    +-- artifacts/
+    |   +-- splitting/
+    |   +-- preprocessing/
+    |   +-- models/
+    |       +-- logistic/
+    |       +-- random_forest/
+    |       +-- xgboost/
+    |       +-- evaluation/
+    |       +-- shift_controls/
+    |       +-- cross_cycle_shap/
+    |       +-- final_synthesis/
+    |
+    +-- src/
+        +-- data/
+        +-- modeling/
+```
+
+---
+
+# Key Frozen Artifacts
+
+## Dataset contract
+
+```text
+cross-cycle-flare-drift/data_manifests/dataset_v2_contract.json
+```
+
+## Cycle 24 split contract
+
+```text
+cross-cycle-flare-drift/artifacts/splitting/contracts/cycle24_split_contract.json
+```
+
+## Preprocessing contract
+
+```text
+cross-cycle-flare-drift/artifacts/preprocessing/contracts/preprocessing_contract.json
+```
+
+## Frozen selected models
+
+```text
+cross-cycle-flare-drift/artifacts/models/selection/contracts/selected_models_contract.json
+```
+
+## Predictive drift contract
+
+```text
+cross-cycle-flare-drift/artifacts/models/evaluation/contracts/cross_cycle_predictive_drift_contract.json
+```
+
+## Distribution-shift and SHAP null controls
+
+```text
+cross-cycle-flare-drift/artifacts/models/shift_controls/contracts/chapter9_shift_null_controls_contract.json
+```
+
+## Cross-cycle SHAP package
+
+```text
+cross-cycle-flare-drift/artifacts/models/cross_cycle_shap/contracts/chapter10_cross_cycle_shap_contract.json
+```
+
+## Final scientific synthesis
+
+```text
+cross-cycle-flare-drift/artifacts/models/final_synthesis/contracts/chapter11_final_synthesis_contract.json
+cross-cycle-flare-drift/artifacts/models/final_synthesis/contracts/chapter11_final_scientific_conclusion_contract.json
+```
+
+---
+
+# Frozen Runtime Artifacts
+
+The historical demo depends on the following frozen files:
+
+```text
+artifacts/models/logistic/models/LR_02_C0p01_BALANCED.joblib
+artifacts/models/random_forest/models/RF_04_D12_L5_BALSUB.joblib
+artifacts/models/xgboost/models/XGB_02_LR0p03_D3_BAL.joblib
+
+artifacts/preprocessing/scalers/logistic_standard_scaler.joblib
+
+data/final/dataset_v2/cycle24_dataset_v2.parquet
+data/final/dataset_v2/cycle25_dataset_v2.parquet
+```
+
+Artifact hashes are verified against frozen contracts during the workflow.
+
+---
+
+# Scientific Guardrails
+
+This project does **not** claim:
+
+- predictive equivalence,
+- strict predictive stability,
+- universal explanation drift,
+- universal explanation stability,
+- SHAP causality,
+- changed solar physics from SHAP alone,
+- a "right for the wrong reasons" mechanism,
+- that this is the first cross-cycle flare forecasting study,
+- that this is the first use of SHAP in flare forecasting.
+
+The contribution is narrower:
+
+> **A controlled frozen-model cross-cycle experiment that evaluates predictive change and explanation change separately, using explicit within-cycle explanation baselines and robustness controls.**
+
+---
+
+# Reproducibility
+
+The project targets:
+
+```text
+Python >= 3.11, < 3.12
+```
+
+The current repository preserves:
+
+- frozen datasets,
+- split contracts,
+- data provenance manifests,
+- model-training protocols,
+- frozen preprocessing metadata,
+- model-selection outputs,
+- prediction artifacts,
+- bootstrap outputs,
+- SHAP artifacts,
+- null distributions,
+- final synthesis contracts,
+- frozen runtime models,
+- the historical inference interface.
+
+A complete pinned dependency lock is still recommended before final archival/public release.
+
+---
+
+# Master Research Reference
+
+A separate master reference document has been prepared for the full project history, including:
+
+- dataset construction,
+- model development,
+- Chapters 1-12,
+- key outputs,
+- graphs,
+- tables,
+- example predictions,
+- SHAP analysis,
+- final scientific conclusions.
+
+The manuscript phase should use the frozen repository artifacts and the master reference together as the source of truth.
+
+---
+
+# Manuscript Phase
+
+The next research phase is paper preparation, subject to professor guidance.
+
+Planned work:
+
+```text
+1. Publication-ready tables
+2. Publication-ready figures
+3. Final literature and novelty audit
+4. Manuscript writing
+5. Scientific claim audit
+6. Journal selection
+7. Journal-specific formatting
+8. Submission package
+```
+
+The frozen scientific pipeline should not be changed merely to obtain a more attractive paper result.
+
+---
+
+# Current Repository Polish Still Pending
+
+Before a formal archival/public release, the following should still be completed:
+
+- exact dependency lock / `requirements.txt`,
+- lightweight automated smoke tests,
+- `LICENSE`,
+- `CITATION.cff`,
+- final paper figures,
+- final paper tables,
+- final manuscript,
+- literature / novelty verification.
+
+These are repository and publication tasks; they do not change the frozen scientific result.
+
+---
+
+# Source-of-Truth Documents
+
+```text
+docs/Solar_Flare_Master_Research_Reference_v2.pdf
+docs/01_WHAT_We_Are_Doing_BASE_v2.pdf
+docs/02_WHY_We_Are_Doing_BASE_v2.pdf
+docs/03_HOW_We_Are_Doing_BASE_v2.pdf
+```
+
+The Master Research Reference v2 supersedes earlier research-reference versions.
+
+---
+
+# Author
+
+**Swayam Jain**
+
+Research area:
+
+**Space Weather · Machine Learning · Explainable AI**
+
+---
+
+# Citation
+
+A formal repository citation and `CITATION.cff` should be added with the first archival/public research release.
+
+---
+
+# License
+
+A repository license has not yet been finalized.
+
+Any future public release should preserve the original attribution and usage requirements associated with SDO/HMI, JSOC, GOES, NOAA/NCEI, and other external scientific data sources.
 
 ---
 
 ## One-Line Summary
 
-> **Train on Cycle 24, freeze the model, test it on Cycle 24 and Cycle 25, compare both prediction performance and SHAP explanations, then determine whether any cross-cycle explanation change is larger than normal sampling and data-distribution variation.**
-
----
-
-## Disclaimer
-
-This repository contains an ongoing scientific research project.
-
-Results, conclusions, and novelty claims are considered provisional until:
-
-- experiments are complete,
-- statistical robustness checks are passed,
-- the literature is re-verified,
-- and the manuscript undergoes scientific review.
-
-SHAP explanations are interpreted as **model-attribution evidence**, not as direct proof of causal solar physics.
-
----
-
-## License
-
-A license should be selected before public release.
-
-Recommended options:
-
-- **MIT License** for code
-- Appropriate data-license / citation requirements for externally sourced scientific datasets
-- **CC BY 4.0** for original documentation, if desired
-
-Always preserve the original terms and attribution requirements of JSOC, SDO/HMI, GOES, and other external data sources.
-
----
-
-## Author
-
-**Swayam Jain**
-
-Research area: **Space Weather · Machine Learning · Explainable AI**
-
----
-
-## Citation
-
-A formal repository citation and `CITATION.cff` file will be added when the first stable research release is published.
+> **Train on Cycle 24, freeze the complete pipeline, test unchanged on Cycle 24 holdout and Cycle 25, and determine whether predictive performance and SHAP explanation behavior move together or separately.**
