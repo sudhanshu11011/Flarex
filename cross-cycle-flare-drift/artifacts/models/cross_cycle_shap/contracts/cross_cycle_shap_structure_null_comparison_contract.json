@@ -1,0 +1,79 @@
+{
+  "contract_name": "Observed Cross-Cycle SHAP Structure vs Frozen Cycle24 Null",
+  "version": "1.0",
+  "status": "FROZEN_CROSS_CYCLE_SHAP_STRUCTURE_NULL_COMPARISON",
+  "created_at_utc": "2026-10-19T22:16:25.399043+00:00",
+  "chapter": "MODEL_CHAPTER_10_6_1B",
+  "null_source": {
+    "threshold_file": "artifacts/models/shift_controls/metrics/cycle24_shap_null_structure_thresholds.csv",
+    "threshold_sha256": "c8ffc3b04e7b72e79dc293aa4bdc67ed6f1de815f14cb2b4181a34298fa89361",
+    "rows": 72,
+    "replicates_per_model_stratum_metric": 2000,
+    "comparison_is_strict": true,
+    "similarity_rule": "OBSERVED_BELOW_LOWER_2P5_THRESHOLD",
+    "distance_rule": "OBSERVED_ABOVE_UPPER_97P5_THRESHOLD"
+  },
+  "observed_sources": {
+    "overall": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/overall_cross_cycle_shap_point_estimates_contract.json",
+      "contract_sha256": "86152f69ccf14688ee4e13516572cf16ebfba05c85e0ae0fe0601bb8ca138661",
+      "structure_file": "artifacts/models/cross_cycle_shap/metrics/overall_cross_cycle_shap_structure_point_estimates.csv",
+      "structure_sha256": "f09c0ff724608e9afffd898bebbc8341af6ae07ac959dd34f332e2d3800dfa18"
+    },
+    "temporal": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/temporal_block_cross_cycle_shap_point_estimates_contract.json",
+      "contract_sha256": "b384271dae3e7bbdc13b39affba78eb6ee1d30ebf7241272b39fadcaacec3ce0",
+      "structure_file": "artifacts/models/cross_cycle_shap/metrics/temporal_block_cross_cycle_shap_structure_point_estimates.csv",
+      "structure_sha256": "8273b800955d0f08955a3f2339e9d126f532a1ba7feb8916a58941b70fa14023"
+    },
+    "class_conditional": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/class_conditional_cross_cycle_shap_point_estimates_contract.json",
+      "contract_sha256": "554829eecb62afe1aec71fd6043bb7f37864d86444516757f66dc46cdb290b42",
+      "structure_file": "artifacts/models/cross_cycle_shap/metrics/class_conditional_cross_cycle_shap_structure_point_estimates.csv",
+      "structure_sha256": "19d6eb39445eb4c8185f0b15a4e25999c869b55d7d372f37607f89e482f68241"
+    }
+  },
+  "null_mapping": {
+    "overall_pooled": "OVERALL",
+    "temporal_B1": "OVERALL",
+    "temporal_B2": "OVERALL",
+    "temporal_B3": "OVERALL",
+    "class_TARGET_0": "TARGET_0",
+    "class_TARGET_1": "TARGET_1"
+  },
+  "temporal_null_caveat": {
+    "block_specific_null_available": false,
+    "temporal_blocks_use_overall_null": true,
+    "sample_size_matched": false,
+    "interpretation": "Temporal block null exceedance is a screening result because the frozen Cycle24 null was not constructed to match each Cycle25 block sample size."
+  },
+  "comparison_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/cross_cycle_shap_structure_null_comparison.csv",
+    "sha256": "197b7439454f3e62f679b092840d416c38b4fc75d28d33e4237ceaebae667956",
+    "rows": 144
+  },
+  "summary_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/cross_cycle_shap_structure_null_summary.csv",
+    "sha256": "948953cf22f2a8134939b0f7c9f98e5aa41d1f5ef7158234594b2488621891b9",
+    "rows": 18
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "frozen_null_thresholds_applied": true,
+    "null_exceedance_evaluated": true,
+    "temporal_block_specific_null_used": false,
+    "featurewise_inference_performed": false,
+    "fdr_applied": false,
+    "common_support_sensitivity_applied": false,
+    "correlated_group_robustness_applied": false,
+    "final_drift_conclusion_made": false,
+    "final_stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "A structure metric crossing its frozen within-Cycle24 threshold indicates that the observed cross-cycle change exceeds the corresponding pre-frozen null threshold for that metric. This is not by itself a final explanation-drift conclusion. Conversely, failure to cross the threshold is not proof of explanation stability.",
+  "next_stage": "MODEL_CHAPTER_10_7_COMMON_SUPPORT_REWEIGHTING_SENSITIVITY"
+}

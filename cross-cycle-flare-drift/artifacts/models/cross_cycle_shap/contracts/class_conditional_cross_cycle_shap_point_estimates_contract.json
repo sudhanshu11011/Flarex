@@ -1,0 +1,76 @@
+{
+  "contract_name": "Frozen Class-Conditional Cross-Cycle SHAP Point Estimates",
+  "version": "1.0",
+  "status": "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+  "created_at_utc": "2026-10-19T22:12:41.825226+00:00",
+  "chapter": "MODEL_CHAPTER_10_5_2",
+  "source_class_inputs": {
+    "contract_file": "artifacts/models/cross_cycle_shap/contracts/class_conditional_cross_cycle_shap_inputs_contract.json",
+    "contract_sha256": "ea4bb222879453d43166031053e6fed88a60d99d4a39460d2bafc8ab0da24b2e",
+    "required_status": "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_INPUTS",
+    "registry_file": "artifacts/models/cross_cycle_shap/manifests/class_conditional_cross_cycle_shap_input_registry.csv",
+    "registry_sha256": "e2d370b33e95f4abf934eb06af0e41fcea217d88d8548a672d948bdcd2c3532d"
+  },
+  "comparison": {
+    "reference_population": "CYCLE24_HOLDOUT",
+    "transfer_population": "CYCLE25_POOLED",
+    "strata": [
+      "TARGET_0",
+      "TARGET_1"
+    ],
+    "models": 3,
+    "features": 25,
+    "comparison_unit": "WITHIN_SAME_FROZEN_MODEL_AND_CLASS"
+  },
+  "metric_definition": {
+    "epsilon": 1e-12,
+    "exact_chapter9_formulas_reused": true,
+    "metrics": [
+      "spearman_rho",
+      "kendall_tau_b",
+      "top5_overlap",
+      "top10_overlap",
+      "normalized_l1_mean_abs",
+      "cosine_distance_mean_abs",
+      "signed_cosine_similarity",
+      "sign_agreement"
+    ]
+  },
+  "structure_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/class_conditional_cross_cycle_shap_structure_point_estimates.csv",
+    "sha256": "19d6eb39445eb4c8185f0b15a4e25999c869b55d7d372f37607f89e482f68241",
+    "rows": 48,
+    "metrics_per_model_per_stratum": 8
+  },
+  "featurewise_output": {
+    "file": "artifacts/models/cross_cycle_shap/metrics/class_conditional_cross_cycle_shap_featurewise_point_estimates.csv",
+    "sha256": "26721b7bdb768cb67778a3ff65ffc5fca119d670f4c53fcd3ba4a9bb95a4b2d9",
+    "rows": 150,
+    "features_per_model_per_stratum": 25,
+    "descriptive_only": true
+  },
+  "sample_size_caution": {
+    "target_1_cycle24_rows": 527,
+    "target_1_cycle24_entity_groups": 25,
+    "interpret_c24_target_1_with_caution": true
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "class_conditional_point_estimates_computed": true,
+    "null_thresholds_applied": false,
+    "null_exceedance_evaluated": false,
+    "featurewise_inference_performed": false,
+    "fdr_applied": false,
+    "common_support_sensitivity_applied": false,
+    "correlated_group_robustness_applied": false,
+    "drift_conclusion_made": false,
+    "stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "These class-conditional values are descriptive point estimates only. They help distinguish overall changes associated with class composition from within-class attribution changes. No drift or stability claim is permitted until comparison against the frozen within-Cycle24 null baseline and later robustness analyses are completed.",
+  "next_stage": "MODEL_CHAPTER_10_6_OBSERVED_DRIFT_VS_CYCLE24_NULL"
+}

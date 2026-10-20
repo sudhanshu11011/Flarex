@@ -1,0 +1,105 @@
+{
+  "contract_name": "Frozen Overall Cross-Cycle SHAP Comparison Inputs",
+  "version": "1.0",
+  "status": "FROZEN_OVERALL_CROSS_CYCLE_SHAP_INPUTS",
+  "created_at_utc": "2026-10-19T21:51:57.096050+00:00",
+  "chapter": "MODEL_CHAPTER_10_3_1",
+  "comparison": {
+    "reference_population": "CYCLE24_HOLDOUT",
+    "transfer_population": "CYCLE25_POOLED",
+    "cycle24_rows": 13072,
+    "cycle24_positive_rows": 527,
+    "cycle24_entity_groups": 176,
+    "cycle25_rows": 79361,
+    "cycle25_positive_rows": 4836,
+    "cycle25_entity_groups": 1011,
+    "models": 3,
+    "features": 25
+  },
+  "frozen_sources": {
+    "chapter9_contract": {
+      "file": "artifacts/models/shift_controls/contracts/chapter9_shift_null_controls_contract.json",
+      "sha256": "231f3aee260edea321b36f5c0da5d0b71fe52f088f1418bd2628b489c6892009",
+      "status": "FROZEN_CHAPTER9_SHIFT_NULL_CONTROLS"
+    },
+    "cycle24_shap_contract": {
+      "file": "artifacts/models/shift_controls/contracts/cycle24_holdout_shap_contract.json",
+      "sha256": "ba8bf114bde867acb69da0f15ce67f0f4a8bb20685b155373f5751093eb4cfcc",
+      "status": "FROZEN_CYCLE24_HOLDOUT_SHAP"
+    },
+    "cycle25_execution_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/cycle25_shap_execution_inputs_contract.json",
+      "sha256": "e3fe5ccbc7d658700932d4a610a2024c61bf0a7062238ff9d34aa38454ac931d",
+      "status": "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS"
+    },
+    "cycle25_shap_contract": {
+      "file": "artifacts/models/cross_cycle_shap/contracts/cycle25_shap_contract.json",
+      "sha256": "5319c5dee324063ae4741e4915d370d5fe13fbc869054d4dc158f2efff55a1e9",
+      "status": "FROZEN_CYCLE25_SHAP"
+    }
+  },
+  "input_registry": {
+    "file": "artifacts/models/cross_cycle_shap/manifests/overall_cross_cycle_shap_input_registry.csv",
+    "sha256": "bb93ee7dbff0ae5e9c6d1295e90724ab14a8a2a66051ad3c589ee59a50949f72",
+    "rows": 3
+  },
+  "feature_order": [
+    "TOTUSJH",
+    "TOTPOT",
+    "TOTUSJZ",
+    "ABSNJZH",
+    "SAVNCPP",
+    "USFLUX",
+    "AREA_ACR",
+    "MEANPOT",
+    "R_VALUE",
+    "SHRGT45",
+    "MEANSHR",
+    "MEANGAM",
+    "MEANGBT",
+    "MEANGBZ",
+    "MEANGBH",
+    "MEANJZH",
+    "MEANJZD",
+    "MEANALP",
+    "TOTBSQ",
+    "TOTFX",
+    "TOTFY",
+    "TOTFZ",
+    "EPSX",
+    "EPSY",
+    "EPSZ"
+  ],
+  "comparison_rules": {
+    "comparison_unit": "WITHIN_SAME_FROZEN_MODEL",
+    "lr": "CYCLE24_HOLDOUT_LR VS CYCLE25_POOLED_LR",
+    "rf": "CYCLE24_HOLDOUT_RF VS CYCLE25_POOLED_RF",
+    "xgb": "CYCLE24_HOLDOUT_XGB VS CYCLE25_POOLED_XGB",
+    "cross_model_raw_shap_magnitude_comparison": false,
+    "same_frozen_models": true,
+    "same_feature_order": true,
+    "same_model_specific_explanation_spaces": true,
+    "same_frozen_cycle24_train_background": true
+  },
+  "explanation_spaces": {
+    "LR_02_C0p01_BALANCED": "LOG_ODDS_DECISION_FUNCTION",
+    "RF_04_D12_L5_BALSUB": "POSITIVE_CLASS_PROBABILITY",
+    "XGB_02_LR0p03_D3_BAL": "XGBOOST_RAW_MARGIN"
+  },
+  "scientific_guardrails": {
+    "cycle25_used_for_training": false,
+    "models_retrained": false,
+    "models_retuned": false,
+    "preprocessing_refit": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "overall_drift_metrics_computed": false,
+    "null_thresholds_applied": false,
+    "hypothesis_test_performed": false,
+    "drift_conclusion_made": false,
+    "stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "immutability_rule": "After Chapter 10.3.1, the matched Cycle24 HOLDOUT and Cycle25 POOLED SHAP artifacts, model mapping, feature order, model-specific explanation spaces and frozen background must not be changed in response to subsequent cross-cycle comparison results.",
+  "next_stage": "MODEL_CHAPTER_10_3_2_OVERALL_SHAP_STRUCTURE_POINT_ESTIMATES"
+}

@@ -1,0 +1,95 @@
+{
+  "contract_name": "Final Frozen Chapter-10 Cross-Cycle SHAP Artifact Set",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER10_CROSS_CYCLE_SHAP",
+  "created_at_utc": "2026-10-20T10:23:22.125652+00:00",
+  "chapter": "MODEL_CHAPTER_10",
+  "artifact_namespace": "artifacts/models/cross_cycle_shap",
+  "freeze_scope": {
+    "checkpoint_artifacts_included": false,
+    "temporary_files_included": false,
+    "final_noncheckpoint_artifacts": 48,
+    "all_inventory_entries_required": true,
+    "all_inventory_entries_integrity_pass": true
+  },
+  "inventory": {
+    "file": "artifacts/models/cross_cycle_shap/manifests/chapter10_cross_cycle_shap_inventory.csv",
+    "sha256": "0f433a79985aa7e63c0f250588e30aed4d71192bcc3adb3bfdb47d83bf03f670",
+    "rows": 48
+  },
+  "required_contract_statuses": [
+    "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_INPUTS",
+    "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+    "FROZEN_COMMON_SUPPORT_REWEIGHTING_SHAP_SENSITIVITY",
+    "FROZEN_CORRELATED_GROUP_SHAP_ROBUSTNESS",
+    "FROZEN_CROSS_CYCLE_SHAP_STRUCTURE_NULL_COMPARISON",
+    "FROZEN_CROSS_CYCLE_SHAP_SYNTHESIS",
+    "FROZEN_CYCLE25_SHAP",
+    "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS",
+    "FROZEN_FEATUREWISE_CROSS_CYCLE_INFERENCE_BH_FDR",
+    "FROZEN_FEATUREWISE_INFERENCE_PROTOCOL",
+    "FROZEN_FINAL_CROSS_CYCLE_SHAP_SYNTHESIS_PROTOCOL",
+    "FROZEN_OVERALL_CROSS_CYCLE_SHAP_INPUTS",
+    "FROZEN_OVERALL_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+    "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_INPUTS",
+    "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_POINT_ESTIMATES"
+  ],
+  "observed_contract_statuses": [
+    "COMPLETE_LR_CYCLE25_SHAP",
+    "COMPLETE_RF_CYCLE25_SHAP",
+    "COMPLETE_XGB_CYCLE25_SHAP",
+    "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_INPUTS",
+    "FROZEN_CLASS_CONDITIONAL_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+    "FROZEN_COMMON_SUPPORT_REWEIGHTING_SHAP_SENSITIVITY",
+    "FROZEN_CORRELATED_GROUP_SHAP_ROBUSTNESS",
+    "FROZEN_CROSS_CYCLE_SHAP_STRUCTURE_NULL_COMPARISON",
+    "FROZEN_CROSS_CYCLE_SHAP_SYNTHESIS",
+    "FROZEN_CYCLE25_SHAP",
+    "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS",
+    "FROZEN_FEATUREWISE_CROSS_CYCLE_INFERENCE_BH_FDR",
+    "FROZEN_FEATUREWISE_INFERENCE_PROTOCOL",
+    "FROZEN_FINAL_CROSS_CYCLE_SHAP_SYNTHESIS_PROTOCOL",
+    "FROZEN_OVERALL_CROSS_CYCLE_SHAP_INPUTS",
+    "FROZEN_OVERALL_CROSS_CYCLE_SHAP_POINT_ESTIMATES",
+    "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_INPUTS",
+    "FROZEN_TEMPORAL_BLOCK_CROSS_CYCLE_SHAP_POINT_ESTIMATES"
+  ],
+  "contract_files_discovered": 18,
+  "final_synthesis": {
+    "contract_file": "artifacts/models/cross_cycle_shap/contracts/final_cross_cycle_shap_synthesis_contract.json",
+    "contract_sha256": "2d00d450dfa97d9ab2989928f885b5c8f3ebf360892dc4ee8264b0d25b44e8d8",
+    "status": "FROZEN_CROSS_CYCLE_SHAP_SYNTHESIS",
+    "cross_model_primary_pattern": "MAJORITY_MODEL_PATTERN",
+    "dominant_primary_evidence_tier": "TIER_2",
+    "tier_counts": {
+      "TIER_0": 1,
+      "TIER_1": 0,
+      "TIER_2": 2
+    },
+    "model_tiers": {
+      "LR_02_C0p01_BALANCED": "TIER_0",
+      "RF_04_D12_L5_BALSUB": "TIER_2",
+      "XGB_02_LR0p03_D3_BAL": "TIER_2"
+    },
+    "automatic_binary_drift_label": false,
+    "automatic_binary_stability_label": false
+  },
+  "scientific_state": {
+    "cycle25_used_for_model_training": false,
+    "models_retrained_in_chapter10": false,
+    "preprocessing_refit_in_chapter10": false,
+    "decision_thresholds_retuned": false,
+    "cycle24_shap_null_recomputed": false,
+    "correlated_groups_recomputed": false,
+    "support_weights_recomputed_after_sensitivity": false,
+    "featurewise_fdr_completed": true,
+    "correlated_group_robustness_completed": true,
+    "support_reweighting_sensitivity_completed": true,
+    "class_conditional_analysis_completed": true,
+    "temporal_block_analysis_completed": true,
+    "final_cross_cycle_shap_synthesis_completed": true,
+    "shap_interpreted_as_causal": false
+  },
+  "interpretation": "Chapter 10 is frozen as the final cross-cycle SHAP evidence package. The synthesis shows a majority-model TIER_2 pattern: RF and XGB exhibit both global structure-null exceedance and featurewise BH-FDR evidence, while LR does not exceed the global structure null despite featurewise attribution changes. This pattern is model-dependent and is not converted into an automatic universal binary drift/stability label.",
+  "next_stage": "CHAPTER_10_GIT_CHECKPOINT_THEN_FINAL_MODEL_SYNTHESIS"
+}

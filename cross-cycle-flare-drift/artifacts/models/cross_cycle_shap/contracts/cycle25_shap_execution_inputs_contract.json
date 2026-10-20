@@ -1,0 +1,155 @@
+{
+  "contract_name": "Frozen Cycle25 SHAP Execution Inputs",
+  "version": "1.0",
+  "status": "FROZEN_CYCLE25_SHAP_EXECUTION_INPUTS",
+  "created_at_utc": "2026-10-19T16:12:53.309633+00:00",
+  "chapter": "MODEL_CHAPTER_10_1",
+  "cycle25_population": {
+    "dataset_file": "data/final/dataset_v2/cycle25_dataset_v2.parquet",
+    "dataset_sha256": "0bd6a364e152685d13c7eb955da074a4b9f019f1851c6b5dafebf295c406cd4d",
+    "rows": 79361,
+    "positive_rows": 4836,
+    "negative_rows": 74525,
+    "entity_groups": 1011,
+    "features": 25,
+    "feature_order": [
+      "TOTUSJH",
+      "TOTPOT",
+      "TOTUSJZ",
+      "ABSNJZH",
+      "SAVNCPP",
+      "USFLUX",
+      "AREA_ACR",
+      "MEANPOT",
+      "R_VALUE",
+      "SHRGT45",
+      "MEANSHR",
+      "MEANGAM",
+      "MEANGBT",
+      "MEANGBZ",
+      "MEANGBH",
+      "MEANJZH",
+      "MEANJZD",
+      "MEANALP",
+      "TOTBSQ",
+      "TOTFX",
+      "TOTFY",
+      "TOTFZ",
+      "EPSX",
+      "EPSY",
+      "EPSZ"
+    ],
+    "ordered_population_sha256": "ab1879bf772f6e24a6dab2cfbcb578f66befdb078125464752f29acf0942f172",
+    "dataset_row_order_preserved": true,
+    "timestamp_sort_applied": false,
+    "timestamp_monotonic_in_original_order": true
+  },
+  "temporal_blocks": {
+    "definition": {
+      "B1": "2020-2021",
+      "B2": "2022-2023",
+      "B3": "2024-2025"
+    },
+    "assignment_basis": "observation_time_utc",
+    "row_membership_rule": "Calendar year of observation_time_utc",
+    "groups_spanning_multiple_blocks": 7,
+    "maximum_blocks_per_group": 2,
+    "population_manifest": {
+      "file": "artifacts/models/cross_cycle_shap/manifests/cycle25_shap_population_manifest.csv",
+      "sha256": "f515a23b92b2729bba28da62c9f12574086e3ad7c97937a9550d93ef789cd1cb",
+      "rows": 4
+    }
+  },
+  "frozen_models": {
+    "count": 3,
+    "model_manifest": {
+      "file": "artifacts/models/cross_cycle_shap/manifests/cycle25_shap_model_manifest.csv",
+      "sha256": "507f3b26d8b715f0202a60b47f808d97aaa2824f9d33e5876f493efc87c198b6",
+      "rows": 3
+    },
+    "training_scope": "CYCLE24_TRAIN_ONLY",
+    "model_retraining_allowed": false,
+    "model_retuning_allowed": false,
+    "cycle25_training_allowed": false
+  },
+  "preprocessing": {
+    "lr_scaler_file": "artifacts/preprocessing/scalers/logistic_standard_scaler.joblib",
+    "lr_scaler_sha256": "48a9c07301f30052f49bad2db048418d3db16951f0433002b831b59fa10a1af5",
+    "fit_scope": "CYCLE24_TRAIN_ONLY",
+    "cycle25_fit_allowed": false
+  },
+  "shap_background": {
+    "file": "artifacts/models/shift_controls/shap/background/cycle24_train_shap_background.parquet",
+    "sha256": "bd9775668a66e90d0576fbed69f56682729a1d1c6016a5ffbca874d4438ad598",
+    "rows": 512,
+    "source": "CYCLE24_TRAIN_ONLY",
+    "changed_for_cycle25": false
+  },
+  "chapter9_controls": {
+    "contract_file": "artifacts/models/shift_controls/contracts/chapter9_shift_null_controls_contract.json",
+    "contract_sha256": "231f3aee260edea321b36f5c0da5d0b71fe52f088f1418bd2628b489c6892009",
+    "inventory_file": "artifacts/models/shift_controls/manifests/chapter9_shift_null_controls_inventory.csv",
+    "inventory_sha256": "604fc736ca433492b0d5aa5e27f8da7bfd8d770cc6e2ca4ace9111d56ae81822",
+    "frozen_artifacts_verified": 48,
+    "all_verified_unchanged": true,
+    "downstream_controls": {
+      "structure_null_thresholds": {
+        "path": "artifacts/models/shift_controls/metrics/cycle24_shap_null_structure_thresholds.csv",
+        "sha256": "c8ffc3b04e7b72e79dc293aa4bdc67ed6f1de815f14cb2b4181a34298fa89361"
+      },
+      "featurewise_null_thresholds": {
+        "path": "artifacts/models/shift_controls/metrics/cycle24_shap_null_featurewise_thresholds.csv",
+        "sha256": "418f40f1b4d7a57f17a009186ee9a85ba1715b5060abf0dfb819de55de5c9287"
+      },
+      "common_support_summary": {
+        "path": "artifacts/models/shift_controls/metrics/common_support_summary.csv",
+        "sha256": "3bd24a43acc4d085285b2dd3f8c13940e3a9134db2eace70f133a732b321e11e"
+      },
+      "domain_common_support": {
+        "path": "artifacts/models/shift_controls/manifests/domain_oof_common_support.parquet",
+        "sha256": "e4f8feaad169a0c8666a1bb30fbd57d2a766782acf474c5f312db5d0db6b499f"
+      },
+      "correlated_feature_groups": {
+        "path": "artifacts/models/shift_controls/manifests/correlated_feature_groups.csv",
+        "sha256": "71d94de4a253c791469893650e159ee61e44253accb47e7cecf154ce2fb0b9bf"
+      },
+      "correlated_feature_groups_contract": {
+        "path": "artifacts/models/shift_controls/contracts/correlated_feature_groups_contract.json",
+        "sha256": "cf366922fb3603e01e87729bd2108fa1cc2915e4667c2bcaefcad2775936274a"
+      }
+    }
+  },
+  "explanation_comparison_rule": {
+    "same_model_cross_population_only": true,
+    "cross_model_raw_shap_magnitude_comparison": false,
+    "lr_output": "LOG_ODDS_DECISION_FUNCTION",
+    "rf_output": "POSITIVE_CLASS_PROBABILITY",
+    "xgb_output": "XGBOOST_RAW_MARGIN",
+    "shap_is_causal": false
+  },
+  "scientific_guardrails": {
+    "cycle25_dataset_read": true,
+    "cycle25_shap_generated": false,
+    "cycle25_used_for_training": false,
+    "cycle25_used_for_model_selection": false,
+    "cycle25_used_for_feature_selection": false,
+    "cycle25_used_for_scaler_fit": false,
+    "cycle25_used_for_threshold_tuning": false,
+    "models_retrained": false,
+    "models_retuned": false,
+    "background_changed": false,
+    "cycle24_null_changed": false,
+    "correlated_feature_groups_changed": false,
+    "common_support_definition_changed": false,
+    "drift_claim_made": false
+  },
+  "software": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit_learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "shap": "0.52.0"
+  },
+  "immutability_rule": "After Chapter 10.1 is frozen, the Cycle25 dataset population, row order, temporal block definitions, feature order, frozen model binaries, LR preprocessing, SHAP background, model-specific explanation spaces, Chapter-9 null thresholds, common-support definition, and correlated-feature groups must not be changed in response to Cycle25 SHAP results.",
+  "next_stage": "MODEL_CHAPTER_10_2_CYCLE25_SHAP_GENERATION"
+}

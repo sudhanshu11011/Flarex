@@ -1,0 +1,175 @@
+{
+  "contract_name": "Frozen Final Cross-Cycle SHAP Synthesis Decision Protocol",
+  "version": "1.0",
+  "status": "FROZEN_FINAL_CROSS_CYCLE_SHAP_SYNTHESIS_PROTOCOL",
+  "created_at_utc": "2026-10-19T22:41:11.677134+00:00",
+  "chapter": "MODEL_CHAPTER_10_10_1B",
+  "timing_disclosure": {
+    "cycle25_shap_results_already_observed": true,
+    "structure_null_results_already_observed": true,
+    "support_reweight_results_already_observed": true,
+    "correlated_group_results_already_observed": true,
+    "featurewise_fdr_results_already_observed": true,
+    "final_synthesis_table_created_before_this_protocol": false,
+    "final_model_evidence_tiers_assigned_before_this_protocol": false,
+    "final_explanation_drift_label_assigned_before_this_protocol": false,
+    "interpretation": "This is a pre-synthesis decision-rule freeze, not a preregistration before Cycle25 data were observed."
+  },
+  "frozen_evidence_sources": {
+    "structure_null": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/cross_cycle_shap_structure_null_comparison_contract.json",
+      "contract_sha256": "353546e1d33591dd1e78828cd765d1a569f71dfd71422610b68bafdebf97a5fd",
+      "summary": "artifacts/models/cross_cycle_shap/metrics/cross_cycle_shap_structure_null_summary.csv",
+      "summary_sha256": "948953cf22f2a8134939b0f7c9f98e5aa41d1f5ef7158234594b2488621891b9"
+    },
+    "support_reweighting": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/common_support_reweighting_shap_sensitivity_contract.json",
+      "contract_sha256": "76e5b3e4593a3058af4f6334ea6f2626ee03b0ca062fbbe5c88a5d80590c4c6c",
+      "structure": "artifacts/models/cross_cycle_shap/metrics/common_support_reweighting_shap_structure_sensitivity.csv",
+      "structure_sha256": "cbec8153b4c73ad0a15f3350ffb41bd7a8c68e6d14d8df718f0698896cd18ebd"
+    },
+    "correlated_groups": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/correlated_group_shap_robustness_contract.json",
+      "contract_sha256": "9ac41b15a7590841da8d73818c95894048b4e5540c5337d2bc0970089948b22e",
+      "structure": "artifacts/models/cross_cycle_shap/metrics/correlated_group_shap_structure_robustness.csv",
+      "structure_sha256": "70f84db4db96368d9d3c241e2bd069bdbe351f188e9144d07f72adc23739eab4"
+    },
+    "featurewise_fdr": {
+      "contract": "artifacts/models/cross_cycle_shap/contracts/featurewise_cross_cycle_inference_contract.json",
+      "contract_sha256": "292a1764a15e0da6d065b031813c9656bf44ebb38aebd4a5664258778fd8df89",
+      "summary": "artifacts/models/cross_cycle_shap/metrics/featurewise_cross_cycle_inference_summary.csv",
+      "summary_sha256": "d878e4d4785620c6afbc5b2f69f4a527a6790e5d2f6582bf6e98a2609621f60b"
+    }
+  },
+  "primary_model_evidence_rule": {
+    "evidence_tiers": {
+      "TIER_0": {
+        "label": "NO_GLOBAL_STRUCTURE_NULL_EXCEEDANCE",
+        "rule": "OVERALL any_null_exceedance == False"
+      },
+      "TIER_1": {
+        "label": "GLOBAL_STRUCTURE_ONLY_EVIDENCE",
+        "rule": "OVERALL any_null_exceedance == True AND OVERALL total FDR-significant featurewise hypotheses == 0"
+      },
+      "TIER_2": {
+        "label": "GLOBAL_STRUCTURE_AND_FEATUREWISE_EVIDENCE",
+        "rule": "OVERALL any_null_exceedance == True AND OVERALL total FDR-significant featurewise hypotheses >= 1"
+      }
+    },
+    "primary_scope": "OVERALL_POOLED",
+    "primary_stratum": "OVERALL",
+    "structure_condition": "Use frozen OVERALL any_null_exceedance.",
+    "featurewise_condition": "Sum OVERALL BH-FDR significant features across the two predefined featurewise quantities.",
+    "featurewise_signal_rule": "TOTAL_OVERALL_FDR_SIGNIFICANT_HYPOTHESES >= 1",
+    "featurewise_zero_rule": "TOTAL_OVERALL_FDR_SIGNIFICANT_HYPOTHESES == 0",
+    "binary_drift_label_created": false,
+    "binary_stability_label_created": false
+  },
+  "robustness_rules": {
+    "class_conditional": {
+      "required_to_report": true,
+      "strata": [
+        "TARGET_0",
+        "TARGET_1"
+      ],
+      "uses_frozen_structure_null": true,
+      "uses_featurewise_bh_fdr": true,
+      "automatic_binary_gate": false,
+      "reason": "Class-conditioned evidence is used to assess whether pooled attribution changes remain visible within classes rather than being explained solely by prevalence mix."
+    },
+    "common_support_reweighting": {
+      "required_to_report": true,
+      "variants": [
+        "COMMON_SUPPORT_UNWEIGHTED",
+        "COMMON_SUPPORT_REWEIGHTED"
+      ],
+      "automatic_binary_gate": false,
+      "reason": "The sensitivity estimand uses a support-restricted reference population. The full-population Chapter-9 null is not validly reusable as a formal threshold.",
+      "allowed_interpretation": [
+        "ATTENUATES_PRIMARY_PATTERN",
+        "SIMILAR_TO_PRIMARY_PATTERN",
+        "STRENGTHENS_PRIMARY_PATTERN",
+        "MIXED_ACROSS_METRICS"
+      ]
+    },
+    "correlated_groups": {
+      "required_to_report": true,
+      "automatic_binary_gate": false,
+      "group_level_null_available": false,
+      "reason": "Group-level metrics are descriptive robustness checks because no frozen 10-group Cycle24 null distribution exists.",
+      "allowed_interpretation": [
+        "GROUP_AGGREGATION_ATTENUATES_PATTERN",
+        "GROUP_AGGREGATION_PRESERVES_PATTERN",
+        "GROUP_AGGREGATION_STRENGTHENS_PATTERN",
+        "MIXED_ACROSS_METRICS"
+      ]
+    },
+    "temporal_blocks": {
+      "required_to_report": true,
+      "blocks": [
+        "B1",
+        "B2",
+        "B3"
+      ],
+      "automatic_primary_drift_gate": false,
+      "reason": "Temporal blocks were screened against the frozen OVERALL null, not against block-size-matched temporal nulls."
+    }
+  },
+  "cross_model_rule": {
+    "unit": "FROZEN_MODEL_FAMILY",
+    "model_count": 3,
+    "no_winner_selected": true,
+    "do_not_average_raw_shap_across_models": true,
+    "consistency_categories": {
+      "CONSISTENT_ACROSS_ALL_MODELS": "All 3 models receive the same primary inferential evidence tier.",
+      "MAJORITY_MODEL_PATTERN": "Exactly 2 of 3 models receive the same primary evidence tier.",
+      "MODEL_DEPENDENT_MIXED_PATTERN": "No single evidence tier describes a majority pattern cleanly."
+    },
+    "final_binary_drift_label_automatic": false,
+    "reason": "Different model families operate in different SHAP output spaces and may exhibit different attribution-drift behavior. The synthesis must preserve model-specific evidence instead of forcing a pooled raw-SHAP conclusion."
+  },
+  "prohibited_logic": [
+    "Do not classify explanation drift from featurewise FDR alone.",
+    "Do not classify stability merely because a frozen null threshold was not exceeded.",
+    "Do not reuse full-population null thresholds as formal thresholds for common-support-restricted estimates.",
+    "Do not invent group-level statistical significance without a frozen group null.",
+    "Do not treat temporal B1/B2/B3 screening as block-specific formal inference.",
+    "Do not compare raw SHAP magnitudes across LR, RF, and XGB.",
+    "Do not interpret SHAP differences as causal solar-physics effects."
+  ],
+  "required_final_synthesis_outputs": {
+    "model_level_rows": 3,
+    "must_report": [
+      "overall_structure_null_exceedance",
+      "overall_structure_exceedance_count",
+      "overall_fdr_mean_abs_count",
+      "overall_fdr_mean_signed_count",
+      "primary_evidence_tier",
+      "target0_structure_null_exceedance",
+      "target1_structure_null_exceedance",
+      "target0_fdr_count",
+      "target1_fdr_count",
+      "support_reweighting_annotation",
+      "correlated_group_annotation",
+      "temporal_screening_annotation",
+      "sample_size_caution"
+    ]
+  },
+  "scientific_guardrails": {
+    "models_retrained": false,
+    "shap_recomputed": false,
+    "cycle24_null_recomputed": false,
+    "support_weights_recomputed": false,
+    "correlated_groups_recomputed": false,
+    "fdr_protocol_changed": false,
+    "new_statistical_threshold_invented": false,
+    "support_binary_threshold_invented": false,
+    "group_binary_threshold_invented": false,
+    "final_synthesis_computed_here": false,
+    "final_explanation_drift_conclusion_made": false,
+    "final_explanation_stability_conclusion_made": false,
+    "shap_is_causal": false
+  },
+  "interpretation_rule": "The final synthesis must preserve the distinction between formal inferential evidence and descriptive robustness evidence. Primary model-level evidence tiers are based on the frozen OVERALL structure-null screen and OVERALL featurewise BH-FDR results. Class-conditional, support/reweighting, correlated-group, and temporal analyses must be reported as predefined context and robustness evidence without inventing unfrozen significance thresholds.",
+  "next_stage": "MODEL_CHAPTER_10_10_2_FINAL_CROSS_CYCLE_SHAP_SYNTHESIS"
+}
