@@ -1,0 +1,70 @@
+{
+  "contract_name": "Frozen Chapter-11 Final Cross-Cycle Synthesis Package",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_FINAL_SYNTHESIS",
+  "created_at_utc": "2026-10-20T11:00:22.682829+00:00",
+  "chapter": "MODEL_CHAPTER_11_7",
+  "completed_stages": [
+    "11.1_SYNTHESIS_INPUT_FREEZE",
+    "11.2_PREDICTIVE_SYNTHESIS",
+    "11.3_EXPLANATION_SYNTHESIS",
+    "11.4_JOINT_PREDICTION_EXPLANATION_OUTCOME",
+    "11.5A_HYPOTHESIS_EVALUATION_PROTOCOL",
+    "11.5B_HYPOTHESIS_EVALUATION",
+    "11.6_FINAL_SCIENTIFIC_CONCLUSION",
+    "11.7_FINAL_PACKAGE_FREEZE"
+  ],
+  "final_conclusion_class": "MAJORITY_MODEL_PREDICTION_EXPLANATION_SEPARATION_WITH_MODEL_DEPENDENCE",
+  "final_predictive_state": {
+    "primary_metric": "TSS",
+    "comparisons": 12,
+    "no_measurable_change_at_95ci": 12,
+    "predictive_equivalence_established": false,
+    "strict_predictive_stability_established": false
+  },
+  "final_explanation_state": {
+    "LR_02_C0p01_BALANCED": "TIER_0",
+    "RF_04_D12_L5_BALSUB": "TIER_2",
+    "XGB_02_LR0p03_D3_BAL": "TIER_2",
+    "cross_model_pattern": "MAJORITY_MODEL_PATTERN",
+    "universal_explanation_drift": false
+  },
+  "final_joint_state": {
+    "prediction_explanation_separation_models": 2,
+    "total_models": 3,
+    "majority_model_evidence": true,
+    "universal_across_models": false
+  },
+  "final_hypothesis_statuses": {
+    "H0": "MIXED_NOT_SUFFICIENT_AS_UNIVERSAL_EXPLANATION",
+    "H1": "NOT_SUPPORTED_BY_PRIMARY_TSS_CRITERION",
+    "H2": "SUPPORTED_WITH_MODEL_DEPENDENCE",
+    "H3": "SUPPORTED_WITH_QUALIFICATION_BY_MAJORITY_MODEL_EVIDENCE"
+  },
+  "inventory": {
+    "file": "artifacts/models/final_synthesis/manifests/chapter11_final_synthesis_inventory.csv",
+    "sha256": "0387b248d8916e02ae328f50c512f0df6968db2b5945fa626de94912ab9e7803",
+    "pre_freeze_artifacts": 16,
+    "contracts": 7,
+    "metrics": 8,
+    "existing_manifests": 1
+  },
+  "scientific_guardrails": {
+    "models_retrained": false,
+    "predictions_recomputed": false,
+    "thresholds_reoptimized": false,
+    "preprocessing_refit": false,
+    "shap_recomputed": false,
+    "new_bootstrap_performed": false,
+    "new_null_distribution_created": false,
+    "new_significance_threshold_created": false,
+    "predictive_equivalence_claimed": false,
+    "strict_predictive_stability_claimed": false,
+    "universal_explanation_drift_claimed": false,
+    "universal_explanation_stability_claimed": false,
+    "causal_shap_claim_made": false,
+    "right_for_wrong_reasons_claim_made": false
+  },
+  "chapter11_complete": true,
+  "next_stage": "CHAPTER11_GIT_CHECKPOINT"
+}

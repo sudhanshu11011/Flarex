@@ -1,0 +1,55 @@
+{
+  "contract_name": "Frozen Chapter-11 Predictive Cross-Cycle Synthesis",
+  "version": "1.0",
+  "status": "FROZEN_CHAPTER11_PREDICTIVE_SYNTHESIS",
+  "created_at_utc": "2026-10-20T10:47:41.850248+00:00",
+  "chapter": "MODEL_CHAPTER_11_2",
+  "primary_metric": "TSS",
+  "models": [
+    "LR_02_C0p01_BALANCED",
+    "RF_04_D12_L5_BALSUB",
+    "XGB_02_LR0p03_D3_BAL"
+  ],
+  "cycle25_scopes": [
+    "C25_B1_2020_2021",
+    "C25_B2_2022_2023",
+    "C25_B3_2024_2025",
+    "C25_ALL_2020_2025"
+  ],
+  "evidence_state": {
+    "models_evaluated": 3,
+    "scopes_per_model": 4,
+    "primary_comparisons": 12,
+    "no_measurable_change_at_95ci": 12,
+    "models_with_all_four_no_measurable_change": 3,
+    "equivalence_claimed": false,
+    "stability_proven": false
+  },
+  "model_synthesis": {
+    "file": "artifacts/models/final_synthesis/metrics/predictive_cross_cycle_model_synthesis.csv",
+    "sha256": "ecb529c001bf268d92e2a9b5b248a8f4ac0a3dfb799232f9997242c2a5c6a851",
+    "rows": 3
+  },
+  "cross_model_summary": {
+    "file": "artifacts/models/final_synthesis/metrics/predictive_cross_cycle_summary.csv",
+    "sha256": "0a8c60246dae8f639311cc92fdd73d90a02690d3935ce013c72f36ee71c05d2e",
+    "rows": 1,
+    "pattern": "NO_MEASURABLE_PRIMARY_TSS_CHANGE_AT_95CI_ACROSS_ALL_MODELS_AND_SCOPES"
+  },
+  "scientific_guardrails": {
+    "new_predictions_generated": false,
+    "models_retrained": false,
+    "thresholds_reoptimized": false,
+    "preprocessing_refit": false,
+    "new_bootstrap_performed": false,
+    "new_statistical_threshold_created": false,
+    "secondary_metrics_reclassified": false,
+    "equivalence_test_performed": false,
+    "equivalence_claimed": false,
+    "strict_stability_claimed": false,
+    "final_prediction_explanation_joint_outcome_assigned": false,
+    "hypotheses_evaluated": false
+  },
+  "required_interpretation": "The frozen primary TSS comparison detected no measurable Cycle24-to-Cycle25 change at the 95% bootstrap-CI criterion in any of the 12 model-by-scope comparisons. This result must not be described as proof of statistical equivalence or strict predictive stability. Secondary predictive metrics remain reported but are not used to redefine the frozen primary predictive-drift classification.",
+  "next_stage": "MODEL_CHAPTER_11_3_EXPLANATION_SYNTHESIS"
+}
